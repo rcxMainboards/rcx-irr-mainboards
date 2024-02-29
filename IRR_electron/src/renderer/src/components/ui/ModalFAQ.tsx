@@ -5,9 +5,22 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure
+  useDisclosure,
+  Accordion,
+  AccordionItem
 } from '@nextui-org/react'
+import FAQ_ITEMS from '../../data/fatqData'
+import motionV1 from '../../utils/motionVariants'
 import { FaQuestionCircle } from 'react-icons/fa'
+import { IoHardwareChipOutline } from 'react-icons/io5'
+import { RxLapTimer } from 'react-icons/rx'
+import { SiOpenbugbounty } from 'react-icons/si'
+const ICONS = {
+  IoHardwareChipOutline: <IoHardwareChipOutline size={23} />,
+  RxLapTimer: <RxLapTimer size={23} />,
+  SiOpenbugbounty: <SiOpenbugbounty size={23} />
+  // Agrega más iconos aquí si es necesario
+}
 function ModalFAQ() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
@@ -20,31 +33,7 @@ function ModalFAQ() {
       >
         FAQ
       </Button>
-      <Modal
-        size="2xl"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        motionProps={{
-          variants: {
-            enter: {
-              y: 0,
-              opacity: 1,
-              transition: {
-                duration: 0.3,
-                ease: 'easeOut'
-              }
-            },
-            exit: {
-              y: -20,
-              opacity: 0,
-              transition: {
-                duration: 0.2,
-                ease: 'easeIn'
-              }
-            }
-          }
-        }}
-      >
+      <Modal size="2xl" isOpen={isOpen} onOpenChange={onOpenChange} motionProps={motionV1}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -52,23 +41,13 @@ function ModalFAQ() {
                 Preguntas Frecuentes
               </ModalHeader>
               <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non
-                  risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
-                  quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non
-                  risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
-                  quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit dolor
-                  adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. Velit duis sit
-                  officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem eiusmod et. Culpa
-                  deserunt nostrud ad veniam.
-                </p>
+                {FAQ_ITEMS.map(({ key, title, content, iconName }) => (
+                  <Accordion variant="bordered" isCompact>
+                    <AccordionItem startContent={ICONS[iconName]} title={title} key={key}>
+                      <p>{content}</p>
+                    </AccordionItem>
+                  </Accordion>
+                ))}
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
