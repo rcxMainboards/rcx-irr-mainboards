@@ -4,6 +4,7 @@ import { ModalInstruccions, ModalFAQ, ExitButton } from './ui'
 import { validateMainboard } from '../services/mainboard'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 interface IFormInput {
   CT: string
@@ -22,10 +23,13 @@ function LoginForm(): JSX.Element {
     mode: 'onSubmit',
     defaultValues: { CT: '', NumEmpleado: '' }
   })
+  const navigate = useNavigate()
 
   const { mutate } = useMutation({
     mutationFn: validateMainboard,
-    onSuccess: () => {},
+    onSuccess: () => {
+      navigate('/TestMenu')
+    },
     onError: (error) => {
       if (error instanceof AxiosError && error.response?.data?.detail) {
         setError('CT', { message: error.response.data.detail })
@@ -34,7 +38,7 @@ function LoginForm(): JSX.Element {
   })
 
   return (
-    <section className="grid min-h-screen place-content-center bg-gradient-to-l from-[#244a65] to-[#7cb4df] p-10 text-lg text-text-950">
+    <section className="grid min-h-screen place-content-center bg-gradient-l p-10 text-lg text-text-950">
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -42,9 +46,9 @@ function LoginForm(): JSX.Element {
             mutate(CT)
           })()
         }}
-        className="flex w-[25rem] flex-col rounded-md border bg-background-50 px-12 py-12  shadow-xl"
+        className="flex w-[28rem] flex-col rounded-md border bg-background-50 px-12 py-12  shadow-xl"
       >
-        <h1 className="mb-8 inline-block bg-gradient-to-l from-[#244a65] to-[#7cb4df] bg-clip-text text-center text-3xl font-bold text-transparent">
+        <h1 className="mb-8 inline-block bg-gradient-l bg-clip-text text-center text-4xl font-bold text-transparent">
           Bienvenido IRR MB Pruebas
         </h1>
         <div className="flex flex-col gap-3">
@@ -106,9 +110,11 @@ function LoginForm(): JSX.Element {
 
           <Divider />
         </div>
-        <section className="mt-4 flex justify-around">
-          <ModalInstruccions />
-          <ModalFAQ />
+        <section className="mt-4">
+          <div className="w-full">
+            <ModalInstruccions />
+            <ModalFAQ />
+          </div>
         </section>
       </form>
     </section>

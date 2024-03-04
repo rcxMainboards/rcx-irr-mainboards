@@ -8,7 +8,11 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: { newBase: ['Inter', 'sans-serif'] }
+      fontFamily: { newBase: ['Inter', 'sans-serif'] },
+      colors: { 'blue-start': '#244a65', 'blue-end': '#7cb4df' },
+      backgroundImage: (theme) => ({
+        'gradient-l': `linear-gradient(270deg, ${theme('colors.blue-start')} 0%, ${theme('colors.blue-end')} 100%)`
+      })
     }
   },
   plugins: [

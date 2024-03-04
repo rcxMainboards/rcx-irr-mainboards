@@ -2,10 +2,10 @@ import { app, shell, BrowserWindow, ipcMain, session } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-
+import { createFileRoute, createURLRoute } from 'electron-router-dom'
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
-function createWindow(): void {
+function createWindow(id: string): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -28,12 +28,15 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
+  const devServerURL = createURLRoute('http://localhost:5173/', id)
+
+  const fileRoute = createFileRoute(join(__dirname, '../renderer/index.html'), id)
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+    mainWindow.loadURL(devServerURL)
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    mainWindow.loadFile(...fileRoute)
   }
 }
 
@@ -62,12 +65,12 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
-  createWindow()
+  createWindow('main')
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) createWindow('main')
   })
 })
 

@@ -1,10 +1,19 @@
-import BaseLayout from './components/ui/baseLayout'
 import LoginForm from './components/LoginForm'
+import useMainboard from './components/hooks/useMainboard'
+import { LoadingAnimation, ErrorMessage } from './components/ui/index'
 function App(): JSX.Element {
+  const { isLoadingRegistration, error } = useMainboard()
+
   return (
-    <BaseLayout>
-      <LoginForm />
-    </BaseLayout>
+    <div>
+      {isLoadingRegistration ? (
+        <LoadingAnimation />
+      ) : error ? (
+        <ErrorMessage errorMessage={error?.message} />
+      ) : (
+        <LoginForm />
+      )}
+    </div>
   )
 }
 
