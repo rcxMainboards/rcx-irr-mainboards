@@ -103,7 +103,7 @@ function LoginForm(): JSX.Element {
 
           <section className="mt-3 flex flex-col gap-3 ">
             <Button className="bg-primary-700 font-semibold text-white" type="submit">
-              Iniciar las Pruebas
+              Validar Información
             </Button>
             <ExitButton />
           </section>
