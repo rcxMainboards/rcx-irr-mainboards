@@ -23,6 +23,7 @@ function LoginForm(): JSX.Element {
     mode: 'onSubmit',
     defaultValues: { CT: '', NumEmpleado: '' }
   })
+
   const navigate = useNavigate()
 
   const { mutate } = useMutation({
@@ -43,10 +44,10 @@ function LoginForm(): JSX.Element {
         onSubmit={(e) => {
           e.preventDefault()
           handleSubmit(({ CT }) => {
-            mutate(CT)
+            mutate(CT.toUpperCase())
           })()
         }}
-        className="flex w-[28rem] flex-col rounded-md border bg-background-50 px-12 py-12  shadow-xl"
+        className="flex w-[28rem] flex-col rounded-md border bg-background-50 px-12 py-12  text-text-700 shadow-xl"
       >
         <h1 className="mb-8 inline-block bg-gradient-l bg-clip-text text-center text-4xl font-bold text-transparent">
           Bienvenido IRR MB Pruebas

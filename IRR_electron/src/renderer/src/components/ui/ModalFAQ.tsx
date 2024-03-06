@@ -34,7 +34,7 @@ function ModalFAQ() {
         FAQ
       </Button>
       <Modal size="4xl" isOpen={isOpen} onOpenChange={onOpenChange} motionProps={motionV1}>
-        <ModalContent>
+        <ModalContent className="text-text-700">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 text-4xl font-bold">

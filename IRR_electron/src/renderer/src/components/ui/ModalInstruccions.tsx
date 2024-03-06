@@ -28,7 +28,7 @@ function ModalInstruccions() {
         Manual de Usuario
       </Button>
       <Modal size="4xl" isOpen={isOpen} onOpenChange={onOpenChange} motionProps={motionV1}>
-        <ModalContent>
+        <ModalContent className="text-text-700">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col text-4xl font-bold">
@@ -62,7 +62,7 @@ function ModalInstruccions() {
                       title="Ir a la siguiente prueba"
                     >
                       <p>
-                        Siempre que se termine una prueba, habrá una ventana en la que se dará una
+                        Siempre que se inice una prueba, habrá una ventana en la que se dará una
                         descripción general de la prueba y sus parámetros. La prueba no comenzará
                         hasta que el usuario decida presionar el botón de{' '}
                         <strong>"Comenzar la prueba"</strong>.

@@ -1,11 +1,13 @@
 import { MdScreenshotMonitor, MdGrid4X4 } from 'react-icons/md'
 import { TouchScreenTest } from '../components/TestComponents/index'
-const tests = [
+import Test from '../components/TestComponents/interfaces'
+
+const tests: Test[] = [
   {
     TestComponent: TouchScreenTest,
-    Testname: 'Prueba de pantalla táctil',
+    TestName: 'Prueba de pantalla táctil',
     TestDescription:
-      'La prueba consiste en presionar los bloques mediante la pantalla táctil, cuando se presiona un bloque y este es detectado por la pantalla cambiara de color.',
+      'La prueba consiste en presionar los bloques mediante la pantalla táctil, cuando se presiona un bloque y este es detectado por la pantalla, el bloque cambiara de color cambiara de color.',
     TestSuccessCondition:
       'Un vez todos los bloques sean presionados antes de que acabe el tiempo y tengan el mismo color, la prueba se dara por terminada y se considerara exitosa.',
     TestFailCondition:
@@ -18,6 +20,7 @@ const tests = [
     TestTimer: 45
   },
   {
+    TestComponent: TouchScreenTest,
     TestName: 'Prueba de Pixeles',
     TestDescription:
       'La prueba consiste en verificar si hay pixeles muertos en la pantalla, para ello cuando comienze la prueba la pantalla mostrara un color, si se presiona la pantalla o se hace click se pasara al siguiente color.',

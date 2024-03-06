@@ -3,7 +3,7 @@ interface IBaseLayout {
 }
 
 function BaseLayout({ children }: IBaseLayout): JSX.Element {
-  return <main className="bg-gradient-l grid min-h-screen place-items-center">{children}</main>
+  return <main className="grid min-h-screen place-items-center bg-gradient-l ">{children}</main>
 }
 
 export default BaseLayout
