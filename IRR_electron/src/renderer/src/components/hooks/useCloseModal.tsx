@@ -10,7 +10,13 @@ function useCloseModal() {
     onOpenChange()
     setOpen(false)
   }
-  return { open, changeOpen }
+
+  const resetModal = () => {
+    onOpenChange()
+    setOpen(true)
+  }
+
+  return { open, changeOpen, resetModal }
 }
 
 export default useCloseModal

@@ -1,5 +1,5 @@
 import { MdScreenshotMonitor, MdGrid4X4 } from 'react-icons/md'
-import { TouchScreenTest } from '../components/TestComponents/index'
+import { TouchScreenTest, PixelesTest } from '../components/TestComponents/index'
 import Test from '../components/TestComponents/interfaces'
 
 const tests: Test[] = [
@@ -17,10 +17,10 @@ const tests: Test[] = [
       'Si se acaba el tiempo, aparecera una ventana al usuario preguntando si desea repetir la prueba o no.',
       'Puede ocurrir que el servicio táctil este funcionando, pero no detecte el toque del usuario, en este caso cuando surja la ventana preguntando si desea repetir la prueba, el usuario puede decidir sin problema no repetirla.'
     ],
-    TestTimer: 60
+    TestTimer: 5
   },
   {
-    TestComponent: TouchScreenTest,
+    TestComponent: PixelesTest,
     TestName: 'Prueba de Pixeles',
     TestDescription:
       'La prueba consiste en verificar si hay pixeles muertos en la pantalla, para ello cuando comienze la prueba la pantalla mostrara un color, si se presiona la pantalla o se hace click se pasara al siguiente color.',
@@ -31,7 +31,8 @@ const tests: Test[] = [
     TestIconName: MdGrid4X4,
     TestNotes: [
       'Siempre y cuando se visualizen todos los colores presionando la pantalla o haciendo click, aparecera una ventana que le preguntara al usuario que accion tomar, si paso la prueba, repetirla, o decidir que no paso lo prueba.'
-    ]
+    ],
+    TestTimer: 0
   }
 ]
 

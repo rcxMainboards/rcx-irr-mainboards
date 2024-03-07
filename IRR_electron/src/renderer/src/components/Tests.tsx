@@ -1,8 +1,10 @@
+import React, { useState } from 'react'
 import Test from './TestComponents/interfaces'
 import { ModalGuideLines } from '../components/ui/index'
 import useCloseModal from './hooks/useCloseModal'
 
 function Tests({ tests }: { tests: Test[] }) {
+  const [currentTestIndex, setCurrentTestIndex] = useState(0)
   const {
     TestComponent,
     TestName,
@@ -12,9 +14,16 @@ function Tests({ tests }: { tests: Test[] }) {
     TestFailCondition,
     TestNotes,
     TestTimer
-  } = tests[0]
+  } = tests[currentTestIndex]
 
-  const { open, changeOpen } = useCloseModal()
+  const { open, changeOpen, resetModal } = useCloseModal()
+
+  const nextTest = () => {
+    if (currentTestIndex < tests.length - 1) {
+      resetModal()
+      setCurrentTestIndex(currentTestIndex + 1)
+    }
+  }
 
   return (
     <>
@@ -27,6 +36,7 @@ function Tests({ tests }: { tests: Test[] }) {
           TestFailCondition={TestFailCondition}
           TestNotes={TestNotes}
           TestTimer={TestTimer}
+          nextTest={nextTest}
         />
       ) : (
         <ModalGuideLines

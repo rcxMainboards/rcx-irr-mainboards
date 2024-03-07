@@ -1,7 +1,7 @@
 import { Modal, ModalContent, ModalHeader, ModalBody, Button } from '@nextui-org/react'
 import motionV1 from '../../utils/motionVariants'
 
-export default function ModalTimeOut({ isOpen, onOpenChange, reset }) {
+export default function ModalTimeOut({ isOpen, onOpenChange, reset, nextTest }) {
   return (
     <>
       <Modal
@@ -9,6 +9,7 @@ export default function ModalTimeOut({ isOpen, onOpenChange, reset }) {
         onOpenChange={onOpenChange}
         motionProps={motionV1}
         hideCloseButton
+        isDismissable={false}
         className="text-text-700"
       >
         <ModalContent className="p-4 text-center">
@@ -31,7 +32,17 @@ export default function ModalTimeOut({ isOpen, onOpenChange, reset }) {
                 >
                   Repetir el test
                 </Button>
-                <Button color="danger" onPress={onClose}>
+                <Button
+                  color="danger"
+                  onPress={() => {
+                    // next({
+                    //   result: false,
+                    //   message:
+                    //     'El usuario decidio que no paso el test, y decidio pasar al siguiente test'
+                    // })
+                    nextTest()
+                  }}
+                >
                   Ir al siguiente test (fallido)
                 </Button>
               </ModalBody>
