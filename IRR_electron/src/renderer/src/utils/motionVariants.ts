@@ -1,20 +1,20 @@
 const motionV1 = {
   variants: {
     enter: {
-      y: 0,
+      scale: 'var(--scale-enter)',
+      y: 'var(--slide-enter)',
       opacity: 1,
       transition: {
-        duration: 0.3,
-        ease: 'easeOut'
+        scale: { duration: 0.4, ease: [0.36, 0.66, 0.4, 1] },
+        opacity: { duration: 0.4, ease: [0.36, 0.66, 0.4, 1] },
+        y: { type: 'spring', bounce: 0, duration: 0.6 }
       }
     },
     exit: {
-      y: -20,
+      scale: 'var(--scale-exit)',
+      y: 'var(--slide-exit)',
       opacity: 0,
-      transition: {
-        duration: 0.2,
-        ease: 'easeIn'
-      }
+      transition: { duration: 0.3, ease: [0.36, 0.66, 0.4, 1] }
     }
   }
 }

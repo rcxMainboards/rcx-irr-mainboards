@@ -1,6 +1,8 @@
 import Test from './TestComponents/interfaces'
+import { ModalGuideLines } from '../components/ui/index'
+import useCloseModal from './hooks/useCloseModal'
 
-function Tests({ tests, open, endGuide }: { tests: Test[]; open: boolean; endGuide: () => void }) {
+function Tests({ tests }: { tests: Test[] }) {
   const {
     TestComponent,
     TestName,
@@ -12,18 +14,33 @@ function Tests({ tests, open, endGuide }: { tests: Test[]; open: boolean; endGui
     TestTimer
   } = tests[0]
 
+  const { open, changeOpen } = useCloseModal()
+
   return (
-    <TestComponent
-      TestName={TestName}
-      TestDescription={TestDescription}
-      TestIconName={TestIconName}
-      TestSuccessCondition={TestSuccessCondition}
-      TestFailCondition={TestFailCondition}
-      TestNotes={TestNotes}
-      TestTimer={TestTimer}
-      endGuide={endGuide}
-      open={open}
-    />
+    <>
+      {!open ? (
+        <TestComponent
+          TestName={TestName}
+          TestDescription={TestDescription}
+          TestIconName={TestIconName}
+          TestSuccessCondition={TestSuccessCondition}
+          TestFailCondition={TestFailCondition}
+          TestNotes={TestNotes}
+          TestTimer={TestTimer}
+        />
+      ) : (
+        <ModalGuideLines
+          TestName={TestName}
+          TestDescription={TestDescription}
+          TestIconName={TestIconName}
+          TestSuccessCondition={TestSuccessCondition}
+          TestFailCondition={TestFailCondition}
+          TestNotes={TestNotes}
+          TestTimer={TestTimer}
+          onOpenChange={changeOpen}
+        />
+      )}
+    </>
   )
 }
 

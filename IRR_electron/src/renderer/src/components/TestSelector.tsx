@@ -1,18 +1,13 @@
 // import tests from '../data/testParams'
 import { ModalWelcome } from './ui'
-import useStartTests from './TestComponents/hooks/useStartTests'
 import tests from '../data/paramsTests'
 import Tests from './Tests'
+import useCloseModal from './hooks/useCloseModal'
 
 function TestSelector() {
-  const { start, open, endGuide } = useStartTests()
+  const { open, changeOpen } = useCloseModal()
 
-  return (
-    <>
-      <ModalWelcome start={start} />
-      <Tests tests={tests} open={open} endGuide={endGuide} />
-    </>
-  )
+  return <>{!open ? <Tests tests={tests} /> : <ModalWelcome onOpenChange={changeOpen} />}</>
 }
 
 export default TestSelector

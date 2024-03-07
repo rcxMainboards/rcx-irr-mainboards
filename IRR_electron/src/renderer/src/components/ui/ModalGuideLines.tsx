@@ -1,8 +1,9 @@
-import { Modal, ModalContent, ModalBody, Button, useDisclosure } from '@nextui-org/react'
+import { Modal, ModalContent, ModalBody } from '@nextui-org/react'
 import { Card, CardBody } from '@nextui-org/react'
 import { MdError } from 'react-icons/md'
 import { FaCheckCircle } from 'react-icons/fa'
 import { IoMdWarning } from 'react-icons/io'
+import motionV1 from '../../utils/motionVariants'
 
 function ModalGuideLines({
   TestName,
@@ -12,20 +13,18 @@ function ModalGuideLines({
   TestFailCondition,
   TestNotes,
   TestTimer,
-  open,
-  endGuide
+  onOpenChange
 }) {
-  const { onOpenChange } = useDisclosure()
-
   return (
     <>
       <Modal
         className="bg-gradient-l"
         backdrop="blur"
         size="full"
-        isOpen={open}
+        defaultOpen
         hideCloseButton
         onOpenChange={onOpenChange}
+        motionProps={motionV1}
       >
         <ModalContent>
           {(onClose) => (
@@ -36,24 +35,13 @@ function ModalGuideLines({
                     isPressable
                     onPress={() => {
                       onClose()
-                      endGuide()
                     }}
                     className="rounded-md bg-primary-300 py-4 shadow-lg hover:bg-accent-400"
                   >
                     <CardBody className="flex flex-col items-center justify-center gap-2 ">
                       <TestIconName size={250} color={'white'} />
                       <h1 className="text-2xl font-bold text-white">{TestName}</h1>
-                      <Button
-                        color="default"
-                        className="w-5/6 font-semibold text-white"
-                        variant="light"
-                        onPress={() => {
-                          onClose()
-                          endGuide()
-                        }}
-                      >
-                        Comenzar Prueba
-                      </Button>
+                      <p className="w-5/6 text-center font-semibold text-white">Comenzar Prueba</p>
                     </CardBody>
                   </Card>
                   <section className="grid grid-cols-2 place-content-center gap-7 text-sm text-text-700">

@@ -1,17 +1,18 @@
 import axios from 'axios'
+import { API_INTERNAL, IRR_MB_API } from '../utils/serviceEndPoints'
 
 const validateMainboard = async (CT: string) => {
-  const response = await axios.get(`http://127.0.0.1:2010/mainboard/serial_number/${CT}`)
+  const response = await axios.get(`${API_INTERNAL}/mainboard/serial_number/${CT}`)
   return response.data
 }
 
 const getMainboardProduct = async () => {
-  const response = await axios.get(`http://127.0.0.1:2010/mainboard/product`)
+  const response = await axios.get(`${API_INTERNAL}/mainboard/product`)
   return response.data
 }
 
 const isMainboardRegistered = async (SSID: string) => {
-  const response = await axios.get(`http://localhost:9001/mainboard/product/${SSID}`)
+  const response = await axios.get(`${IRR_MB_API}/mainboard/product/${SSID}`)
   return response.data
 }
 

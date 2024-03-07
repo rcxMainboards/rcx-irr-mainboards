@@ -1,18 +1,17 @@
-import { Modal, ModalContent, ModalBody, Button, useDisclosure } from '@nextui-org/react'
+import { Modal, ModalContent, ModalBody, Button } from '@nextui-org/react'
 import tests from '../../data/paramsTests'
+import motionV1 from '../../utils/motionVariants'
 
-function ModalWelcome({ start }) {
-  const { onOpenChange } = useDisclosure()
-
+function ModalWelcome({ onOpenChange }) {
   return (
     <>
       <Modal
         className="bg-gradient-l"
         defaultOpen
-        backdrop="blur"
         size="full"
         hideCloseButton
         onOpenChange={onOpenChange}
+        motionProps={motionV1}
       >
         <ModalContent className="text-text-700">
           {(onClose) => (
@@ -31,7 +30,6 @@ function ModalWelcome({ start }) {
                       variant="bordered"
                       onPress={() => {
                         onClose()
-                        start()
                       }}
                     >
                       Iniciar con las pruebas

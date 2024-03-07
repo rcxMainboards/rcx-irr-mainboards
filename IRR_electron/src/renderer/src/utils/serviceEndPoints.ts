@@ -1,0 +1,4 @@
+const API_INTERNAL = import.meta.env.RENDERER_VITE_API_INTERNAL
+const IRR_MB_API = import.meta.env.RENDERER_VITE_IRR_MB_API
+
+export { API_INTERNAL, IRR_MB_API }

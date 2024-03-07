@@ -28,6 +28,7 @@ function createWindow(id: string): void {
     return { action: 'deny' }
   })
 
+  // This code configuration is for the use of the React router to function correctly.
   const devServerURL = createURLRoute('http://localhost:5173/', id)
 
   const fileRoute = createFileRoute(join(__dirname, '../renderer/index.html'), id)
