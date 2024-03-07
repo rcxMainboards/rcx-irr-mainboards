@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Test from './TestComponents/interfaces'
 import { ModalGuideLines } from '../components/ui/index'
 import useCloseModal from './hooks/useCloseModal'
