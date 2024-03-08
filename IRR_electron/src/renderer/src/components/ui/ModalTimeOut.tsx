@@ -1,15 +1,29 @@
-import { Modal, ModalContent, ModalHeader, ModalBody, Button } from '@nextui-org/react'
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Button
+} from '@nextui-org/react'
 import motionV1 from '../../utils/motionVariants'
 import { IoReload } from 'react-icons/io5'
 import { MdOutlineDangerous } from 'react-icons/md'
 
-export default function ModalTimeOut({ isOpen, onOpenChange, reset, nextTest, TestName }) {
+export default function ModalTimeOut({
+  isOpen,
+  onOpenChange,
+  reset,
+  nextTest,
+  TestName,
+  disableAnimation = false // Agrega disableAnimation como una prop opcional con un valor predeterminado de false
+}) {
   return (
     <>
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         motionProps={motionV1}
+        disableAnimation={disableAnimation}
         hideCloseButton
         isDismissable={false}
         className="text-text-700"
@@ -22,12 +36,12 @@ export default function ModalTimeOut({ isOpen, onOpenChange, reset, nextTest, Te
               </ModalHeader>
               <ModalBody>
                 <p>
-                  se acabó el tiempo para realizar el test, por favor eliga una opción sobre como
-                  proceder.
+                  se acabó el tiempo para realizar el test, por favor eliga una
+                  opción sobre como proceder.
                 </p>
                 <Button
                   startContent={<IoReload size={20} />}
-                  className="bg-primary-500 text-white"
+                  className="bg-accent-800 text-white"
                   onPress={() => {
                     onClose()
                     reset()
@@ -39,6 +53,7 @@ export default function ModalTimeOut({ isOpen, onOpenChange, reset, nextTest, Te
                   color="danger"
                   startContent={<MdOutlineDangerous size={20} />}
                   onPress={() => {
+                    onClose()
                     nextTest(TestName, {
                       result: false,
                       message:

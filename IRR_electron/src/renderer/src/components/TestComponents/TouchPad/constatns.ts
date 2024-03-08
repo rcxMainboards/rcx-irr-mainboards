@@ -1,0 +1,3 @@
+const CLICK_AMOUT = 5
+const TOTAL_CLICKS = 10
+export { CLICK_AMOUT, TOTAL_CLICKS }

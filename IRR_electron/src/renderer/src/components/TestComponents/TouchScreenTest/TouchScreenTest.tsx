@@ -32,6 +32,7 @@ function TouchScreenTest({ TestTimer, nextTest, TestName }) {
         reset={handleRestTest}
         TestName={TestName}
         nextTest={nextTest}
+        disableAnimation={true}
       />
     </>
   )

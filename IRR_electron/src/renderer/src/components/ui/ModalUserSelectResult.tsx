@@ -1,10 +1,22 @@
-import { Modal, ModalContent, ModalHeader, ModalBody, Button } from '@nextui-org/react'
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Button
+} from '@nextui-org/react'
 import motionV1 from '../../utils/motionVariants'
 import { FaCheckCircle } from 'react-icons/fa'
-import { IoReload } from 'react-icons/io5'
 import { MdOutlineDangerous } from 'react-icons/md'
+import { IoReload } from 'react-icons/io5'
 
-function ModalUserSelectResult({ isOpen, onOpenChange, reset, nextTest, TestName }) {
+function ModalUserSelectResult({
+  isOpen,
+  onOpenChange,
+  reset,
+  nextTest,
+  TestName
+}) {
   return (
     <>
       <Modal
@@ -23,8 +35,8 @@ function ModalUserSelectResult({ isOpen, onOpenChange, reset, nextTest, TestName
               </ModalHeader>
               <ModalBody>
                 <p>
-                  Se ha terminado todo el proceso de la prueba, por favor seleccione una de las
-                  opciones disponibles.
+                  Se ha terminado todo el proceso de la prueba, por favor
+                  seleccione una de las opciones disponibles.
                 </p>
                 <Button
                   startContent={<IoReload size={20} />}
@@ -44,7 +56,7 @@ function ModalUserSelectResult({ isOpen, onOpenChange, reset, nextTest, TestName
                     nextTest(TestName, {
                       result: true,
                       message:
-                        'El usuario decidio que paso el test, y decidio pasar al siguiente test'
+                        'El usuario decidio que paso la prueba, y decidio pasar a la siguiente prueba'
                     })
                   }}
                 >
@@ -57,7 +69,7 @@ function ModalUserSelectResult({ isOpen, onOpenChange, reset, nextTest, TestName
                     nextTest(TestName, {
                       result: false,
                       message:
-                        'El usuario decidio que no paso el test, y decidio pasar al siguiente test'
+                        'El usuario decidio que no paso el prueba, y decidio pasar a la siguiente prueba'
                     })
                   }}
                 >

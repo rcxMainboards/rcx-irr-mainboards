@@ -65,7 +65,7 @@ function ModalInstruccions() {
                         Siempre que se inice una prueba, habrá una ventana en la que se dará una
                         descripción general de la prueba y sus parámetros. La prueba no comenzará
                         hasta que el usuario decida presionar el botón de{' '}
-                        <strong>"Comenzar la prueba"</strong>.
+                        <strong>"Comenzar prueba"</strong>.
                       </p>
                     </AccordionItem>
                     <AccordionItem startContent={<CgScreen />} title="Prueba de pantalla táctil">
