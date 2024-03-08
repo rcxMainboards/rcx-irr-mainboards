@@ -17,7 +17,7 @@ const tests: Test[] = [
       'Si se acaba el tiempo, aparecera una ventana al usuario preguntando si desea repetir la prueba o no.',
       'Puede ocurrir que el servicio táctil este funcionando, pero no detecte el toque del usuario, en este caso cuando surja la ventana preguntando si desea repetir la prueba, el usuario puede decidir sin problema no repetirla.'
     ],
-    TestTimer: 50
+    TestTimer: 2
   },
   {
     TestComponent: PixelesTest,

@@ -1,9 +1,10 @@
 import { Modal, ModalContent, ModalHeader, ModalBody, Button } from '@nextui-org/react'
 import motionV1 from '../../utils/motionVariants'
+import { FaCheckCircle } from 'react-icons/fa'
 import { IoReload } from 'react-icons/io5'
 import { MdOutlineDangerous } from 'react-icons/md'
 
-export default function ModalTimeOut({ isOpen, onOpenChange, reset, nextTest, TestName }) {
+function ModalUserSelectResult({ isOpen, onOpenChange, reset, nextTest, TestName }) {
   return (
     <>
       <Modal
@@ -18,22 +19,36 @@ export default function ModalTimeOut({ isOpen, onOpenChange, reset, nextTest, Te
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-2 text-3xl font-semibold">
-                Se acabó el tiempo
+                La prueba terminó
               </ModalHeader>
               <ModalBody>
                 <p>
-                  se acabó el tiempo para realizar el test, por favor eliga una opción sobre como
-                  proceder.
+                  Se ha terminado todo el proceso de la prueba, por favor seleccione una de las
+                  opciones disponibles.
                 </p>
                 <Button
                   startContent={<IoReload size={20} />}
-                  className="bg-primary-500 text-white"
+                  className="bg-accent-800 text-white"
                   onPress={() => {
                     onClose()
                     reset()
                   }}
                 >
                   Repetir el test
+                </Button>
+                <Button
+                  className="bg-primary-500 text-white"
+                  startContent={<FaCheckCircle size={20} />}
+                  onPress={() => {
+                    onClose()
+                    nextTest(TestName, {
+                      result: true,
+                      message:
+                        'El usuario decidio que paso el test, y decidio pasar al siguiente test'
+                    })
+                  }}
+                >
+                  Paso el test (exitoso)
                 </Button>
                 <Button
                   color="danger"
@@ -56,3 +71,5 @@ export default function ModalTimeOut({ isOpen, onOpenChange, reset, nextTest, Te
     </>
   )
 }
+
+export default ModalUserSelectResult

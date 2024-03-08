@@ -3,7 +3,6 @@ import { useState } from 'react'
 
 function useCloseModal() {
   const { onOpenChange } = useDisclosure()
-
   const [open, setOpen] = useState(true)
 
   const changeOpen = () => {
