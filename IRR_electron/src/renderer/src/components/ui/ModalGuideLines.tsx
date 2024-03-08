@@ -3,7 +3,19 @@ import { Card, CardBody } from '@nextui-org/react'
 import { MdError } from 'react-icons/md'
 import { FaCheckCircle } from 'react-icons/fa'
 import { IoMdWarning } from 'react-icons/io'
+import { IconType } from 'react-icons'
 import motionV1 from '../../utils/motionVariants'
+
+interface ModalGuideLinesProps {
+  TestName: string
+  TestDescription: string
+  TestSuccessCondition: string
+  TestFailCondition: string
+  TestIconName: IconType
+  TestNotes: string[]
+  TestTimer?: number
+  onOpenChange: () => void
+}
 
 function ModalGuideLines({
   TestName,
@@ -14,7 +26,7 @@ function ModalGuideLines({
   TestNotes,
   TestTimer,
   onOpenChange
-}) {
+}: ModalGuideLinesProps) {
   return (
     <>
       <Modal

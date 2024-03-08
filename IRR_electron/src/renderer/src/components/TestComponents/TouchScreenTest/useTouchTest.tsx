@@ -1,7 +1,12 @@
 import { useState, useEffect, TouchEvent } from 'react'
 import useCountDown from '../hooks/useCountDown'
 
-function useTouchTest(onOpen: () => void, TestTimer: number) {
+function useTouchTest(
+  onOpen: () => void,
+  TestTimer: number,
+  TestName: string,
+  nextTest: (TestName: string, detailsResult: { result: boolean; message: string }) => void
+) {
   const [boxes, setBoxes] = useState(Array(256).fill('bg-accent-500'))
 
   const { start, secondsLeft } = useCountDown(onOpen)
@@ -11,8 +16,8 @@ function useTouchTest(onOpen: () => void, TestTimer: number) {
   }, [])
 
   useEffect(() => {
-    if (boxes.every((box) => box === 'bg-white')) {
-      console.log('All boxes touched')
+    if (boxes.every((box) => box === 'bg-transparent')) {
+      nextTest(TestName, { result: true, message: 'Test completado con éxito' })
     }
   }, [boxes])
 

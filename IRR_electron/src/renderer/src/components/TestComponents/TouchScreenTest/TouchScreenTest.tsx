@@ -3,11 +3,15 @@ import TouchBox from './TouchBox'
 import { ModalTimeOut } from '../../ui/index'
 import { useDisclosure } from '@nextui-org/react'
 
-function TouchScreenTest({ TestTimer, nextTest }) {
+function TouchScreenTest({ TestTimer, nextTest, TestName }) {
   const { onOpen, isOpen, onOpenChange } = useDisclosure()
-
   // Este hook activa un timer en cuanto se monta el componente
-  const { boxes, handleTouch, handleRestTest, secondsLeft } = useTouchTest(onOpen, TestTimer)
+  const { boxes, handleTouch, handleRestTest, secondsLeft } = useTouchTest(
+    onOpen,
+    TestTimer,
+    TestName,
+    nextTest
+  )
 
   return (
     <>
@@ -26,6 +30,7 @@ function TouchScreenTest({ TestTimer, nextTest }) {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         reset={handleRestTest}
+        TestName={TestName}
         nextTest={nextTest}
       />
     </>

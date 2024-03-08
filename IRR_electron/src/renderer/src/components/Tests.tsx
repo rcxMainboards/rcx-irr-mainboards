@@ -1,53 +1,24 @@
-import { useState } from 'react'
-import Test from './TestComponents/interfaces'
 import { ModalGuideLines } from '../components/ui/index'
 import useCloseModal from './hooks/useCloseModal'
+import Test from './TestComponents/interfaces'
+import useNextTest from './hooks/useNextTest'
 
 function Tests({ tests }: { tests: Test[] }) {
-  const [currentTestIndex, setCurrentTestIndex] = useState(0)
-  const {
-    TestComponent,
-    TestName,
-    TestDescription,
-    TestIconName,
-    TestSuccessCondition,
-    TestFailCondition,
-    TestNotes,
-    TestTimer
-  } = tests[currentTestIndex]
-
   const { open, changeOpen, resetModal } = useCloseModal()
+  const { nextTest, currentTestIndex } = useNextTest(resetModal, tests)
 
-  const nextTest = () => {
-    if (currentTestIndex < tests.length - 1) {
-      resetModal()
-      setCurrentTestIndex(currentTestIndex + 1)
-    }
-  }
+  const { TestComponent, TestName, TestTimer, ...props } = tests[currentTestIndex]
 
   return (
     <>
       {!open ? (
-        <TestComponent
-          TestName={TestName}
-          TestDescription={TestDescription}
-          TestIconName={TestIconName}
-          TestSuccessCondition={TestSuccessCondition}
-          TestFailCondition={TestFailCondition}
-          TestNotes={TestNotes}
-          TestTimer={TestTimer}
-          nextTest={nextTest}
-        />
+        <TestComponent TestTimer={TestTimer} TestName={TestName} nextTest={nextTest} />
       ) : (
         <ModalGuideLines
           TestName={TestName}
-          TestDescription={TestDescription}
-          TestIconName={TestIconName}
-          TestSuccessCondition={TestSuccessCondition}
-          TestFailCondition={TestFailCondition}
-          TestNotes={TestNotes}
           TestTimer={TestTimer}
           onOpenChange={changeOpen}
+          {...props}
         />
       )}
     </>

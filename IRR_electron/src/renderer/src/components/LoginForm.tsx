@@ -59,6 +59,7 @@ function LoginForm(): JSX.Element {
             render={({ field }) => (
               <Input
                 {...field}
+                maxLength={19}
                 type="text"
                 label="CT"
                 variant="bordered"
@@ -85,6 +86,7 @@ function LoginForm(): JSX.Element {
               <Input
                 {...field}
                 type="text"
+                maxLength={19}
                 label="Numero de empleado"
                 variant="bordered"
                 isClearable
