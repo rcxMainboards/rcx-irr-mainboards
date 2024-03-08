@@ -10,6 +10,7 @@ interface Test {
   TestIconName: IconType
   TestNotes: string[]
   TestTimer?: number
+  TestTries?: number
 }
 
 export default Test

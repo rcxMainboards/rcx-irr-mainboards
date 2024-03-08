@@ -7,7 +7,7 @@ import { MdOutlineDangerous } from 'react-icons/md'
 
 function WebCamTest({ TestName, nextTest }) {
   const [isLoading, setIsLoading] = useState(false)
-  const [stream] = useState<MediaStream | null>(null)
+  const [stream, setStream] = useState<any>()
   const videoRef = useRef<HTMLVideoElement | null>(null)
 
   function startCamera() {
@@ -15,6 +15,7 @@ function WebCamTest({ TestName, nextTest }) {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(function (stream) {
+        setStream(stream)
         if (videoRef.current) {
           videoRef.current.srcObject = stream
           videoRef.current.play()

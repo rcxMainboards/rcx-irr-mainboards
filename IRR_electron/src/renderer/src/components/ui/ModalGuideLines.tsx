@@ -52,8 +52,12 @@ function ModalGuideLines({
                   >
                     <CardBody className="flex flex-col items-center justify-center gap-2 ">
                       <TestIconName size={250} color={'white'} />
-                      <h1 className="text-2xl font-bold text-white">{TestName}</h1>
-                      <p className="w-5/6 text-center font-semibold text-white">Comenzar Prueba</p>
+                      <h1 className="text-2xl font-bold text-white">
+                        {TestName}
+                      </h1>
+                      <p className="w-5/6 text-center font-semibold text-white">
+                        Comenzar Prueba
+                      </p>
                     </CardBody>
                   </Card>
                   <div>
@@ -68,7 +72,9 @@ function ModalGuideLines({
                           <p>{TestDescription}</p>
                         </div>
                         <div>
-                          <h2 className="text-lg font-semibold">Tomar en cuenta</h2>
+                          <h2 className="text-lg font-semibold">
+                            Tomar en cuenta
+                          </h2>
                           <ul className="flex flex-col gap-2">
                             {TestNotes.map((note: string, index: number) => (
                               <li className=" list-disc" key={index}>
@@ -82,7 +88,9 @@ function ModalGuideLines({
                         <div>
                           <div className="flex items-center gap-2">
                             <FaCheckCircle size={19} color={'green'} />
-                            <h2 className="text-lg font-semibold ">Condición de exito</h2>
+                            <h2 className="text-lg font-semibold ">
+                              Condición de exito
+                            </h2>
                           </div>
                           <p>{TestSuccessCondition}</p>
                         </div>
@@ -98,7 +106,9 @@ function ModalGuideLines({
                         <div className="flex items-center gap-2">
                           <div className="flex items-center gap-2">
                             <IoMdWarning size={19} />
-                            <h2 className="text-lg font-semibold ">Tiempo:</h2>
+                            <h2 className="text-lg font-semibold ">
+                              Tiempo Limite:
+                            </h2>
                           </div>
                           <p>{TestTimer} segundos</p>
                         </div>

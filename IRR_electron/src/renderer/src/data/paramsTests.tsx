@@ -1,11 +1,13 @@
 import { MdScreenshotMonitor, MdGrid4X4 } from 'react-icons/md'
 import { CgTouchpad } from 'react-icons/cg'
-import { FaCamera } from 'react-icons/fa'
+import { FaCamera, FaHeadphones } from 'react-icons/fa'
+
 import {
   TouchScreenTest,
   PixelesTest,
   TouchPadTest,
-  WebCamTest
+  WebCamTest,
+  AudioTest
 } from '../components/TestComponents/index'
 import Test from '../components/TestComponents/interfaces'
 
@@ -72,6 +74,22 @@ const tests: Test[] = [
       'Puede ocurrir que el servicio de la cámara este funcionando, pero el video que de la camara no sea completamente funcional.'
     ],
     TestTimer: 0
+  },
+  {
+    TestComponent: AudioTest,
+    TestName: 'Prueba de Audio',
+    TestDescription:
+      'La prueba consiste en verificar si la salida de audio esta funcionando correctamente, para ello se intentara reproducir un audio durante un tiempo determinado; esta prueba es automatica, pero el usuario previamente debe conectar los audifonos a la entrada de la Mainboard antes de iniciar la prueba.',
+    TestSuccessCondition:
+      'Si los audifonos reproducen el audio correctamente y estos no sufren de desconexiones durante el proceso, se le preguntara al usuario si paso la prueba o no',
+    TestFailCondition:
+      'Esta prueba esta condicionada a intentos, si mientras se reproduce el audio los audifonos sufren desconexiones, la prueba se reiniciara y se perdera un intento, si se pierden todos los intentos, la prueba se dara por fallida.',
+    TestIconName: FaHeadphones,
+    TestNotes: [
+      'Si los audifonos sufren desconexiones durante la prueba, se le pedira al usuario que vuelva conectar los audifoos y se reiniciara la prueba.'
+    ],
+    TestTimer: 0,
+    TestTries: 3
   }
 ]
 
