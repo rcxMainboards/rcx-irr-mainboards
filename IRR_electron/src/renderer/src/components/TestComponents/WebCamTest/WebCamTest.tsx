@@ -1,57 +1,27 @@
 import { Button } from '@nextui-org/react'
-import { useRef, useState, useEffect } from 'react'
 import { Card, CardBody } from '@nextui-org/react'
 import BaseLayout from '../../ui/baseLayout'
 import { FaCheckCircle } from 'react-icons/fa'
 import { MdOutlineDangerous } from 'react-icons/md'
+import Webcam from 'react-webcam'
 
 function WebCamTest({ TestName, nextTest }) {
-  const [isLoading, setIsLoading] = useState(false)
-  const [stream, setStream] = useState<any>()
-  const videoRef = useRef<HTMLVideoElement | null>(null)
-
-  function startCamera() {
-    setIsLoading(true)
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then(function (stream) {
-        setStream(stream)
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream
-          videoRef.current.play()
-          setIsLoading(false)
-        }
-      })
-      .catch(function () {
-        nextTest(TestName, {
-          result: false,
-          message: 'No se pudo acceder a la camara'
-        })
-        setIsLoading(false)
-      })
-  }
-
-  useEffect(() => {
-    startCamera()
-    return () => {
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop())
-      }
-    }
-  }, [stream])
-
   return (
     <BaseLayout>
       <div className="flex flex-col items-center ">
-        <video
-          className={`block h-2/4 w-3/4 rounded-lg border-5 ${isLoading ? 'hidden' : ''}`}
-          ref={videoRef}
-          autoPlay
-          playsInline
-        ></video>
-        {isLoading && (
-          <p className="text-2xl font-semibold text-white">Cargando...</p>
-        )}
+        <Webcam
+          style={{ borderRadius: '12px', border: '2px solid white' }}
+          audio={false}
+          height={720}
+          width={500}
+          onUserMediaError={() => {
+            nextTest(TestName, {
+              result: false,
+              message: 'La camara no esta disponible'
+            })
+          }}
+          videoConstraints={{ facingMode: 'user' }}
+        />
         <Card className="mt-8">
           <CardBody className="grid grid-cols-2 gap-6">
             <Button
@@ -75,7 +45,7 @@ function WebCamTest({ TestName, nextTest }) {
                 nextTest(TestName, {
                   result: false,
                   message:
-                    'El usuario decidio que paso la prueba, y decidio pasar a la siguiente prueba.'
+                    'El usuario decidio que paso la prueba, y decidio pasar a la siguiente'
                 })
               }}
             >

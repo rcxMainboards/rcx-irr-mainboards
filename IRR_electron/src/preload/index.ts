@@ -1,11 +1,17 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { join } from 'path'
+
+const resourcesPath = join(__dirname, '../../resources')
+
+const videoPath = join(resourcesPath, 'MediaAudioMusic.mp4')
 
 // Custom APIs for renderer
 const api = {
   send: (channel: string, data: any) => {
     ipcRenderer.send(channel, data)
-  }
+  },
+  getVideoPath: () => videoPath
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

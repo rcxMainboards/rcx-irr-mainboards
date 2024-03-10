@@ -14,6 +14,7 @@ interface ModalGuideLinesProps {
   TestIconName: IconType
   TestNotes: string[]
   TestTimer?: number
+  TestTries?: number
   onOpenChange: () => void
 }
 
@@ -25,6 +26,7 @@ function ModalGuideLines({
   TestFailCondition,
   TestNotes,
   TestTimer,
+  TestTries,
   onOpenChange
 }: ModalGuideLinesProps) {
   return (
@@ -110,8 +112,23 @@ function ModalGuideLines({
                               Tiempo Limite:
                             </h2>
                           </div>
-                          <p>{TestTimer} segundos</p>
+                          <p>
+                            {TestTimer === 0
+                              ? 'Esta prueba no tiene tiempo limite'
+                              : TestTimer}
+                          </p>
                         </div>
+                        {TestTries ? (
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2">
+                              <IoMdWarning size={19} />
+                              <h2 className="text-lg font-semibold ">
+                                Intentos:
+                              </h2>
+                            </div>
+                            <p>{TestTries}</p>
+                          </div>
+                        ) : null}
                       </section>
                     </section>
                   </div>

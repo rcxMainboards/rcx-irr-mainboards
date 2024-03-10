@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain, session } from 'electron'
+import { app, protocol, shell, BrowserWindow, ipcMain, session } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -31,7 +31,10 @@ function createWindow(id: string): void {
   // This code configuration is for the use of the React router to function correctly.
   const devServerURL = createURLRoute('http://localhost:5173/', id)
 
-  const fileRoute = createFileRoute(join(__dirname, '../renderer/index.html'), id)
+  const fileRoute = createFileRoute(
+    join(__dirname, '../renderer/index.html'),
+    id
+  )
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
@@ -45,6 +48,15 @@ function createWindow(id: string): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  protocol.registerFileProtocol('local', (request, callback) => {
+    const url = request.url.replace('local:///', '')
+    try {
+      return callback(decodeURIComponent(url))
+    } catch (error) {
+      console.error('Failed to register protocol', error)
+    }
+  })
+
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     callback({
       responseHeaders: {

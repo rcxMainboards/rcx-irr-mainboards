@@ -1,12 +1,11 @@
-// global.d.ts
+import { ElectronAPI } from '@electron-toolkit/preload'
+
 declare global {
   interface Window {
+    electron: ElectronAPI
     api: {
       send: (channel: string, data?: any) => void
-      // define other methods or properties here as needed
+      getVideoPath: () => string
     }
   }
 }
-
-// This will allow you to import this file as a module
-export {}
