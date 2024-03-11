@@ -76,36 +76,37 @@ const tests: Test[] = [
   //   ],
   //   TestTimer: 0
   // },
-  {
-    TestComponent: AudioTest,
-    TestName: 'Prueba de Audio',
-    TestDescription:
-      'La prueba consiste en verificar si la salida de audio esta funcionando correctamente, para ello se intentara reproducir un audio durante un tiempo determinado; primero se empezara con los audifonos conectados durante 15 segundos y deforma automatica se cambiara a los speakers, el usuario no debe deconectar nada en esta prueba.',
-    TestSuccessCondition:
-      'Si los audifonos reproducen el audio correctamente y estos no sufren de desconexiones durante el proceso, se le preguntara al usuario si paso la prueba o no',
-    TestFailCondition:
-      'Esta prueba esta condicionada a intentos, si mientras se reproduce el audio los audifonos sufren desconexiones, la prueba se reiniciara y se perdera un intento, si se pierden todos los intentos, la prueba se dara por fallida.',
-    TestIconName: FaHeadphones,
-    TestNotes: [
-      'Si los audifonos sufren desconexiones durante la prueba, se le pedira al usuario que vuelva conectar los audifoos y se reiniciara la prueba.',
-      'Si se pierden todos los intentos, la prueba se dara por fallida'
-    ],
-    TestTimer: 0,
-    TestTries: 3
-  },
+  // {
+  //   TestComponent: AudioTest,
+  //   TestName: 'Prueba de Audio',
+  //   TestDescription:
+  //     'La prueba consiste en verificar si la salida de audio esta funcionando correctamente, para ello se intentara reproducir un audio durante un tiempo determinado; primero se empezara con los audifonos conectados durante 15 segundos y deforma automatica se cambiara a los speakers, el usuario no debe deconectar nada en esta prueba.',
+  //   TestSuccessCondition:
+  //     'Si los audifonos reproducen el audio correctamente y estos no sufren de desconexiones durante el proceso, se le preguntara al usuario si paso la prueba o no',
+  //   TestFailCondition:
+  //     'Esta prueba esta condicionada a intentos, si mientras se reproduce el audio los audifonos sufren desconexiones, la prueba se reiniciara y se perdera un intento, si se pierden todos los intentos, la prueba se dara por fallida.',
+  //   TestIconName: FaHeadphones,
+  //   TestNotes: [
+  //     'Si los audifonos sufren desconexiones durante la prueba, se le pedira al usuario que vuelva conectar los audifoos y se reiniciara la prueba.',
+  //     'Si se pierden todos los intentos, la prueba se dara por fallida'
+  //   ],
+  //   TestTimer: 0,
+  //   TestTries: 3
+  // },
   {
     TestComponent: KeyBoardTest,
     TestName: 'Prueba de Teclado',
     TestDescription:
-      'La prueba consiste en verificar si la salida de audio esta funcionando correctamente, para ello se intentara reproducir un audio durante un tiempo determinado; primero se empezara con los audifonos conectados durante 15 segundos y deforma automatica se cambiara a los speakers, el usuario no debe deconectar nada en esta prueba.',
+      'La prueba consiste presionar todos los botones disponibles en teclado y verificar que estos funcionen correctamente, cada boton cambiara de color cuando sea presionado.',
     TestSuccessCondition:
-      'Si los audifonos reproducen el audio correctamente y estos no sufren de desconexiones durante el proceso, se le preguntara al usuario si paso la prueba o no',
+      'Si cada boton del teclado cambia de color cuando sea presionado, la prueba se dara por terminada y se considerara exitosa.',
     TestFailCondition:
-      'Esta prueba esta condicionada a intentos, si mientras se reproduce el audio los audifonos sufren desconexiones, la prueba se reiniciara y se perdera un intento, si se pierden todos los intentos, la prueba se dara por fallida.',
+      'Esta prueba solo puede fallar si al acabar el tiempo el usuario decide que no se paso la prueba, y no desea repetirla.',
     TestIconName: FaKeyboard,
     TestNotes: [
-      'Si los audifonos sufren desconexiones durante la prueba, se le pedira al usuario que vuelva conectar los audifoos y se reiniciara la prueba.',
-      'Si se pierden todos los intentos, la prueba se dara por fallida'
+      'Los botones F1, F2, F3.., solo deben presionarse al mismo tiempo que el boton FN, esto para que no se muestren ventanas emergentes y sean detectados correctamente.',
+      'La tecla FN no cambiara de color y esto es normal, por lo que no cuenta para terminar la prueba.',
+      'La tecla de Windows si cuenta para la prueba, pero esta siempre trae consigo una ventana emergente, por lo que puede que la app pierda el foco una vez presionada; por lo que se le pide al usuario que vuelva a clickear la app para regresar el foco y seguir con las pruebas.'
     ],
     TestTimer: 120
   }
