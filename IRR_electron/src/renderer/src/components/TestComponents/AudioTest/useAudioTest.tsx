@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMediaDevices } from 'react-media-devices'
 import useCountDown from '../hooks/useCountDown'
 
@@ -7,11 +7,13 @@ function useAudioTest(
   onClose: any,
   videoRef: any,
   nextTest: any,
-  TestName: any
+  TestName: any,
+  onOpenAnother: any
 ) {
   const [tries, setTries] = useState(3)
+  const [sinkId, setSinkId] = useState<any>('')
 
-  async function changeAudioOutput(videoElement, deviceId) {
+  async function changeAudioOutput(videoElement: any, deviceId: any) {
     try {
       await videoElement.setSinkId(deviceId)
     } catch (error) {
@@ -29,7 +31,20 @@ function useAudioTest(
           device.label.toLowerCase().includes('speaker') ||
           device.label.toLowerCase().includes('speakers')
       )?.deviceId
-      console.log(speakerId)
+      setSinkId(speakerId) // esto es para que cuando se termine el siguiente timer, se termine la prueba si no hubo problemas
+      if (sinkId) {
+        stop()
+        onOpenAnother()
+        navigator.mediaDevices.removeEventListener(
+          'devicechange',
+          handleDeviceChangeAtStartRef.current
+        )
+        navigator.mediaDevices.removeEventListener(
+          'devicechange',
+          handleDeviceChangeDuringTestRef.current
+        )
+        return
+      }
       await changeAudioOutput(videoRef.current, speakerId)
       start(15)
     } else {
@@ -67,14 +82,14 @@ function useAudioTest(
     stop()
     navigator.mediaDevices.addEventListener(
       'devicechange',
-      handleDeviceChangeAtStart
+      handleDeviceChangeAtStartRef.current
     )
   }
 
   const ErrorDuringTest = () => {
     navigator.mediaDevices.addEventListener(
       'devicechange',
-      handleDeviceChangeDuringTest
+      handleDeviceChangeDuringTestRef.current
     )
   }
 
@@ -106,21 +121,26 @@ function useAudioTest(
     )
   }
 
-  const handleDeviceChangeAtStart = () => {
-    restartVideo()
-    start(15)
-    onClose()
-    navigator.mediaDevices.removeEventListener(
-      'devicechange',
-      handleDeviceChangeAtStart
-    )
-    navigator.mediaDevices.addEventListener(
-      'devicechange',
-      handleDeviceChangeDuringTest
-    )
+  const handleDeviceChangeAtStart = async () => {
+    const newDevices = await handleDeviceChange()
+    const deviceLabels = newDevices?.map((device) => device.label.toLowerCase())
+    if (findDefaultAudioDevice(deviceLabels)) {
+      restartVideo()
+      onClose()
+      start(15)
+      navigator.mediaDevices.removeEventListener(
+        'devicechange',
+        handleDeviceChangeAtStartRef.current
+      )
+      navigator.mediaDevices.addEventListener(
+        'devicechange',
+        handleDeviceChangeDuringTestRef.current
+      )
+    }
   }
 
   const handleDeviceChangeDuringTest = async () => {
+    setSinkId('')
     const newDevices = await handleDeviceChange()
     const deviceLabels = newDevices?.map((device) => device.label.toLowerCase())
     if (findDefaultAudioDevice(deviceLabels)) {
@@ -133,6 +153,13 @@ function useAudioTest(
       stop()
     }
   }
+  const handleDeviceChangeAtStartRef = useRef(handleDeviceChangeAtStart)
+  const handleDeviceChangeDuringTestRef = useRef(handleDeviceChangeDuringTest)
+
+  useEffect(() => {
+    handleDeviceChangeAtStartRef.current = handleDeviceChangeAtStart
+    handleDeviceChangeDuringTestRef.current = handleDeviceChangeDuringTest
+  }, [])
 
   useEffect(() => {
     // Buscar el dispositivo de audio por defecto cuando los dispositivos estén cargados

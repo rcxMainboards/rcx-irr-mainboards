@@ -2,18 +2,24 @@ import { Card, CardBody } from '@nextui-org/react'
 import BaseLayout from '../../ui/baseLayout'
 import { useDisclosure } from '@nextui-org/react'
 import useAudioTest from './useAudioTest'
-import { ModalNoHeadPhonesWarning } from '../../ui/index'
+import { ModalNoHeadPhonesWarning, ModalAudioTestF } from '../../ui/index'
 import { useRef } from 'react'
 
 function AudioTest({ TestName, nextTest }) {
   const { onOpen, isOpen, onOpenChange, onClose } = useDisclosure()
+  const {
+    onOpen: onOpenAnother,
+    isOpen: isOpenAnother,
+    onOpenChange: onOpenChangeAnother
+  } = useDisclosure()
   const videoRef = useRef(null)
   const { secondsLeft, loading } = useAudioTest(
     onOpen,
     onClose,
     videoRef,
     nextTest,
-    TestName
+    TestName,
+    onOpenAnother
   )
 
   return (
@@ -37,6 +43,12 @@ function AudioTest({ TestName, nextTest }) {
           <ModalNoHeadPhonesWarning
             isOpen={isOpen}
             onOpenChange={onOpenChange}
+            nextTest={nextTest}
+            TestName={TestName}
+          />
+          <ModalAudioTestF
+            isOpen={isOpenAnother}
+            onOpenChange={onOpenChangeAnother}
             nextTest={nextTest}
             TestName={TestName}
           />
