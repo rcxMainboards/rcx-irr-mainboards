@@ -2,23 +2,22 @@ import BaseLayout from '../../ui/baseLayout'
 import { Card, CardBody } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { executeUSBTest } from './services/usb'
+import { executeWifiTest } from './services/wifi'
 import { errorData } from '../../../utils/functions'
 
-function USBTest({ TestName, nextTest, profile }) {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['usbTest'],
-    queryFn: () => executeUSBTest(profile.usb),
+function WifiTest({ TestName, nextTest }) {
+  const { isLoading, error } = useQuery({
+    queryKey: ['WifiTest'],
+    queryFn: executeWifiTest,
     retry: false,
     refetchOnWindowFocus: false
   })
 
   useEffect(() => {
     if (!isLoading && !error) {
-      console.log(data)
       nextTest(TestName, {
         result: true,
-        message: 'Prueba de USB exitosa'
+        message: 'Prueba de Wifi exitosa'
       })
     } else if (!isLoading && error) {
       nextTest(TestName, {
@@ -33,11 +32,11 @@ function USBTest({ TestName, nextTest, profile }) {
       <Card className="p-10">
         <CardBody>
           {isLoading ? (
-            <p>Ejecutando Prueba de USB...</p>
+            <p>Ejecutando Prueba de Wifi...</p>
           ) : error ? (
             errorData(error)
           ) : (
-            'Termino la prueba de USB'
+            'Termino la prueba de Wifi'
           )}
         </CardBody>
       </Card>
@@ -45,4 +44,4 @@ function USBTest({ TestName, nextTest, profile }) {
   )
 }
 
-export default USBTest
+export default WifiTest

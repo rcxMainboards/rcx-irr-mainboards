@@ -6,4 +6,10 @@ const errorData = (error) => {
   }
 }
 
-export { errorData }
+const errorStatus = (error) => {
+  if (error instanceof AxiosError) {
+    return error.response?.status
+  }
+}
+
+export { errorData, errorStatus }

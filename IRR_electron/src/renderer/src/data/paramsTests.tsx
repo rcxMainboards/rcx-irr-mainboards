@@ -4,10 +4,13 @@ import {
   FaCamera,
   FaHeadphones,
   FaKeyboard,
-  FaFingerprint
+  FaFingerprint,
+  FaWifi,
+  FaMemory,
+  FaSdCard
 } from 'react-icons/fa'
 import { GiBurningEmbers, GiUsbKey } from 'react-icons/gi'
-
+import { RiHardDrive3Fill } from 'react-icons/ri'
 import {
   TouchScreenTest,
   PixelesTest,
@@ -17,7 +20,11 @@ import {
   KeyBoardTest,
   BurningTest,
   USBTest,
-  FingerPrintTest
+  WifiTest,
+  FingerPrintTest,
+  RamTest,
+  SDTest,
+  DiscsTest
 } from '../components/TestComponents/index'
 import Test from '../components/TestComponents/interfaces'
 
@@ -118,32 +125,97 @@ const tests: Test[] = [
   //   ],
   //   TestTimer: 1000
   // },
+  // {
+  //   TestComponent: USBTest,
+  //   TestName: 'Prueba de USB',
+  //   TestDescription:
+  //     'La prueba consiste conectar dispotivios USB en todos los puertos disponibles del Mainboard, incluyendo los puertos tipos A y C, usted tendra disponibles adaptadores para ello, una vez conectados, iniciara un proceso automatico de lectura y escritura de archivos en los dispositivos conectados.',
+  //   TestSuccessCondition:
+  //     'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
+  //   TestFailCondition:
+  //     'Esta prueba puede fallar si durante el proceso ocurre algun error.',
+  //   TestIconName: GiUsbKey,
+  //   TestNotes: [
+  //     'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
+  //     'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
+  //   ],
+  //   TestTimer: 0
+  // },
+  // {
+  //   TestComponent: FingerPrintTest,
+  //   TestName: 'Prueba de FingerPrint',
+  //   TestDescription:
+  //     'La prueba consiste revisar si el Mainboard tiene activo el servicio de FingerPrint. (Si este Mainboard no cuenta con el servicio, la prueba se dara por exitosa de forma automatica y se pasara a la siguiente instantaneamente.)',
+  //   TestSuccessCondition:
+  //     'Si el servicio de FingerPrint esta activo, la prueba se dara por exitosa de forma automatica.',
+  //   TestFailCondition:
+  //     'Si el servicio de FingerPrint no esta activo, la prueba se dara por fallida.',
+  //   TestIconName: FaFingerprint,
+  //   TestNotes: [
+  //     'Esta prueba es automatica, por lo que se pasara a la siguiente prueba en cuanto se obtenga el resultado de la prueba.'
+  //   ],
+  //   TestTimer: 0
+  // },
+  // {
+  //   TestComponent: WifiTest,
+  //   TestName: 'Prueba de Wifi ',
+  //   TestDescription:
+  //     'La prueba consiste revisar si el servicio de Wifi funciona correctamente en el Mainboard. Para ello se intentara conectarse a una red wifi disponible.',
+  //   TestSuccessCondition:
+  //     'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
+  //   TestFailCondition:
+  //     'Esta prueba puede fallar si durante el proceso ocurre algun error.',
+  //   TestIconName: FaWifi,
+  //   TestNotes: [
+  //     'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
+  //     'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
+  //   ],
+  //   TestTimer: 0
+  // },
+  // {
+  //   TestComponent: RamTest,
+  //   TestName: 'Prueba de Ram ',
+  //   TestDescription:
+  //     'La prueba consiste revisar si el servicio de Wifi funciona correctamente en el Mainboard. Para ello se intentara conectarse a una red wifi disponible.',
+  //   TestSuccessCondition:
+  //     'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
+  //   TestFailCondition:
+  //     'Esta prueba puede fallar si durante el proceso ocurre algun error.',
+  //   TestIconName: FaMemory,
+  //   TestNotes: [
+  //     'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
+  //     'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
+  //   ],
+  //   TestTimer: 0
+  // },
+
   {
-    TestComponent: USBTest,
-    TestName: 'Prueba de USB',
+    TestComponent: DiscsTest,
+    TestName: 'Prueba de Discos',
     TestDescription:
-      'La prueba consiste conectar dispotivios USB en todos los puertos disponibles del Mainboard, incluyendo los puertos tipos A y C, usted tendra disponibles adaptadores para ello, una vez conectados, iniciara un proceso automatico de lectura y escritura de archivos en los dispositivos conectados.',
+      'La prueba consiste revisar si el servicio de Wifi funciona correctamente en el Mainboard. Para ello se intentara conectarse a una red wifi disponible.',
     TestSuccessCondition:
       'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
     TestFailCondition:
       'Esta prueba puede fallar si durante el proceso ocurre algun error.',
-    TestIconName: GiUsbKey,
+    TestIconName: RiHardDrive3Fill,
     TestNotes: [
       'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
       'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
     ],
-    TestTimer: 0
+    TestTimer: 0,
+    TestTries: 3
   },
   {
-    TestComponent: FingerPrintTest,
-    TestName: 'Prueba de FingerPrint',
+    TestComponent: SDTest,
+    TestName: 'Prueba de SD ',
     TestDescription:
-      'La prueba consiste revisar si el Mainboard tiene activo el servicio de FingerPrint.',
+      'La prueba consiste en verificar el estado del puerto SD, para ello se hara una prueba de lectura y escritura sobre la tarjeta SD que se debe de insertar en el puerto',
     TestSuccessCondition:
       'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
     TestFailCondition:
       'Esta prueba puede fallar si durante el proceso ocurre algun error.',
-    TestIconName: FaFingerprint,
+    TestIconName: FaSdCard,
     TestNotes: [
       'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
       'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
