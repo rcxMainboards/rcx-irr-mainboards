@@ -1,6 +1,12 @@
 import { MdScreenshotMonitor, MdGrid4X4 } from 'react-icons/md'
 import { CgTouchpad } from 'react-icons/cg'
-import { FaCamera, FaHeadphones, FaKeyboard } from 'react-icons/fa'
+import {
+  FaCamera,
+  FaHeadphones,
+  FaKeyboard,
+  FaFingerprint
+} from 'react-icons/fa'
+import { GiBurningEmbers, GiUsbKey } from 'react-icons/gi'
 
 import {
   TouchScreenTest,
@@ -8,7 +14,10 @@ import {
   TouchPadTest,
   WebCamTest,
   AudioTest,
-  KeyBoardTest
+  KeyBoardTest,
+  BurningTest,
+  USBTest,
+  FingerPrintTest
 } from '../components/TestComponents/index'
 import Test from '../components/TestComponents/interfaces'
 
@@ -93,22 +102,53 @@ const tests: Test[] = [
   //   TestTimer: 0,
   //   TestTries: 3
   // },
+  // {
+  //   TestComponent: BurningTest,
+  //   TestName: 'Prueba de Estres',
+  //   TestDescription:
+  //     'La prueba consiste en invocar la prueba de estres de burningInTest, una vez se presiones Comenzar Prueba, de forma automatica el programa de "BurninTest" iniciara un proceso de estres de RAM, CPU Y GPU.',
+  //   TestSuccessCondition:
+  //     'La prueba debe realizarce con un determinado tiempo, una vez transcurra el tiempo acordado, y el resultado de las pruebas no haya arrojado ningun error, la prueba se dara por exitosa.',
+  //   TestFailCondition:
+  //     'Esta prueba puede fallar si el programa burning es cerrado de forma manual, o si el resultado de las pruebas arroja algun error, en este caso la prueba se dara por fallida.',
+  //   TestIconName: GiBurningEmbers,
+  //   TestNotes: [
+  //     'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
+  //     'Es necesario que el programa se ejecute por el tiempo que fue determinado, por lo que si se cierra el programa de burning de forma manual, la prueba se dara por fallida.'
+  //   ],
+  //   TestTimer: 1000
+  // },
   {
-    TestComponent: KeyBoardTest,
-    TestName: 'Prueba de Teclado',
+    TestComponent: USBTest,
+    TestName: 'Prueba de USB',
     TestDescription:
-      'La prueba consiste presionar todos los botones disponibles en teclado y verificar que estos funcionen correctamente, cada boton cambiara de color cuando sea presionado.',
+      'La prueba consiste conectar dispotivios USB en todos los puertos disponibles del Mainboard, incluyendo los puertos tipos A y C, usted tendra disponibles adaptadores para ello, una vez conectados, iniciara un proceso automatico de lectura y escritura de archivos en los dispositivos conectados.',
     TestSuccessCondition:
-      'Si cada boton del teclado cambia de color cuando sea presionado, la prueba se dara por terminada y se considerara exitosa.',
+      'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
     TestFailCondition:
-      'Esta prueba solo puede fallar si al acabar el tiempo el usuario decide que no se paso la prueba, y no desea repetirla.',
-    TestIconName: FaKeyboard,
+      'Esta prueba puede fallar si durante el proceso ocurre algun error.',
+    TestIconName: GiUsbKey,
     TestNotes: [
-      'Los botones F1, F2, F3.., solo deben presionarse al mismo tiempo que el boton FN, esto para que no se muestren ventanas emergentes y sean detectados correctamente.',
-      'La tecla FN no cambiara de color y esto es normal, por lo que no cuenta para terminar la prueba.',
-      'La tecla de Windows si cuenta para la prueba, pero esta siempre trae consigo una ventana emergente, por lo que puede que la app pierda el foco una vez presionada; por lo que se le pide al usuario que vuelva a clickear la app para regresar el foco y seguir con las pruebas.'
+      'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
+      'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
     ],
-    TestTimer: 120
+    TestTimer: 0
+  },
+  {
+    TestComponent: FingerPrintTest,
+    TestName: 'Prueba de FingerPrint',
+    TestDescription:
+      'La prueba consiste revisar si el Mainboard tiene activo el servicio de FingerPrint.',
+    TestSuccessCondition:
+      'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
+    TestFailCondition:
+      'Esta prueba puede fallar si durante el proceso ocurre algun error.',
+    TestIconName: FaFingerprint,
+    TestNotes: [
+      'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
+      'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
+    ],
+    TestTimer: 0
   }
 ]
 

@@ -8,7 +8,8 @@ import { getMainboardProduct, getMainboardProfile } from '../services/mainboard'
 function Tests({ tests }: { tests: Test[] }) {
   const { data } = useQuery({
     queryKey: ['SSID'],
-    queryFn: getMainboardProduct
+    queryFn: getMainboardProduct,
+    refetchOnWindowFocus: false
   })
 
   const ssid = data?.product
@@ -16,6 +17,7 @@ function Tests({ tests }: { tests: Test[] }) {
   const { data: ProfileData } = useQuery({
     queryKey: ['profile', ssid],
     queryFn: () => getMainboardProfile(ssid),
+    refetchOnWindowFocus: false,
     enabled: !!ssid,
     retry: false
   })
