@@ -57,7 +57,7 @@ export default function ModalTimeOut({
                     nextTest(TestName, {
                       result: false,
                       message:
-                        'El usuario decidio que no paso el test, y decidio pasar al siguiente test'
+                        'El usuario decidio que no paso el test, y decidio pasar a la siguiente test'
                     })
                   }}
                 >

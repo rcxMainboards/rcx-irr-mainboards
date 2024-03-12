@@ -13,7 +13,7 @@ function BurningTest({ TestName, nextTest }) {
   })
 
   useEffect(() => {
-    if (!isLoading && !error) {
+    if (!isLoading && !error && data) {
       if (typeof data === 'object' && data !== null && 'message' in data) {
         let messageTests = data.message
           .map((test) => `${test['Test Name']}: ${test['Result Errors']}`)
@@ -41,7 +41,7 @@ function BurningTest({ TestName, nextTest }) {
           ) : error ? (
             errorData(error)
           ) : (
-            data.message
+            'Prueba de Burning finalizada'
           )}
         </CardBody>
       </Card>

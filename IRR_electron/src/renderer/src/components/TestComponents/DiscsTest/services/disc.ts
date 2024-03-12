@@ -10,7 +10,7 @@ const executeDiskTest = async (profile) => {
 
 const getPartNumber = async (partNumber, profile) => {
   const response = await axios.get(
-    `${IRR_MB_API}/mainboard/get_hp_description/${partNumber}/${profile.ssid}`
+    `${IRR_MB_API}/mainboard/get_hp_description/${partNumber}/${profile.product}`
   )
   return response.data
 }

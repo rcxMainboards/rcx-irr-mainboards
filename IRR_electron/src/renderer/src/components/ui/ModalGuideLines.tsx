@@ -115,7 +115,7 @@ function ModalGuideLines({
                           <p>
                             {TestTimer === 0
                               ? 'Esta prueba no tiene tiempo limite'
-                              : TestTimer}
+                              : `${TestTimer} segundos`}
                           </p>
                         </div>
                         {TestTries ? (

@@ -17,12 +17,12 @@ function ModalWelcome({ onOpenChange }) {
           {(onClose) => (
             <div className="flex flex-col items-center justify-center">
               <ModalBody className="flex min-h-screen flex-col items-center justify-center">
-                <div className="grid max-w-[50rem] grid-cols-2 gap-4 rounded-lg bg-white p-10 px-16 shadow-lg">
-                  <main className="grid gap-5 text-justify">
+                <div className="grid max-w-[50rem] grid-cols-2 gap-4 rounded-lg bg-white p-10 px-12 shadow-lg">
+                  <main className="flex flex-col justify-center gap-3">
                     <h1 className="text-3xl font-bold">Pruebas Actuales</h1>
                     <p>
-                      Bienvenido a IRR MB pruebas, cuando este listo puede presionar el boton para
-                      comenzar con las pruebas.
+                      Bienvenido a IRR MB pruebas, cuando este listo puede
+                      presionar el boton para comenzar con las pruebas.
                     </p>
                     <Button
                       color="primary"
@@ -35,8 +35,8 @@ function ModalWelcome({ onOpenChange }) {
                       Iniciar con las pruebas
                     </Button>
                   </main>
-                  <section>
-                    <section className="flex flex-wrap items-center justify-center gap-1">
+                  <section className="pl-4">
+                    <section className="flex flex-row-reverse flex-wrap gap-1">
                       {tests.map(({ TestIconName, TestName }, index) => (
                         <div
                           className="flex flex-col items-center bg-primary-200 p-2 text-[10px] shadow-md"

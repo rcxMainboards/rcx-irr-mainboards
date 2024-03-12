@@ -27,9 +27,21 @@ const isMainboardRegistered = async (SSID: string) => {
   return response.data
 }
 
+const getMainboardProps = async () => {
+  const response = await axios.get(`${API_INTERNAL}/mainboard/props`)
+  return response.data
+}
+
+const sendOutputLog = async (data) => {
+  const response = await axios.post(`${IRR_MB_API}/mainboard/saveLog`, data)
+  return response.data
+}
+
 export {
   validateMainboard,
   getMainboardProduct,
   isMainboardRegistered,
-  getMainboardProfile
+  getMainboardProfile,
+  getMainboardProps,
+  sendOutputLog
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import useCountDown from '../hooks/useCountDown'
 
-const TIME_SPARE = 120
+const TIME_SPARE = 10
 
 const KeyboardLayout = {
   Base: 82,

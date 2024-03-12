@@ -43,7 +43,7 @@ const tests: Test[] = [
   //     'Si se acaba el tiempo, aparecera una ventana al usuario preguntando si desea repetir la prueba o no.',
   //     'Puede ocurrir que el servicio táctil este funcionando, pero no detecte el toque del usuario, en este caso cuando surja la ventana preguntando si desea repetir la prueba, el usuario puede decidir sin problema no repetirla.'
   //   ],
-  //   TestTimer: 3
+  //   TestTimer: 100
   // },
   // {
   //   TestComponent: PixelesTest,
@@ -75,7 +75,7 @@ const tests: Test[] = [
   //     'Si se acaba el tiempo, aparecera una ventana al usuario preguntando si desea repetir la prueba o no.',
   //     'Puede ocurrir que el servicio del touchpad este funcionando, pero no detecte el toque del usuario de forma correcta, en este caso cuando surja la ventana preguntando si desea repetir la prueba, el usuario puede decidir sin problema no repetirla.'
   //   ],
-  //   TestTimer: 2
+  //   TestTimer: 100
   // },
   // {
   //   TestComponent: WebCamTest,
@@ -123,7 +123,22 @@ const tests: Test[] = [
   //     'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
   //     'Es necesario que el programa se ejecute por el tiempo que fue determinado, por lo que si se cierra el programa de burning de forma manual, la prueba se dara por fallida.'
   //   ],
-  //   TestTimer: 1000
+  //   TestTimer: 0
+  // },
+  // {
+  //   TestComponent: KeyBoardTest,
+  //   TestName: 'Prueba de teclado',
+  //   TestDescription:
+  //     'La prueba consiste presiona cada tecla del teclado y que esta reaccione cambiando de color.',
+  //   TestSuccessCondition:
+  //     'Una vez que todas las teclas del teclado hayan sido presionadas y estas hayan reaccionado cambiando de color, la prueba se dara por terminada y se considerara exitosa.',
+  //   TestFailCondition:
+  //     'Esta fallara si trascurre el tiempo y el tecnico decide que no paso la prueba',
+  //   TestIconName: FaKeyboard,
+  //   TestNotes: [
+  //     'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.'
+  //   ],
+  //   TestTimer: 120
   // },
   // {
   //   TestComponent: USBTest,
@@ -189,23 +204,23 @@ const tests: Test[] = [
   //   TestTimer: 0
   // },
 
-  {
-    TestComponent: DiscsTest,
-    TestName: 'Prueba de Discos',
-    TestDescription:
-      'La prueba consiste revisar si el servicio de Wifi funciona correctamente en el Mainboard. Para ello se intentara conectarse a una red wifi disponible.',
-    TestSuccessCondition:
-      'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
-    TestFailCondition:
-      'Esta prueba puede fallar si durante el proceso ocurre algun error.',
-    TestIconName: RiHardDrive3Fill,
-    TestNotes: [
-      'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
-      'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
-    ],
-    TestTimer: 0,
-    TestTries: 3
-  },
+  // {
+  //   TestComponent: DiscsTest,
+  //   TestName: 'Prueba de Discos',
+  //   TestDescription:
+  //     'La prueba consiste revisar si el servicio de Wifi funciona correctamente en el Mainboard. Para ello se intentara conectarse a una red wifi disponible.',
+  //   TestSuccessCondition:
+  //     'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
+  //   TestFailCondition:
+  //     'Esta prueba puede fallar si durante el proceso ocurre algun error.',
+  //   TestIconName: RiHardDrive3Fill,
+  //   TestNotes: [
+  //     'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
+  //     'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
+  //   ],
+  //   TestTimer: 0,
+  //   TestTries: 3
+  // },
   {
     TestComponent: SDTest,
     TestName: 'Prueba de SD ',

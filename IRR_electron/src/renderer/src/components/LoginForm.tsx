@@ -18,6 +18,7 @@ function LoginForm(): JSX.Element {
     clearErrors,
     setValue,
     setError,
+    getValues,
     formState: { errors }
   } = useForm<IFormInput>({
     mode: 'onSubmit',
@@ -29,7 +30,9 @@ function LoginForm(): JSX.Element {
   const { mutate } = useMutation({
     mutationFn: validateMainboard,
     onSuccess: () => {
-      navigate('/TestMenu')
+      navigate('/TestMenu', {
+        state: { numEmpleado: getValues('NumEmpleado') }
+      })
     },
     onError: (error) => {
       if (error instanceof AxiosError && error.response?.data?.detail) {
@@ -105,7 +108,10 @@ function LoginForm(): JSX.Element {
           />
 
           <section className="mt-3 flex flex-col gap-3 ">
-            <Button className="bg-primary-700 font-semibold text-white" type="submit">
+            <Button
+              className="bg-primary-700 font-semibold text-white"
+              type="submit"
+            >
               Validar Información
             </Button>
             <ExitButton />

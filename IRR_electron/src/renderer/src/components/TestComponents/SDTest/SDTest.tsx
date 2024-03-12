@@ -37,7 +37,6 @@ function SDTest({ TestName, nextTest, profile }) {
     } else if (!isLoading && error) {
       const statusError = errorStatus(error)
       if (statusError === 422) {
-        console.log('Porque le pones seguro pa')
         onOpen()
       } else {
         nextTest(TestName, {
