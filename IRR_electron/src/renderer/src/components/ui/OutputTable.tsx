@@ -8,12 +8,7 @@ import {
 } from '@nextui-org/react'
 import { Chip } from '@nextui-org/react'
 import { useCallback } from 'react'
-import { getMainboardProps, sendOutputLog } from '../../services/mainboard'
-import { useEffect } from 'react'
 import { TestResult } from '../TestComponents/objectInterfaces'
-import { useQuery, useMutation } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
-import { errorData } from '../../utils/functions'
 
 const columns = [
   {
@@ -44,8 +39,7 @@ const statusColorMap: Record<
   true: 'success'
 }
 
-export default function OutputTable({ Results, user }) {
-  console.log(user)
+export default function OutputTable({ Results }) {
   const mapedResults = Results.map((TestResult: TestResult) => {
     return {
       name: TestResult.Testname,
@@ -53,44 +47,6 @@ export default function OutputTable({ Results, user }) {
       status: TestResult.details.result.toString()
     }
   })
-
-  const { isLoading, data } = useQuery({
-    queryKey: ['fingerPrintTest'],
-    queryFn: getMainboardProps,
-    retry: false,
-    refetchOnWindowFocus: false
-  })
-
-  const { mutate } = useMutation({
-    mutationFn: (args: {
-      tests: any
-      Passed: any
-      mainboard: any
-      user: string
-    }) => sendOutputLog(args),
-    onSuccess: (data) => {
-      console.log(data)
-    },
-    retry: false,
-    onError: (error) => {
-      if (error instanceof AxiosError && error.response?.data?.detail) {
-        console.log(error.response?.data?.detail)
-      }
-    }
-  })
-
-  useEffect(() => {
-    if (!isLoading && data) {
-      const isPassed = Results.every((test) => test.details.result)
-      const mainboardProfile = data
-      mutate({
-        tests: Results,
-        Passed: isPassed,
-        mainboard: mainboardProfile,
-        user: user
-      })
-    }
-  }, [isLoading, data])
 
   const renderCell = useCallback((user, columnKey) => {
     const cellValue = user[columnKey]

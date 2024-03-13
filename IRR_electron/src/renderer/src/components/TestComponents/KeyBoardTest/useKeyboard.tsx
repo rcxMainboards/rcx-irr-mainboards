@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import useCountDown from '../hooks/useCountDown'
 
-const TIME_SPARE = 10
+const TIME_SPARE = 120
 
 const KeyboardLayout = {
   Base: 82,
@@ -21,20 +21,26 @@ function useKeyboardTest(TestName, nextTest, onOpen, profile) {
     start(TIME_SPARE)
   }, [])
 
+  useEffect(() => {
+    console.log(keysPresed)
+    if (keysAmount) {
+      if (keysPresed === keysAmount) {
+        nextTest(TestName, {
+          result: true,
+          message: 'Prueba de Teclado Exitosa'
+        })
+      }
+    }
+  }, [keysPresed])
+
   const handleKeyDown = () => {
-    setKeysPressed(keysPresed + 1)
+    setKeysPressed((oldKeys) => oldKeys + 1)
   }
 
   const handleResetTest = () => {
     start(TIME_SPARE)
     setKeysPressed(0)
   }
-
-  useEffect(() => {
-    if (keysPresed === keysAmount) {
-      nextTest(TestName, { result: true, message: 'Prueba de Teclado Exitosa' })
-    }
-  }, [keysPresed])
 
   return { handleKeyDown, handleResetTest, secondsLeft }
 }

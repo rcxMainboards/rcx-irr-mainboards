@@ -4,10 +4,7 @@ import Test from './TestComponents/interfaces'
 import useNextTest from './hooks/useNextTest'
 import { useQuery } from '@tanstack/react-query'
 import { getMainboardProduct, getMainboardProfile } from '../services/mainboard'
-import { OutputTable } from '../components/ui/index'
-import BaseLayout from './ui/baseLayout'
-import { Card, CardHeader } from '@nextui-org/react'
-import { TbReportSearch } from 'react-icons/tb'
+import OutPutLog from './OutputLog'
 
 function Tests({ tests, user }: { tests: Test[]; user: string }) {
   const { data } = useQuery({
@@ -54,21 +51,7 @@ function Tests({ tests, user }: { tests: Test[]; user: string }) {
           />
         )
       ) : (
-        <BaseLayout>
-          <Card className="m-4 grid grid-cols-2 px-10 pb-5 text-text-700">
-            <main className="mt-10 w-[40rem]">
-              <CardHeader className=" flex items-center">
-                <h1 className="text-4xl font-bold">Resultados</h1>
-                <TbReportSearch size={40} />
-              </CardHeader>
-              <OutputTable Results={Results} user={user} />
-            </main>
-            <CardHeader className="flex flex-col items-center justify-center">
-              <h1 className="text-4xl font-bold">Resultados</h1>
-              <TbReportSearch size={100} />
-            </CardHeader>
-          </Card>
-        </BaseLayout>
+        <OutPutLog Results={Results} user={user} />
       )}
     </>
   )

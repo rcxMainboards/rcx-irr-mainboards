@@ -4,6 +4,13 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+import { spawn } from 'child_process'
+
+const mainExePath = app.isPackaged
+  ? join(process.resourcesPath, 'app.asar.unpacked', 'resources', 'myapp.exe')
+  : join(__dirname, '../../resources/myapp.exe')
+
+let serverProcess
 
 function createWindow(id: string): void {
   // Create the browser window.
@@ -44,6 +51,22 @@ function createWindow(id: string): void {
   }
 }
 
+function startServer() {
+  return new Promise((resolve, _) => {
+    serverProcess = spawn(mainExePath)
+    serverProcess.stderr.on('data', (data) => {
+      console.log(`stderr: ${data}`)
+      if (
+        data.includes(
+          'Uvicorn running on http://127.0.0.1:2010 (Press CTRL+C to quit)'
+        )
+      ) {
+        resolve(true)
+      }
+    })
+  })
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -75,9 +98,6 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
-
   createWindow('main')
 
   app.on('activate', function () {
@@ -87,18 +107,49 @@ app.whenReady().then(() => {
   })
 })
 
-ipcMain.on('close-app', () => {
+// In this file you can include the rest of your app"s specific main process
+// code. You can also put them in separate files and require them here.
+async function closeServer() {
+  fetch('http://127.0.01:2010/shutdown')
+}
+
+ipcMain.on('close-app', async () => {
+  try {
+    await closeServer()
+  } catch (error) {
+    console.error(error)
+  }
+  app.quit()
+})
+
+ipcMain.handle('start-server', async () => {
+  try {
+    const response = await startServer()
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+})
+
+app.on('before-quit', async () => {
+  try {
+    await closeServer()
+  } catch (error) {}
   app.quit()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
+  try {
+    await closeServer()
+  } catch (error) {
+    console.error(error)
+  }
+
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
-
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.

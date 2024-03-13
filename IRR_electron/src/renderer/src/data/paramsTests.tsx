@@ -125,21 +125,21 @@ const tests: Test[] = [
   //   ],
   //   TestTimer: 0
   // },
-  // {
-  //   TestComponent: KeyBoardTest,
-  //   TestName: 'Prueba de teclado',
-  //   TestDescription:
-  //     'La prueba consiste presiona cada tecla del teclado y que esta reaccione cambiando de color.',
-  //   TestSuccessCondition:
-  //     'Una vez que todas las teclas del teclado hayan sido presionadas y estas hayan reaccionado cambiando de color, la prueba se dara por terminada y se considerara exitosa.',
-  //   TestFailCondition:
-  //     'Esta fallara si trascurre el tiempo y el tecnico decide que no paso la prueba',
-  //   TestIconName: FaKeyboard,
-  //   TestNotes: [
-  //     'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.'
-  //   ],
-  //   TestTimer: 120
-  // },
+  {
+    TestComponent: KeyBoardTest,
+    TestName: 'Prueba de teclado',
+    TestDescription:
+      'La prueba consiste presiona cada tecla del teclado y que esta reaccione cambiando de color.',
+    TestSuccessCondition:
+      'Una vez que todas las teclas del teclado hayan sido presionadas y estas hayan reaccionado cambiando de color, la prueba se dara por terminada y se considerara exitosa.',
+    TestFailCondition:
+      'Esta fallara si trascurre el tiempo y el tecnico decide que no paso la prueba',
+    TestIconName: FaKeyboard,
+    TestNotes: [
+      'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.'
+    ],
+    TestTimer: 120
+  }
   // {
   //   TestComponent: USBTest,
   //   TestName: 'Prueba de USB',
@@ -221,22 +221,22 @@ const tests: Test[] = [
   //   TestTimer: 0,
   //   TestTries: 3
   // },
-  {
-    TestComponent: SDTest,
-    TestName: 'Prueba de SD ',
-    TestDescription:
-      'La prueba consiste en verificar el estado del puerto SD, para ello se hara una prueba de lectura y escritura sobre la tarjeta SD que se debe de insertar en el puerto',
-    TestSuccessCondition:
-      'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
-    TestFailCondition:
-      'Esta prueba puede fallar si durante el proceso ocurre algun error.',
-    TestIconName: FaSdCard,
-    TestNotes: [
-      'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
-      'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
-    ],
-    TestTimer: 0
-  }
+  // {
+  //   TestComponent: SDTest,
+  //   TestName: 'Prueba de SD ',
+  //   TestDescription:
+  //     'La prueba consiste en verificar el estado del puerto SD, para ello se hara una prueba de lectura y escritura sobre la tarjeta SD que se debe de insertar en el puerto',
+  //   TestSuccessCondition:
+  //     'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
+  //   TestFailCondition:
+  //     'Esta prueba puede fallar si durante el proceso ocurre algun error.',
+  //   TestIconName: FaSdCard,
+  //   TestNotes: [
+  //     'Esta prueba es automatica, por lo que una vez el proceso de burning termine, se pasara la siguiente prueba de forma automatica.',
+  //     'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba.'
+  //   ],
+  //   TestTimer: 0
+  // }
 ]
 
 export default tests

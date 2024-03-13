@@ -10,20 +10,18 @@ import { Router, Route } from 'electron-router-dom'
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <NextUIProvider>
-        <main className="font-newBase">
-          <Router
-            main={
-              <>
-                <Route path="/" element={<App />} />
-                <Route path="/TestMenu" element={<TestSelector />} />
-              </>
-            }
-          />
-        </main>
-      </NextUIProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <NextUIProvider>
+      <main className="font-newBase">
+        <Router
+          main={
+            <>
+              <Route path="/" element={<App />} />
+              <Route path="/TestMenu" element={<TestSelector />} />
+            </>
+          }
+        />
+      </main>
+    </NextUIProvider>
+  </QueryClientProvider>
 )

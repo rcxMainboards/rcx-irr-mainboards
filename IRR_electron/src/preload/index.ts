@@ -11,7 +11,8 @@ const api = {
   send: (channel: string, data: any) => {
     ipcRenderer.send(channel, data)
   },
-  getVideoPath: () => videoPath
+  getVideoPath: () => videoPath,
+  startServer: () => ipcRenderer.invoke('start-server')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
