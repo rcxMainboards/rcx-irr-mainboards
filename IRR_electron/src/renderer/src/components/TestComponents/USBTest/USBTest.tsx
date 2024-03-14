@@ -15,7 +15,6 @@ function USBTest({ TestName, nextTest, profile }) {
 
   useEffect(() => {
     if (!isLoading && !error) {
-      console.log(data)
       nextTest(TestName, {
         result: true,
         message: 'Prueba de USB exitosa'

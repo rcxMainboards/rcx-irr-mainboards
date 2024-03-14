@@ -64,10 +64,7 @@ function useAudioTest(
   })
 
   useEffect(() => {
-    console.log(tries)
-
     if (tries === 0) {
-      console.log(tries)
       onClose()
       nextTest(TestName, {
         result: false,

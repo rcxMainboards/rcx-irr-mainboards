@@ -25,7 +25,11 @@ function AudioTest({ TestName, nextTest }) {
   return (
     <BaseLayout>
       {loading ? (
-        <p>Cargango..</p>
+        <Card className="p-10">
+          <CardBody>
+            <p>Cargando...</p>
+          </CardBody>
+        </Card>
       ) : (
         <>
           {!isOpen ? (
