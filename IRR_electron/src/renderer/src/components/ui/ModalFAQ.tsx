@@ -11,14 +11,19 @@ import {
 } from '@nextui-org/react'
 import FAQ_ITEMS from '../../data/fatqData'
 import motionV1 from '../../utils/motionVariants'
-import { FaQuestionCircle } from 'react-icons/fa'
+import { FaQuestionCircle, FaRegQuestionCircle } from 'react-icons/fa'
 import { IoHardwareChipOutline } from 'react-icons/io5'
 import { RxLapTimer } from 'react-icons/rx'
 import { SiOpenbugbounty } from 'react-icons/si'
+import { GiFinishLine } from 'react-icons/gi'
+
 const ICONS = {
   IoHardwareChipOutline: <IoHardwareChipOutline size={23} />,
   RxLapTimer: <RxLapTimer size={23} />,
-  SiOpenbugbounty: <SiOpenbugbounty size={23} />
+  SiOpenbugbounty: <SiOpenbugbounty size={23} />,
+  FaRegQuestionCircle: <FaRegQuestionCircle size={23} />,
+  GiFinishLine: <GiFinishLine size={23} />
+
   // Agrega más iconos aquí si es necesario
 }
 function ModalFAQ() {
@@ -33,7 +38,12 @@ function ModalFAQ() {
       >
         FAQ
       </Button>
-      <Modal size="4xl" isOpen={isOpen} onOpenChange={onOpenChange} motionProps={motionV1}>
+      <Modal
+        size="4xl"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        motionProps={motionV1}
+      >
         <ModalContent className="text-text-700">
           {(onClose) => (
             <>
@@ -43,7 +53,11 @@ function ModalFAQ() {
               <ModalBody className="text-lg">
                 <Accordion variant="bordered" isCompact>
                   {FAQ_ITEMS.map(({ key, title, content, iconName }) => (
-                    <AccordionItem startContent={ICONS[iconName]} title={title} key={key}>
+                    <AccordionItem
+                      startContent={ICONS[iconName]}
+                      title={title}
+                      key={key}
+                    >
                       <p>{content}</p>
                     </AccordionItem>
                   ))}

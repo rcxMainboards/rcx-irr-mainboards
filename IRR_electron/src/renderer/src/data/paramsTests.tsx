@@ -7,7 +7,8 @@ import {
   FaFingerprint,
   FaWifi,
   FaMemory,
-  FaSdCard
+  FaSdCard,
+  FaBluetooth
 } from 'react-icons/fa'
 import { GiBurningEmbers, GiUsbKey } from 'react-icons/gi'
 import { RiHardDrive3Fill } from 'react-icons/ri'
@@ -24,7 +25,8 @@ import {
   FingerPrintTest,
   RamTest,
   SDTest,
-  DiscsTest
+  DiscsTest,
+  BlueToothTest
 } from '../components/TestComponents/index'
 import Test from '../components/TestComponents/interfaces'
 
@@ -63,9 +65,9 @@ const tests: Test[] = [
   },
   {
     TestComponent: TouchPadTest,
-    TestName: 'Prueba de TouchPad',
+    TestName: 'Prueba de Pad táctil',
     TestDescription:
-      'La prueba consiste en dos partes, el usuario debera presionar los bloques con los botones correspondientes del TouchPad una cierta cantidad de veces, y una vez termine esto, debera hace otra prueba donde tendra que arrastrar bloques a zonas especificas de la pantalla.',
+      'La prueba consiste en dos partes, el usuario debera presionar los bloques con los botones correspondientes del Pad táctil una cierta cantidad de veces, y una vez termine esto, debera hace otra prueba donde tendra que arrastrar bloques a zonas especificas de la pantalla.',
     TestSuccessCondition:
       'Un vez que el usuario haya presionado los bloques la cantidad de veces necesarias y haya arrastrado los bloques a las zonas disponibles, la prueba se dara por terminada y se considerara exitosa.',
     TestFailCondition:
@@ -73,7 +75,7 @@ const tests: Test[] = [
     TestIconName: CgTouchpad,
     TestNotes: [
       'Si se acaba el tiempo, aparecera una ventana al usuario preguntando si desea repetir la prueba o no.',
-      'Puede ocurrir que el servicio del touchpad este funcionando, pero no detecte el toque del usuario de forma correcta, en este caso cuando surja la ventana preguntando si desea repetir la prueba, el usuario puede decidir sin problema no repetirla.'
+      'Puede ocurrir que el servicio del Pad táctil este funcionando, pero no detecte el toque del usuario de forma correcta, en este caso cuando surja la ventana preguntando si desea repetir la prueba, el usuario puede decidir sin problema no repetirla.'
     ],
     TestTimer: 100
   },
@@ -97,7 +99,7 @@ const tests: Test[] = [
     TestComponent: AudioTest,
     TestName: 'Prueba de Audio',
     TestDescription:
-      'La prueba consiste en verificar si la salida de audio esta funcionando correctamente, para ello se intentara reproducir un audio durante un tiempo determinado; primero se empezara con los Audifonos conectados durante 15 segundos y deforma automatica se cambiara a las Bocinas, el usuario no debe deconectar nada en esta prueba.',
+      'La prueba consiste en verificar si la salida de audio esta funcionando correctamente, para ello se intentara reproducir un audio durante un tiempo determinado; primero se empezara con los Audifonos conectados durante 15 segundos y deforma automática se cambiara a las Bocinas, el usuario no debe deconectar nada en esta prueba.',
     TestSuccessCondition:
       'Si los audifonos reproducen el audio correctamente y estos no sufren de desconexiones durante el proceso, saldra una ventana con la que el usuario podra determinar si paso la prueba o no',
     TestFailCondition:
@@ -112,17 +114,32 @@ const tests: Test[] = [
     TestTries: 3
   },
   {
+    TestComponent: BlueToothTest,
+    TestName: 'Prueba de Bluetooth',
+    TestDescription:
+      'La prueba consiste en tratar de utilizar el servicio de bluetooth del Mainboard, este proceso sera automatico.',
+    TestSuccessCondition:
+      'Si se logra establecer comunicacion con un dispositivo bluetooth, la prueba se dara por exitosa de forma automática.',
+    TestFailCondition:
+      'Esta prueba se dara por fallida si el servicio de bluetooth del Mainboard no esta disponible o si al dispositivo que se desea conectar no esta en funcionamiento.',
+    TestIconName: FaBluetooth,
+    TestNotes: [
+      'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.'
+    ],
+    TestTimer: 0
+  },
+  {
     TestComponent: BurningTest,
     TestName: 'Prueba de Estres',
     TestDescription:
-      'La prueba consiste en invocar la prueba de estres de burninInTest, una vez se presione "Comenzar Prueba", de forma automatica el programa de "BurninTest" iniciara un proceso de estres de RAM, CPU Y GPU. Una vez termine este proceso, el programa se cerrara solo de forma automatica y se pasar a la siguiente prueba.',
+      'La prueba consiste en invocar la prueba de estres de burninInTest, una vez se presione "Comenzar Prueba", de forma automática el programa de "BurninTest" iniciara un proceso de estres de RAM, CPU Y GPU. Una vez termine este proceso, el programa se cerrara solo de forma automática y se pasar a la siguiente prueba.',
     TestSuccessCondition:
       'La prueba debe realizarce con un determinado tiempo, una vez transcurra el tiempo acordado, y el resultado de las pruebas no haya arrojado ningun error, la prueba se dara por exitosa.',
     TestFailCondition:
       'Esta prueba puede fallar si el programa Burnin es cerrado de forma manual, o si el resultado de las pruebas arroja algún error, en este caso la prueba se dara por fallida.',
     TestIconName: GiBurningEmbers,
     TestNotes: [
-      'Esta prueba es automatica, por lo que una vez el proceso de BurniIn termine, se pasara la siguiente prueba de forma automatica.',
+      'Esta prueba es automática, por lo que una vez el proceso de BurniIn termine, se pasara la siguiente prueba de forma automática.',
       'Es necesario que el programa se ejecute por el tiempo que fue determinado, por lo que si se cierra el programa de burning de forma manual, la prueba se dara por fallida.'
     ],
     TestTimer: 0
@@ -138,7 +155,10 @@ const tests: Test[] = [
       'Esta fallara si trascurre el tiempo y el usuario determine que no paso la prueba',
     TestIconName: FaKeyboard,
     TestNotes: [
-      'Si se acaba el tiempo, aparecera una ventana al usuario preguntando si desea repetir la prueba o no.'
+      'Si se acaba el tiempo, aparecera una ventana al usuario preguntando si desea repetir la prueba o no.',
+      'Las teclas de F1, F2, F3... deben presionarse junto con la tecla "Fn", para que sean detectadas corrrectamente.',
+      'La tecla Fn no cambiara de color cuando sea presionada, esto es normal, y no cuenta para que la prueba termine.',
+      'La tecla de Windows si cuenta para que la prueba termine, pero esta al presionarla mostrara una ventana, por lo que se perdera el foco de la prueba, por lo que se recomienda, volver a presionar la ventana de la app cuanto esto suceda.'
     ],
     TestTimer: 120
   },
@@ -153,7 +173,7 @@ const tests: Test[] = [
       'Esta prueba puede fallar si durante el proceso ocurre algún error.',
     TestIconName: GiUsbKey,
     TestNotes: [
-      'Esta prueba es automatica, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automatica.',
+      'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.',
       'Asegurese de conectar la cantidad de USB correcta antes de iniciar la prueba, de no ser asi la prueba fallara instantaneamente.'
     ],
     TestTimer: 0
@@ -162,20 +182,20 @@ const tests: Test[] = [
     TestComponent: FingerPrintTest,
     TestName: 'Prueba de FingerPrint',
     TestDescription:
-      'La prueba consiste revisar si el Mainboard tiene activo el servicio de FingerPrint. (Si este Mainboard no cuenta con el servicio, la prueba se dara por exitosa de forma automatica y se pasara a la siguiente instantaneamente.)',
+      'La prueba consiste revisar si el Mainboard tiene activo el servicio de FingerPrint. (Si este Mainboard no cuenta con el servicio, la prueba se dara por exitosa de forma automática y se pasara a la siguiente instantaneamente.)',
     TestSuccessCondition:
-      'Si el servicio de FingerPrint esta activo, la prueba se dara por exitosa de forma automatica.',
+      'Si el servicio de FingerPrint esta activo, la prueba se dara por exitosa de forma automática.',
     TestFailCondition:
       'Si el servicio de FingerPrint no esta activo, la prueba se dara por fallida.',
     TestIconName: FaFingerprint,
     TestNotes: [
-      'Esta prueba es automatica, por lo que se pasara a la siguiente prueba en cuanto se obtenga el resultado de la prueba.'
+      'Esta prueba es automática, por lo que se pasara a la siguiente prueba en cuanto se obtenga el resultado de la prueba.'
     ],
     TestTimer: 0
   },
   {
     TestComponent: WifiTest,
-    TestName: 'Prueba de Wifi ',
+    TestName: 'Prueba de Wifi',
     TestDescription:
       'La prueba consiste revisar si el servicio de Wifi funciona correctamente en el Mainboard. Para ello se intentara conectarse a una red wifi disponible.',
     TestSuccessCondition:
@@ -184,13 +204,13 @@ const tests: Test[] = [
       'Esta prueba puede fallar si durante el proceso ocurre algún error.',
     TestIconName: FaWifi,
     TestNotes: [
-      'Esta prueba es automatica, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automatica.'
+      'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.'
     ],
     TestTimer: 0
   },
   {
     TestComponent: RamTest,
-    TestName: 'Prueba de Ram ',
+    TestName: 'Prueba de Ram',
     TestDescription:
       'La prueba consiste revisar si la ram instala es igual a la del perfil obtenido del Mainboard; (Esta prueba puede saltarse si en el perfil del Mainboard tiene marcado que tiene partes integradas)',
     TestSuccessCondition:
@@ -199,7 +219,7 @@ const tests: Test[] = [
       'Esta prueba puede fallar si durante el proceso ocurre algún error.',
     TestIconName: FaMemory,
     TestNotes: [
-      'Esta prueba es automatica, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automatica.'
+      'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.'
     ],
     TestTimer: 0
   },
@@ -215,7 +235,7 @@ const tests: Test[] = [
       'Esta prueba puede fallar si durante el proceso ocurre algún error; esta prueba contara con intentos si es que se le pide ingresar el numero de parte, la prueba puede fallar si el numero de parte dado es incorrecto, o si no es encontrado en la base de datos',
     TestIconName: RiHardDrive3Fill,
     TestNotes: [
-      'Esta prueba es automatica, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automatica.',
+      'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.',
       'Si el Mainboard tiene partes integradas marcadas, se le pedira al usuario ingresar el numero de parte.'
     ],
     TestTimer: 0,
@@ -223,7 +243,7 @@ const tests: Test[] = [
   },
   {
     TestComponent: SDTest,
-    TestName: 'Prueba de SD ',
+    TestName: 'Prueba de SD',
     TestDescription:
       'La prueba consiste en verificar el estado del puerto SD, para ello se hara una prueba de lectura y escritura sobre la tarjeta SD que se debe de insertar en el puerto',
     TestSuccessCondition:
@@ -232,7 +252,7 @@ const tests: Test[] = [
       'Esta prueba puede fallar si durante el proceso ocurre algún error.',
     TestIconName: FaSdCard,
     TestNotes: [
-      'Esta prueba es automatica, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automatica.',
+      'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.',
       'Asegurese de conectar la tarjeta SD antes de iniciar la prueba, de no ser asi la prueba fallara instantaneamente.',
       'Si se conecta el SD en modo de solo lectura, aparecera una ventana pidiendole al usuario que vuelva a insertar la SD cambiando el switch fisico del SD y reiniciando la prueba.'
     ],

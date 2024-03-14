@@ -20,6 +20,21 @@ export const FAQ_ITEMS = [
     content:
       'Cada prueba en el programa genera un resultado, sin embargo, el conjunto total de resultados solo se guarda y envía una vez que se completan todas las pruebas. Por lo tanto, si el proceso no se completa, los resultados no se guardarán de ninguna manera.',
     iconName: 'SiOpenbugbounty'
+  },
+  {
+    key: '4',
+    title:
+      '¿Por qué cuando inicie la prueba pase a la siguiente de forma instantanea ?',
+    content:
+      'Varias pruebas ejecutan procesos internos, los cuales pueden fallar o pasar la prueba la instante, los resultados seran visibles al terminar todas las pruebas.',
+    iconName: 'FaRegQuestionCircle'
+  },
+  {
+    key: '5',
+    title: '¿Como se que terminé el proceso realmente ?',
+    content:
+      'Cuando se terminen todas las pruebas, se mostrara el resultado de cada una; posteriormente si fue posible subir al servidor los resultados de las pruebas o no.',
+    iconName: 'GiFinishLine'
   }
   // Agrega más elementos aquí si es necesario
 ]
