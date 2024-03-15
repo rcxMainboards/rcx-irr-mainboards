@@ -1,33 +1,18 @@
-import LoginForm from './components/LoginForm'
-import useMainboard from './components/hooks/useMainboard'
-import { LoadingAnimation, ErrorMessage } from './components/ui/index'
-import { EthernetError } from './components/ui/index'
+import Aplicationstart from './components/Aplicationstart'
+import { WarningStartingApp } from './components/ui'
+import useCloseModal from './components/hooks/useCloseModal'
 
 function App(): JSX.Element {
-  const {
-    isLoadingRegistration,
-    netWorkError,
-    EhternetError,
-    loadingEthernet,
-    loadingServer
-  } = useMainboard()
+  const { open, changeOpen } = useCloseModal()
 
   return (
-    <div>
-      {loadingServer ? (
-        <LoadingAnimation />
-      ) : isLoadingRegistration ? (
-        <LoadingAnimation /> // Esperamos a que la peticion sobre la informacion de la mainboard se complete
-      ) : netWorkError ? ( // si hay un error de red, mostramos el mensaje de error o de que el mainboard no esta registrado.
-        <ErrorMessage errorMessage={netWorkError?.message} />
-      ) : loadingEthernet ? ( // Esperamos a que la app compruebe la conexion ethernet
-        <LoadingAnimation />
-      ) : !EhternetError ? ( // Si no hay error de ethernet, mostramos el formulario de login
-        <LoginForm />
+    <>
+      {!open ? (
+        <Aplicationstart />
       ) : (
-        <EthernetError />
+        <WarningStartingApp onOpenChange={changeOpen} />
       )}
-    </div>
+    </>
   )
 }
 

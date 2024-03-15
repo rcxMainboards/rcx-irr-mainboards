@@ -33,6 +33,7 @@ function LoginForm(): JSX.Element {
       navigate('/TestMenu', {
         state: { numEmpleado: getValues('NumEmpleado') }
       })
+      console.log('hola')
     },
     onError: (error) => {
       if (error instanceof AxiosError && error.response?.data?.detail) {

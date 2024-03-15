@@ -18,7 +18,7 @@ function useMainboard() {
     initialServer()
   }, [])
 
-  const { error: errorWifi } = useQuery({
+  const {} = useQuery({
     queryKey: ['wifi'],
     queryFn: disableWifi,
     refetchOnWindowFocus: false,
@@ -26,7 +26,7 @@ function useMainboard() {
     enabled: !loadingServer
   })
 
-  const { data, isLoading: LoadinginternalApi } = useQuery({
+  const { data } = useQuery({
     queryKey: ['SSID'],
     queryFn: getMainboardProduct,
     refetchOnWindowFocus: false,

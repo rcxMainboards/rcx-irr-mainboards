@@ -6,7 +6,7 @@ import { executeUSBTest } from './services/usb'
 import { errorData } from '../../../utils/functions'
 
 function USBTest({ TestName, nextTest, profile }) {
-  const { data, isLoading, error } = useQuery({
+  const { isLoading, error } = useQuery({
     queryKey: ['usbTest'],
     queryFn: () => executeUSBTest(profile.usb),
     retry: false,

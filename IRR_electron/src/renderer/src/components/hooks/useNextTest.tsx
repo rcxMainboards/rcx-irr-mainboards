@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Test from '../TestComponents/interfaces'
 import { Result, TestResult } from '../TestComponents/objectInterfaces'
 
