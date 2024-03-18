@@ -4,26 +4,26 @@ import {
   isMainboardRegistered,
   getMainboardProfile
 } from '../../services/mainboard'
-import { disableWifi, checkEthernet } from '../../services/internalServices'
-import { useEffect, useState } from 'react'
+import {
+  disableWifi,
+  checkEthernet,
+  initServer
+} from '../../services/internalServices'
 
 function useMainboard() {
-  const [loadingServer, setLoadingServer] = useState(true)
-
-  useEffect(() => {
-    async function initialServer() {
-      await (window.api as any).startServer()
-      setLoadingServer(false)
-    }
-    initialServer()
-  }, [])
+  const { isLoading: loadingServer } = useQuery({
+    queryKey: ['initServer'],
+    queryFn: initServer,
+    refetchOnWindowFocus: false,
+    retry: false
+  })
 
   const {} = useQuery({
     queryKey: ['wifi'],
     queryFn: disableWifi,
     refetchOnWindowFocus: false,
     retry: false,
-    enabled: !loadingServer
+    enabled: !!loadingServer
   })
 
   const { data } = useQuery({
@@ -46,6 +46,7 @@ function useMainboard() {
     enabled: !!ssid,
     refetchOnWindowFocus: false,
     retry: false
+  
   })
 
   const { data: ProfileData } = useQuery({
@@ -64,12 +65,12 @@ function useMainboard() {
     retry: false
   })
 
+  const isLoading = loadingServer || isLoadingRegistration || loadingEthernet
+
   return {
-    isLoadingRegistration,
     netWorkError,
     EhternetError,
-    loadingEthernet,
-    loadingServer
+    isLoading
   }
 }
 export default useMainboard

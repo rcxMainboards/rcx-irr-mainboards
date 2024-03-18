@@ -4,25 +4,15 @@ import { LoadingAnimation, ErrorMessage } from '../components/ui/index'
 import { EthernetError } from '../components/ui/index'
 
 function Aplicationstart() {
-  const {
-    isLoadingRegistration,
-    netWorkError,
-    EhternetError,
-    loadingEthernet,
-    loadingServer
-  } = useMainboard()
+  const { netWorkError, EhternetError, isLoading } = useMainboard()
 
   return (
     <div>
-      {loadingServer ? (
+      {isLoading ? (
         <LoadingAnimation />
-      ) : isLoadingRegistration ? (
-        <LoadingAnimation /> // Esperamos a que la peticion sobre la informacion de la mainboard se complete
-      ) : netWorkError ? ( // si hay un error de red, mostramos el mensaje de error o de que el mainboard no esta registrado.
+      ) : netWorkError ? (
         <ErrorMessage errorMessage={netWorkError?.message} />
-      ) : loadingEthernet ? ( // Esperamos a que la app compruebe la conexion ethernet
-        <LoadingAnimation />
-      ) : !EhternetError ? ( // Si no hay error de ethernet, mostramos el formulario de login
+      ) : !EhternetError ? (
         <LoginForm />
       ) : (
         <EthernetError />

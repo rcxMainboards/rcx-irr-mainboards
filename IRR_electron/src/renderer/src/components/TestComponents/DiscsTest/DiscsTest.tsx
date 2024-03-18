@@ -7,17 +7,16 @@ import { errorData } from '../../../utils/functions'
 import NumberPartForm from './NumberPartForm'
 
 function DiscsTest({ TestName, nextTest, profile }) {
-  const { isLoading, error, isFetching } = useQuery({
+  const { isLoading, error, isSuccess } = useQuery({
     queryKey: ['DiscsTest'],
     queryFn: () => executeDiskTest(profile),
     retry: false,
     refetchOnWindowFocus: false,
-    enabled: !profile.integrated // si el perfil no tiene integrado se ejecuta
+    enabled: !profile.integrated // la consulta se ejecutará si profile.integrated es false
   })
 
   useEffect(() => {
-    if (!isLoading && !error && isFetching) {
-      // solo se ejecuta si el perfil no tiene integrado
+    if (!isLoading && isSuccess) {
       nextTest(TestName, {
         result: true,
         message: 'Prueba discos exitosa'

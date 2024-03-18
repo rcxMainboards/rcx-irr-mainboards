@@ -13,4 +13,9 @@ const disableWifi = async () => {
   return response.data
 }
 
-export { checkEthernet, disableWifi }
+const initServer = async () => {
+  const response = await (window.api as any).startServer()
+  return response
+}
+
+export { checkEthernet, disableWifi, initServer }
