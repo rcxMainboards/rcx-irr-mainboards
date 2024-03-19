@@ -6,6 +6,7 @@ const TIME_SPARE = 120
 const KeyboardLayout = {
   Base: 82,
   NumPad: 99,
+  NumPadV1: 100,
   BaseV1: 83
 }
 

@@ -144,24 +144,24 @@ const tests: Test[] = [
   //   ],
   //   TestTimer: 0
   // },
-  // {
-  //   TestComponent: KeyBoardTest,
-  //   TestName: 'Prueba de teclado',
-  //   TestDescription:
-  //     'La prueba consiste presiona cada tecla del teclado y que esta reaccione cambiando de color antes del tiempo establecido.',
-  //   TestSuccessCondition:
-  //     'Una vez que todas las teclas del teclado hayan sido presionadas y estas hayan reaccionado cambiando de color, la prueba se dara por terminada y se considerara exitosa.',
-  //   TestFailCondition:
-  //     'Esta fallara si trascurre el tiempo y el usuario determine que no paso la prueba',
-  //   TestIconName: FaKeyboard,
-  //   TestNotes: [
-  //     'Si se acaba el tiempo, aparecera una ventana al usuario preguntando si desea repetir la prueba o no.',
-  //     'Las teclas de F1, F2, F3... deben presionarse junto con la tecla "Fn", para que sean detectadas corrrectamente.',
-  //     'La tecla Fn no cambiara de color cuando sea presionada, esto es normal, y no cuenta para que la prueba termine.',
-  //     'La tecla de Windows si cuenta para que la prueba termine, pero esta al presionarla mostrara una ventana, por lo que se perdera el foco de la prueba, por lo que se recomienda, volver a presionar la ventana de la app cuanto esto suceda.'
-  //   ],
-  //   TestTimer: 120
-  // },
+  {
+    TestComponent: KeyBoardTest,
+    TestName: 'Prueba de teclado',
+    TestDescription:
+      'La prueba consiste presiona cada tecla del teclado y que esta reaccione cambiando de color antes del tiempo establecido.',
+    TestSuccessCondition:
+      'Una vez que todas las teclas del teclado hayan sido presionadas y estas hayan reaccionado cambiando de color, la prueba se dara por terminada y se considerara exitosa.',
+    TestFailCondition:
+      'Esta fallara si trascurre el tiempo y el usuario determine que no paso la prueba',
+    TestIconName: FaKeyboard,
+    TestNotes: [
+      'Si se acaba el tiempo, aparecera una ventana al usuario preguntando si desea repetir la prueba o no.',
+      'Las teclas de F1, F2, F3... deben presionarse junto con la tecla "Fn", para que sean detectadas corrrectamente.',
+      'La tecla Fn no cambiara de color cuando sea presionada, esto es normal, y no cuenta para que la prueba termine.',
+      'La tecla de Windows si cuenta para que la prueba termine, pero esta al presionarla mostrara una ventana, por lo que se perdera el foco de la prueba, por lo que se recomienda, volver a presionar la ventana de la app cuanto esto suceda.'
+    ],
+    TestTimer: 120
+  }
   // {
   //   TestComponent: USBTest,
   //   TestName: 'Prueba de USB',
@@ -223,40 +223,40 @@ const tests: Test[] = [
   //   ],
   //   TestTimer: 0
   // },
-  {
-    TestComponent: DiscsTest,
-    TestName: 'Prueba de Discos',
-    TestDescription:
-      'La prueba consiste revisar si el numero de discos en el sistema es el correcto; si el perfil del Mainboard tiene marcado que tiene partes integradas, se le pedira al usuario ingresar el numero de parte.',
-    TestSuccessCondition:
-      'Una vez el proceso termine se parasa a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
-    TestFailCondition:
-      'Esta prueba puede fallar si durante el proceso ocurre algún error; esta prueba contara con intentos si es que se le pide ingresar el numero de parte, la prueba puede fallar si el numero de parte dado es incorrecto, o si no es encontrado en la base de datos',
-    TestIconName: RiHardDrive3Fill,
-    TestNotes: [
-      'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.',
-      'Si el Mainboard tiene partes integradas marcadas, se le pedira al usuario ingresar el numero de parte.'
-    ],
-    TestTimer: 0,
-    TestTries: 3
-  },
-  {
-    TestComponent: SDTest,
-    TestName: 'Prueba de SD',
-    TestDescription:
-      'La prueba consiste en verificar el estado del puerto SD, para ello se hara una prueba de lectura y escritura sobre la tarjeta SD que se debe de insertar en el puerto',
-    TestSuccessCondition:
-      'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
-    TestFailCondition:
-      'Esta prueba puede fallar si durante el proceso ocurre algún error.',
-    TestIconName: FaSdCard,
-    TestNotes: [
-      'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.',
-      'Asegurese de conectar la tarjeta SD antes de iniciar la prueba, de no ser asi la prueba fallara instantaneamente.',
-      'Si se conecta el SD en modo de solo lectura, aparecera una ventana pidiendole al usuario que vuelva a insertar la SD cambiando el switch fisico del SD y reiniciando la prueba.'
-    ],
-    TestTimer: 0
-  }
+  // {
+  //   TestComponent: DiscsTest,
+  //   TestName: 'Prueba de Discos',
+  //   TestDescription:
+  //     'La prueba consiste revisar si el numero de discos en el sistema es el correcto; si el perfil del Mainboard tiene marcado que tiene partes integradas, se le pedira al usuario ingresar el numero de parte.',
+  //   TestSuccessCondition:
+  //     'Una vez el proceso termine se parasa a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
+  //   TestFailCondition:
+  //     'Esta prueba puede fallar si durante el proceso ocurre algún error; esta prueba contara con intentos si es que se le pide ingresar el numero de parte, la prueba puede fallar si el numero de parte dado es incorrecto, o si no es encontrado en la base de datos',
+  //   TestIconName: RiHardDrive3Fill,
+  //   TestNotes: [
+  //     'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.',
+  //     'Si el Mainboard tiene partes integradas marcadas, se le pedira al usuario ingresar el numero de parte.'
+  //   ],
+  //   TestTimer: 0,
+  //   TestTries: 3
+  // },
+  // {
+  //   TestComponent: SDTest,
+  //   TestName: 'Prueba de SD',
+  //   TestDescription:
+  //     'La prueba consiste en verificar el estado del puerto SD, para ello se hara una prueba de lectura y escritura sobre la tarjeta SD que se debe de insertar en el puerto',
+  //   TestSuccessCondition:
+  //     'Una vez el proceso interno se pasara a la siguiente prueba con el mensaje de exito si no hubo ningun problema durante el proceso.',
+  //   TestFailCondition:
+  //     'Esta prueba puede fallar si durante el proceso ocurre algún error.',
+  //   TestIconName: FaSdCard,
+  //   TestNotes: [
+  //     'Esta prueba es automática, por lo que una vez el proceso termine, se pasara la siguiente prueba de forma automática.',
+  //     'Asegurese de conectar la tarjeta SD antes de iniciar la prueba, de no ser asi la prueba fallara instantaneamente.',
+  //     'Si se conecta el SD en modo de solo lectura, aparecera una ventana pidiendole al usuario que vuelva a insertar la SD cambiando el switch fisico del SD y reiniciando la prueba.'
+  //   ],
+  //   TestTimer: 0
+  // }
 ]
 
 export default tests

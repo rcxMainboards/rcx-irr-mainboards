@@ -11,7 +11,7 @@ import {
 } from '../../services/internalServices'
 
 function useMainboard() {
-  const { isLoading: loadingServer } = useQuery({
+  const { isLoading: loadingServer, isSuccess } = useQuery({
     queryKey: ['initServer'],
     queryFn: initServer,
     refetchOnWindowFocus: false,
@@ -23,7 +23,7 @@ function useMainboard() {
     queryFn: disableWifi,
     refetchOnWindowFocus: false,
     retry: false,
-    enabled: !!loadingServer
+    enabled: isSuccess
   })
 
   const { data } = useQuery({
@@ -31,7 +31,7 @@ function useMainboard() {
     queryFn: getMainboardProduct,
     refetchOnWindowFocus: false,
     retry: false,
-    enabled: !loadingServer
+    enabled: isSuccess
   })
 
   const ssid = data?.product
@@ -46,7 +46,6 @@ function useMainboard() {
     enabled: !!ssid,
     refetchOnWindowFocus: false,
     retry: false
-  
   })
 
   const { data: ProfileData } = useQuery({
