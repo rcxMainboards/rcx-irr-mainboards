@@ -2,8 +2,12 @@ import axios from 'axios'
 import { API_INTERNAL, IRR_MB_API } from '../../../../utils/serviceEndPoints'
 
 const executeDiskTest = async (profile) => {
-  const response = await axios.get(
-    `${API_INTERNAL}/mountedDrives/TestDrives/${profile.ssd_amount}`
+  const response = await axios.post(
+    `${API_INTERNAL}/mountedDrives/TestDrives`,
+    {
+      ssd_amount: profile.ssd_amount,
+      hdd_amount: profile.hdd_amount
+    }
   )
   return response.data
 }
@@ -16,8 +20,13 @@ const getPartNumber = async (partNumber, profile) => {
 }
 
 const executeDiskTestWihtIntegrated = async (part, profile) => {
-  const response = await axios.get(
-    `${API_INTERNAL}/mountedDrives/TestDrives/${profile.ssd_amount}${part ? `?integrated_disk=${part}` : ''}`
+  const response = await axios.post(
+    `${API_INTERNAL}/mountedDrives/TestDrives`,
+    {
+      ssd_amount: profile.ssd_amount,
+      hdd_amount: profile.hdd_amount,
+      integrated_disk: part
+    }
   )
   return response.data
 }
