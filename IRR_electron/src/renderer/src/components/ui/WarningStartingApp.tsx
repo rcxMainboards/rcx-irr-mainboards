@@ -4,8 +4,17 @@ import { IoIosWarning } from 'react-icons/io'
 import { GiUsbKey } from 'react-icons/gi'
 import { FaSdCard, FaHeadphones } from 'react-icons/fa'
 import { CgEthernet } from 'react-icons/cg'
+import { useState, useEffect } from 'react'
 
 function WarningStartingApp({ onOpenChange }) {
+  const [appVersion, setAppVersion] = useState('')
+
+  useEffect(() => {
+    window.api.getAppVersion().then((version) => {
+      setAppVersion(version)
+    })
+  }, [])
+
   return (
     <>
       <Modal
@@ -22,10 +31,13 @@ function WarningStartingApp({ onOpenChange }) {
               <ModalBody className="flex min-h-screen flex-col items-center justify-center">
                 <div className="grid max-w-[50rem] grid-cols-[1.5fr_1fr] place-items-center gap-7 rounded-lg bg-white p-10 px-12 shadow-lg">
                   <main className="flex flex-col justify-center gap-3">
+                    <h1 className="text-2xl font-semibold text-warning-600">
+                      Versión de la Aplicación: {appVersion}
+                    </h1>
                     <div className="flex items-center gap-2">
-                      <h1 className="text-3xl font-bold text-warning-500">
+                      <h2 className="text-3xl font-bold text-warning-500">
                         Atención
-                      </h1>
+                      </h2>
                       <IoIosWarning size={37} />
                     </div>
                     <p>

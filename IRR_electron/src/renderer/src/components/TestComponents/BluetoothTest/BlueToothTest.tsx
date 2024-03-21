@@ -32,7 +32,7 @@ function BlueToothTest({ TestName, nextTest }) {
       <Card className="p-10">
         <CardBody>
           {isLoading ? (
-            <p>Ejecutando Bluetooth...</p>
+            <p>Ejecutando Prueba de Bluetooth...</p>
           ) : error ? (
             errorData(error)
           ) : (

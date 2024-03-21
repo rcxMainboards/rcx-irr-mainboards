@@ -6,6 +6,9 @@ declare global {
     api: {
       send: (channel: string, data?: any) => void
       getVideoPath: () => string
+      startServer: () => Promise<void>
+      getAppVersion: () => Promise<string>
+      on(channel: string, func: (...args: any[]) => void): void
     }
   }
 }

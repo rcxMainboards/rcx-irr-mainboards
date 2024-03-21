@@ -34,7 +34,7 @@ function DiscsTest({ TestName, nextTest, profile }) {
       {!profile.integrated ? (
         <Card className="p-10">
           <CardBody>
-            <p>Ejecutando la prueba de discos...</p>
+            <p>Ejecutando Prueba de discos...</p>
           </CardBody>
         </Card>
       ) : (

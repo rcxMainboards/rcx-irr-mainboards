@@ -4,6 +4,15 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 import { spawn } from 'child_process'
+import { autoUpdater } from 'electron-updater'
+import log from 'electron-log/main'
+
+log.initialize()
+autoUpdater.logger = log
+log.transports.file.level = 'info'
+
+autoUpdater.autoDownload = true
+autoUpdater.autoInstallOnAppQuit = true
 
 const mainExePath = app.isPackaged
   ? join(process.resourcesPath, 'app.asar.unpacked', 'resources', 'myapp.exe')
@@ -11,7 +20,7 @@ const mainExePath = app.isPackaged
 
 let serverProcess
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -29,7 +38,7 @@ function createWindow(): void {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
     mainWindow.setMenu(null) // Esto quita el menú
-    // mainWindow.setFullScreen(true) // Esto pone la aplicación en pantalla completa
+    mainWindow.setFullScreen(true) // Esto pone la aplicación en pantalla completa
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -46,6 +55,8 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  return mainWindow
 }
 
 function startServer() {
@@ -95,7 +106,34 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  createWindow()
+  const mainWindow = createWindow()
+
+  autoUpdater.checkForUpdatesAndNotify()
+
+  autoUpdater.on('checking-for-update', () => {
+    mainWindow.webContents.send('checking-for-update')
+  })
+
+  autoUpdater.on('update-available', () => {
+    mainWindow.webContents.send('update-available')
+  })
+
+  autoUpdater.on('update-not-available', () => {
+    mainWindow.webContents.send('update-not-available')
+  })
+
+  autoUpdater.on('update-cancelled', () => {
+    mainWindow.webContents.send('update-cancelled')
+  })
+
+  autoUpdater.on('update-downloaded', () => {
+    autoUpdater.quitAndInstall()
+  })
+
+  autoUpdater.on('error', (message) => {
+    log.error('There was a problem updating the application')
+    log.error(message.stack || message)
+  })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -117,6 +155,10 @@ ipcMain.on('close-app', async () => {
     console.error(error)
   }
   app.quit()
+})
+
+ipcMain.handle('get-app-version', () => {
+  return app.getVersion()
 })
 
 ipcMain.handle('start-server', async () => {
