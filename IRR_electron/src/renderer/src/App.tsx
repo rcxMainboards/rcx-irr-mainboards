@@ -15,6 +15,10 @@ function App(): JSX.Element {
             <h1 className="text-4xl font-bold text-white">
               Verificando actualizaciones...
             </h1>
+            <p className="text-sm">
+              Si esta verificación falla, la aplicación cerrará, solucione esto
+              revisando su conexión a internet.
+            </p>
           </div>
         </>
       ) : updateDownloading ? (

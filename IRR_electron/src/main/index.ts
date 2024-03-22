@@ -130,9 +130,12 @@ app.whenReady().then(() => {
     autoUpdater.quitAndInstall()
   })
 
-  autoUpdater.on('error', (message) => {
+  autoUpdater.on('error', () => {
     log.error('There was a problem updating the application')
-    log.error(message.stack || message)
+    mainWindow.webContents.send('error')
+    setTimeout(() => {
+      app.quit()
+    }, 5000)
   })
 
   app.on('activate', function () {

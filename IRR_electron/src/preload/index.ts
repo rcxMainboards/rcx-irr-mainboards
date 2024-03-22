@@ -17,7 +17,8 @@ const api = {
       'update-downloaded',
       'update-cancelled',
       'update-not-available',
-      'checking-for-update'
+      'checking-for-update',
+      'error'
     ]
     if (validChannels.includes(channel)) {
       // Delimit the event sender to avoid exploits

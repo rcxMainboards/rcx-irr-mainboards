@@ -24,6 +24,8 @@ export default function useUpdateCheck() {
       setCheckingForUpdate(false) // Establece checkingForUpdate en false cuando no hay una actualización disponible
     })
 
+    window.api.on('error', () => {})
+
     window.api.on('update-downloaded', () => {
       setUpdateDownloading(false)
     })
