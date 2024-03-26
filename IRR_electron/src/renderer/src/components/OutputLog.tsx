@@ -1,4 +1,4 @@
-import { OutputTable } from '../components/ui/index'
+import { OutputTable, ExitButton } from '../components/ui/index'
 import BaseLayout from './ui/baseLayout'
 import { Card, CardHeader } from '@nextui-org/react'
 import { TbReportSearch } from 'react-icons/tb'
@@ -82,6 +82,7 @@ function OutputLog({ Results, user }) {
             )}
           </div>
         </CardHeader>
+        <ExitButton />
       </Card>
     </BaseLayout>
   )

@@ -1,35 +1,21 @@
 import { useEffect, useState } from 'react'
 
 export default function useUpdateCheck() {
+  const [updateChecking, setUpdateChecking] = useState(true)
   const [updateDownloading, setUpdateDownloading] = useState(false)
-  const [checkingForUpdate, setCheckingForUpdate] = useState(true)
 
   useEffect(() => {
-    window.api.on('checking-for-update', () => {
-      setCheckingForUpdate(true) // Establece checkingForUpdate en true cuando se está verificando si hay actualizaciones
-    })
+    window.api.send('check-for-updates')
 
-    window.api.on('update-available', () => {
+    window.api.on('update-available', (_event) => {
+      setUpdateChecking(false)
       setUpdateDownloading(true)
-      setCheckingForUpdate(false) // Establece checkingForUpdate en false cuando hay una actualización disponible
     })
 
     window.api.on('update-not-available', () => {
-      setUpdateDownloading(false)
-      setCheckingForUpdate(false) // Establece checkingForUpdate en false cuando no hay una actualización disponible
-    })
-
-    window.api.on('update-cancelled', () => {
-      setUpdateDownloading(false)
-      setCheckingForUpdate(false) // Establece checkingForUpdate en false cuando no hay una actualización disponible
-    })
-
-    window.api.on('error', () => {})
-
-    window.api.on('update-downloaded', () => {
-      setUpdateDownloading(false)
+      setUpdateChecking(false)
     })
   }, [])
 
-  return { updateDownloading, checkingForUpdate }
+  return { updateChecking, updateDownloading }
 }

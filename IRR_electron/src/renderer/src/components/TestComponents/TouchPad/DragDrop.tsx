@@ -14,7 +14,7 @@ export default function DragDrop({ TestName, nextTest }) {
 
   useEffect(() => {
     if (boxList.length === 0) {
-      nextTest(TestName, { result: true, message: 'Test completado con éxito' })
+      nextTest(TestName, { result: true, message: 'Prueba completada con éxito' })
     }
   }, [boxList])
 

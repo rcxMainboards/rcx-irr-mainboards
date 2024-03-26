@@ -7,12 +7,15 @@ import { useRef } from 'react'
 
 function AudioTest({ TestName, nextTest }) {
   const { onOpen, isOpen, onOpenChange, onClose } = useDisclosure()
+
   const {
     onOpen: onOpenAnother,
     isOpen: isOpenAnother,
     onOpenChange: onOpenChangeAnother
   } = useDisclosure()
+
   const videoRef = useRef(null)
+  
   const { secondsLeft, loading } = useAudioTest(
     onOpen,
     onClose,

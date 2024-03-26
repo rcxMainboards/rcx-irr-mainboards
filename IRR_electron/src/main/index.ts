@@ -4,7 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 import { spawn } from 'child_process'
-import { autoUpdater } from 'electron-updater'
+import { UpdateCheckResult, autoUpdater } from 'electron-updater'
 import log from 'electron-log/main'
 
 log.initialize()
@@ -106,36 +106,30 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  const mainWindow = createWindow()
+  createWindow()
 
-  autoUpdater.checkForUpdatesAndNotify()
-
-  autoUpdater.on('checking-for-update', () => {
-    mainWindow.webContents.send('checking-for-update')
-  })
-
-  autoUpdater.on('update-available', () => {
-    mainWindow.webContents.send('update-available')
-  })
-
-  autoUpdater.on('update-not-available', () => {
-    mainWindow.webContents.send('update-not-available')
-  })
-
-  autoUpdater.on('update-cancelled', () => {
-    mainWindow.webContents.send('update-cancelled')
-  })
+  if (app.isPackaged) {
+    ipcMain.on('check-for-updates', (event) => {
+      const { sender } = event
+      const result = autoUpdater.checkForUpdates()
+      result
+        .then((checkResult: UpdateCheckResult | null) => {
+          const updateInfo = checkResult?.updateInfo
+          if (updateInfo?.version !== app.getVersion()) {
+            log.info(updateInfo)
+            sender.send('update-available', updateInfo)
+          } else {
+            sender.send('update-not-available')
+          }
+        })
+        .catch(() => {
+          app.quit()
+        })
+    })
+  }
 
   autoUpdater.on('update-downloaded', () => {
     autoUpdater.quitAndInstall()
-  })
-
-  autoUpdater.on('error', () => {
-    log.error('There was a problem updating the application')
-    mainWindow.webContents.send('error')
-    setTimeout(() => {
-      app.quit()
-    }, 5000)
   })
 
   app.on('activate', function () {

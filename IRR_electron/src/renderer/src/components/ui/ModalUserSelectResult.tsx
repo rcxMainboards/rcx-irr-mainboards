@@ -60,7 +60,7 @@ function ModalUserSelectResult({
                     })
                   }}
                 >
-                  Paso el test (exitoso)
+                  Paso la Prueba (exitoso)
                 </Button>
                 <Button
                   color="danger"
@@ -73,7 +73,7 @@ function ModalUserSelectResult({
                     })
                   }}
                 >
-                  Ir al siguiente test (fallido)
+                  Ir a la siguiente Prueba (fallido)
                 </Button>
               </ModalBody>
             </>
