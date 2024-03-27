@@ -3,6 +3,7 @@ import { Card, CardBody } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import { executeBurning } from './Services/burning'
 import { errorData } from '../../../utils/functions'
+import { useEffect } from 'react'
 function BurningTest({ TestName, nextTest }) {
   const { data, isSuccess, error } = useQuery({
     queryKey: ['burninTest'],
@@ -11,22 +12,25 @@ function BurningTest({ TestName, nextTest }) {
     refetchOnWindowFocus: false
   })
 
-  if (isSuccess && data) {
-    if (typeof data === 'object' && data !== null && 'message' in data) {
-      let messageTests = data.message
-        .map((test) => `${test['Test Name']}: ${test['Result Errors']}`)
-        .join(', ')
+  useEffect(() => {
+    if (isSuccess) {
+      if (typeof data === 'object' && data !== null && 'message' in data) {
+        let messageTests = data.message
+          .map((test) => `${test['Test Name']}: ${test['Result Errors']}`)
+          .join(', ')
+        nextTest(TestName, {
+          result: true,
+          message: messageTests
+        })
+      }
+    }
+    if (error) {
       nextTest(TestName, {
-        result: true,
-        message: messageTests
+        result: false,
+        message: errorData(error)
       })
     }
-  } else if (error) {
-    nextTest(TestName, {
-      result: false,
-      message: errorData(error)
-    })
-  }
+  }, [isSuccess, data, error])
 
   return (
     <BaseLayout>
