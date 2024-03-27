@@ -108,6 +108,10 @@ app.whenReady().then(() => {
 
   createWindow()
 
+  ipcMain.on('log', (_, message) => {
+    log.info(message)
+  })
+
   if (app.isPackaged) {
     ipcMain.on('check-for-updates', (event) => {
       const { sender } = event
@@ -152,6 +156,10 @@ ipcMain.on('close-app', async () => {
     console.error(error)
   }
   app.quit()
+})
+
+ipcMain.handle('get-app-status', () => {
+  return app.isPackaged
 })
 
 ipcMain.handle('get-app-version', () => {

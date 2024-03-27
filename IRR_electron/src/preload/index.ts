@@ -16,7 +16,8 @@ const api = {
   },
   getVideoPath: () => videoPath,
   startServer: () => ipcRenderer.invoke('start-server'),
-  getAppVersion: () => ipcRenderer.invoke('get-app-version')
+  getAppVersion: () => ipcRenderer.invoke('get-app-version'),
+  getAppStatus: () => ipcRenderer.invoke('get-app-status')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

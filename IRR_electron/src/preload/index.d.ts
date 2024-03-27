@@ -8,6 +8,7 @@ declare global {
       getVideoPath: () => string
       startServer: () => Promise<void>
       getAppVersion: () => Promise<string>
+      getAppStatus: () => Promise<boolean>
       onUpdateAvailable: (callback: () => void) => void
       onUpdateDownloaded: (callback: () => void) => void
       onUpdateNotAvailable: (callback: () => void) => void

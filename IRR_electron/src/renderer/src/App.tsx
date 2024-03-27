@@ -6,16 +6,24 @@ import {
 } from './components/ui'
 import useCloseModal from './components/hooks/useCloseModal'
 import useUpdateCheck from './components/hooks/useUpdateCheck'
+import { useState, useEffect } from 'react'
 
 function App(): JSX.Element {
   const { open, changeOpen } = useCloseModal()
   const { updateDownloading, updateChecking } = useUpdateCheck()
+  const [AppStatus, setAppStatus] = useState<boolean>()
+
+  useEffect(() => {
+    window.api.getAppStatus().then((status: boolean) => {
+      setAppStatus(status)
+    })
+  }, [])
 
   return (
     <>
-      {updateChecking ? (
+      {updateChecking && AppStatus ? (
         <ModalCheckUpdates />
-      ) : updateDownloading ? (
+      ) : updateDownloading && AppStatus ? (
         <UpdateInProgress />
       ) : !open ? (
         <Aplicationstart />
