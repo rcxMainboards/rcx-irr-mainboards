@@ -11,7 +11,7 @@ function Aplicationstart() {
       {isLoading ? (
         <LoadingAnimation />
       ) : netWorkError ? (
-        <ErrorMessage errorMessage={netWorkError?.message} />
+        <ErrorMessage errorMessage={netWorkError} />
       ) : !EhternetError ? (
         <LoginForm />
       ) : (
