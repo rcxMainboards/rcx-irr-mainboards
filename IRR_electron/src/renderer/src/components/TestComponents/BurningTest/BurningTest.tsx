@@ -16,7 +16,7 @@ function BurningTest({ TestName, nextTest }) {
     if (isSuccess) {
       if (typeof data === 'object' && data !== null && 'message' in data) {
         let messageTests = data.message
-          .map((test) => `${test['Test Name']}: ${test['Result Errors']}`)
+          .map((test) => `${test['Test']}: ${test['Result']}`)
           .join(', ')
         nextTest(TestName, {
           result: true,

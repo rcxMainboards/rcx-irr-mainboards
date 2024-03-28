@@ -19,11 +19,11 @@ function useMainboard() {
   })
 
   const {} = useQuery({
-    queryKey: ['wifi'],
-    queryFn: disableWifi,
-    refetchOnWindowFocus: false,
-    retry: false,
-    enabled: isSuccess
+  queryKey: ['wifi'],
+  queryFn: disableWifi,
+  refetchOnWindowFocus: false,
+  retry: false,
+  enabled: isSuccess
   })
 
   const { data } = useQuery({

@@ -31,7 +31,7 @@ import {
 import Test from '../components/TestComponents/interfaces'
 
 const tests: Test[] = [
-  {
+{
     TestComponent: TouchScreenTest,
     TestName: 'Prueba de pantalla táctil',
     TestDescription:
@@ -143,7 +143,7 @@ const tests: Test[] = [
       'Es necesario que el programa se ejecute por el tiempo que fue determinado, por lo que si se cierra el programa de burning de forma manual, la prueba se dara por fallida.'
     ],
     TestTimer: 0
-  },
+},
   {
     TestComponent: KeyBoardTest,
     TestName: 'Prueba de teclado',

@@ -150,6 +150,7 @@ function useAudioTest(
       stop()
     }
   }
+  
   const handleDeviceChangeAtStartRef = useRef(handleDeviceChangeAtStart)
   const handleDeviceChangeDuringTestRef = useRef(handleDeviceChangeDuringTest)
 

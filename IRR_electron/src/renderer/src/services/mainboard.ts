@@ -19,7 +19,7 @@ const getMainboardProfile = async (SSID: string) => {
   const response = await axios.get(
     `${IRR_MB_API}/mainboard/get_SSID_profile/${SSID}`,
     {
-      timeout: 5500
+      timeout: 7500
     }
   )
   return response.data
@@ -27,7 +27,7 @@ const getMainboardProfile = async (SSID: string) => {
 
 const isMainboardRegistered = async (SSID: string) => {
   const response = await axios.get(`${IRR_MB_API}/mainboard/product/${SSID}`, {
-    timeout: 5500
+    timeout: 7500
   })
   return response.data
 }
@@ -39,7 +39,7 @@ const getMainboardProps = async () => {
 
 const sendOutputLog = async (data) => {
   const response = await axios.post(`${IRR_MB_API}/mainboard/saveLog`, data, {
-    timeout: 5500
+    timeout: 7500
   })
   return response.data
 }

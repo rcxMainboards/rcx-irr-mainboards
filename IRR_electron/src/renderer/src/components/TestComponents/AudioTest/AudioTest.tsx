@@ -15,7 +15,7 @@ function AudioTest({ TestName, nextTest }) {
   } = useDisclosure()
 
   const videoRef = useRef(null)
-  
+
   const { secondsLeft, loading } = useAudioTest(
     onOpen,
     onClose,
@@ -30,7 +30,7 @@ function AudioTest({ TestName, nextTest }) {
       {loading ? (
         <Card className="p-10">
           <CardBody>
-            <p>Cargando...</p>
+            <p>Cargando Prueba de Audio...</p>
           </CardBody>
         </Card>
       ) : (
