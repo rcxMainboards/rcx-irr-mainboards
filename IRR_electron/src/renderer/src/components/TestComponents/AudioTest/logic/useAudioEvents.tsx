@@ -5,7 +5,7 @@ import {
   checkDefaultAudioDevice,
   restartVideo
 } from './helperFunctions'
-import { RemoveAudioEventLisener, AddAudioEventLisener } from './eventFunctions'
+import { useMediaDevices } from 'react-media-devices'
 
 function useAudioEvents({
   videoRef,
@@ -18,6 +18,22 @@ function useAudioEvents({
 }) {
   const [sinkId, setSinkId] = useState<any>()
   const [tries, setTries] = useState(3)
+
+  const { devices, loading } = useMediaDevices({
+    constraints: { audio: true },
+    onError: (error) => {
+      console.error(error)
+    }
+  })
+
+  useEffect(() => {
+    if (!loading) {
+      const deviceLabels = formatDeviceLabels(devices)
+      if (!checkDefaultAudioDevice(deviceLabels)) {
+        showModalAndLoseTry()
+      }
+    }
+  }, [loading])
 
   useEffect(() => {
     if (tries === 0) {
@@ -41,17 +57,7 @@ function useAudioEvents({
     start(15)
   }
 
-  const handleDeviceChangeAtStart = async () => {
-    const newDevices = await handleDeviceChange()
-    const deviceLabels = formatDeviceLabels(newDevices)
-    if (checkDefaultAudioDevice(deviceLabels)) {
-      resetTest()
-      RemoveAudioEventLisener(handleDeviceChangeAtStartRef)
-      AddAudioEventLisener(handleDeviceChangeDuringTestRef)
-    }
-  }
-
-  const handleDeviceChangeDuringTest = async () => {
+  const handleErrorDuringTest = async () => {
     const newDevices = await handleDeviceChange()
     const deviceLabels = formatDeviceLabels(newDevices)
     if (checkDefaultAudioDevice(deviceLabels)) {
@@ -61,18 +67,14 @@ function useAudioEvents({
     }
   }
 
-  const handleDeviceChangeAtStartRef = useRef(handleDeviceChangeAtStart)
-  const handleDeviceChangeDuringTestRef = useRef(handleDeviceChangeDuringTest)
+  const handleDeviceChangeDuringTestRef = useRef(handleErrorDuringTest)
 
   useEffect(() => {
-    handleDeviceChangeAtStartRef.current = handleDeviceChangeAtStart
-    handleDeviceChangeDuringTestRef.current = handleDeviceChangeDuringTest
+    handleDeviceChangeDuringTestRef.current = handleErrorDuringTest
   }, [])
 
   return {
-    handleDeviceChangeAtStartRef,
     handleDeviceChangeDuringTestRef,
-    showModalAndLoseTry,
     tries
   }
 }
