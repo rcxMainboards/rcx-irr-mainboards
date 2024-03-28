@@ -52,7 +52,7 @@ function ModalAudioTestF({ isOpen, onOpenChange, nextTest, TestName }) {
                     nextTest(TestName, {
                       result: false,
                       message:
-                        'El usuario decidio que no paso el prueba, y decidio pasar a la siguiente prueba'
+                        'El usuario decidio que no paso la prueba, y decidio pasar a la siguiente prueba'
                     })
                   }}
                 >

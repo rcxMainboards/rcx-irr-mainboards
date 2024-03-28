@@ -1,93 +1,73 @@
-// import { useEffect, useRef, useState } from 'react'
-// import { useMediaDevices } from 'react-media-devices'
-// import useCountDown from '../hooks/useCountDown'
-// import {
-//   changeAudioOutput,
-//   handleDeviceChange,
-//   formatDeviceLabels,
-//   checkDefaultAudioDevice,
-//   findAudioDeviceSpeaker
-// } from './logic/helperFunctions'
+import { useEffect, useState } from 'react'
+import { useMediaDevices } from 'react-media-devices'
+import useCountDown from '../hooks/useCountDown'
+import useAudioEvents from './logic/useAudioEvents'
+import {
+  formatDeviceLabels,
+  checkDefaultAudioDevice
+} from './logic/helperFunctions'
+import { AddAudioEventLisener } from './logic/eventFunctions'
 
-// function useAudioTestR(
-//   onOpen: any,
-//   onClose: any,
-//   videoRef: any,
-//   nextTest: any,
-//   TestName: any,
-//   onOpenAnother: any
-// ) {
-//   const [tries, setTries] = useState(3)
-//   const [sinkId, setSinkId] = useState<any>('')
-//   const { secondsLeft, start, stop } = useCountDown(() => console.log('hola'))
-//   const { devices, loading } = useMediaDevices({
-//     constraints: { audio: true },
-//     onError: (error) => {
-//       console.error(error)
-//     }
-//   })
+function useAudioTestR(
+  onOpen: any,
+  onClose: any,
+  videoRef: any,
+  nextTest: any,
+  TestName: any,
+  onOpenAnother: any
+) {
+  const {
+    secondsLeft: speakerLeft,
+    start: startSpeaker,
+    stop: stopSpeaker
+  } = useCountDown(() => onOpenAnother())
 
-//   const handleDeviceChangeAtStart = async () => {
-//     const newDevices = await handleDeviceChange()
-//     const deviceLabels = formatDeviceLabels(newDevices)
-//     if (checkDefaultAudioDevice(deviceLabels)) {
-//       restartVideo()
-//       onClose()
-//       start(15)
-//       navigator.mediaDevices.removeEventListener(
-//         'devicechange',
-//         handleDeviceChangeAtStartRef.current
-//       )
-//       navigator.mediaDevices.addEventListener(
-//         'devicechange',
-//         handleDeviceChangeDuringTestRef.current
-//       )
-//     }
-//   }
+  const { secondsLeft, start, stop } = useCountDown(() => startSpeaker(15))
 
-//   const handleDeviceChangeDuringTest = async () => {
-//     setSinkId('')
-//     const newDevices = await handleDeviceChange()
-//     const deviceLabels = formatDeviceLabels(newDevices)
-//     if (checkDefaultAudioDevice(deviceLabels)) {
-//       restartVideo()
-//       onClose()
-//       start(15)
-//     } else {
-//       setTries((oldtries) => oldtries - 1)
-//       onOpen()
-//       stop()
-//     }
-//   }
+  const {
+    handleDeviceChangeAtStartRef,
+    handleDeviceChangeDuringTestRef,
+    showModalAndLoseTry,
+    tries
+  } = useAudioEvents({
+    videoRef,
+    onClose,
+    start,
+    onOpen,
+    stop,
+    nextTest,
+    TestName
+  })
 
-//   const restartVideo = () => {
-//     if (videoRef.current) {
-//       videoRef.current.load() // Cargar el video
-//       videoRef.current.play() // Reproducir el video
-//     }
-//   }
+  const { devices, loading } = useMediaDevices({
+    constraints: { audio: true },
+    onError: (error) => {
+      console.error(error)
+    }
+  })
 
-//   const handleDeviceChangeAtStartRef = useRef(handleDeviceChangeAtStart)
-//   const handleDeviceChangeDuringTestRef = useRef(handleDeviceChangeDuringTest)
+  const errorAtStart = () => {
+    showModalAndLoseTry()
+    AddAudioEventLisener(handleDeviceChangeAtStartRef) // Add event listener to check if the default audio device changes
+  }
 
-//   useEffect(() => {
-//     handleDeviceChangeAtStartRef.current = handleDeviceChangeAtStart
-//     handleDeviceChangeDuringTestRef.current = handleDeviceChangeDuringTest
-//   }, [])
+  const AddErrorCatcher = () => {
+    AddAudioEventLisener(handleDeviceChangeDuringTestRef) // Add event listener to check if the default audio device changes
+  }
 
-//   useEffect(() => {
-//     if (!loading) {
-//       const deviceLabels = formatDeviceLabels(devices)
-//       const defaultAudioDevice = checkDefaultAudioDevice(deviceLabels)
-//       if (defaultAudioDevice) {
-//         //   ErrorDuringTest()
-//       } else {
-//         //   ErrorAtStart()
-//       }
-//     }
-//   }, [loading, devices])
+  useEffect(() => {
+    if (!loading) {
+      const deviceLabels = formatDeviceLabels(devices)
+      const defaultAudioDevice = checkDefaultAudioDevice(deviceLabels)
+      if (!defaultAudioDevice) {
+        errorAtStart()
+      } else {
+        AddErrorCatcher()
+      }
+    }
+  }, [loading])
 
-//   return { secondsLeft, loading, devices }
-// }
+  return { secondsLeft, speakerLeft, loading, devices, tries }
+}
 
-// export default useAudioTestR
+export default useAudioTestR
