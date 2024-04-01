@@ -11,7 +11,7 @@ function ErrorMessage({ errorMessage }: any) {
       ) : errorMessage.response && errorMessage.response.status === 404 ? (
         <MainboardNotFound />
       ) : (
-        'Error inesperado'
+        <p className="text-2xl">Ocurrio un error inesperado</p>
       )}
     </div>
   )

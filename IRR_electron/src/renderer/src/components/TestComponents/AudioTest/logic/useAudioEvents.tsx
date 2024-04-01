@@ -12,12 +12,35 @@ function useAudioEvents({
   onClose,
   start,
   stop,
+  stopSpeaker,
   onOpen,
   nextTest,
   TestName
 }) {
-  const [sinkId, setSinkId] = useState<any>()
   const [tries, setTries] = useState(3)
+
+  const showModalAndLoseTry = () => {
+    stop()
+    stopSpeaker()
+    setTries((oldtries) => oldtries - 1)
+    onOpen()
+  }
+
+  const resetTest = () => {
+    start(15)
+    restartVideo(videoRef)
+    onClose()
+  }
+
+  const handleErrorDuringTest = async () => {
+    const newDevices = await handleDeviceChange()
+    const deviceLabels = formatDeviceLabels(newDevices)
+    if (!checkDefaultAudioDevice(deviceLabels)) {
+      showModalAndLoseTry()
+    } else {
+      resetTest()
+    }
+  }
 
   const { devices, loading } = useMediaDevices({
     constraints: { audio: true },
@@ -27,10 +50,14 @@ function useAudioEvents({
   })
 
   useEffect(() => {
-    if (!loading) {
+    // Este efecto al montarse se consigue los dispositivos iniciales.
+    if (!loading && devices) {
       const deviceLabels = formatDeviceLabels(devices)
       if (!checkDefaultAudioDevice(deviceLabels)) {
         showModalAndLoseTry()
+        stop()
+      } else {
+        start(15)
       }
     }
   }, [loading])
@@ -45,36 +72,11 @@ function useAudioEvents({
     }
   }, [tries])
 
-  const showModalAndLoseTry = () => {
-    setTries((oldtries) => oldtries - 1)
-    onOpen()
-    stop()
-  }
-
-  const resetTest = () => {
-    restartVideo(videoRef)
-    onClose()
-    start(15)
-  }
-
-  const handleErrorDuringTest = async () => {
-    const newDevices = await handleDeviceChange()
-    const deviceLabels = formatDeviceLabels(newDevices)
-    if (checkDefaultAudioDevice(deviceLabels)) {
-      resetTest()
-    } else {
-      showModalAndLoseTry()
-    }
-  }
-
   const handleDeviceChangeDuringTestRef = useRef(handleErrorDuringTest)
-
-  useEffect(() => {
-    handleDeviceChangeDuringTestRef.current = handleErrorDuringTest
-  }, [])
 
   return {
     handleDeviceChangeDuringTestRef,
+    loading,
     tries
   }
 }

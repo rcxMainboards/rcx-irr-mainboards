@@ -19,9 +19,11 @@ const checkDefaultAudioDevice = (deviceLabels: any) => {
   )
 }
 
-const findAudioDeviceSpeaker = (deviceLabels: any) => {
-  return deviceLabels.find(
-    (label: string) => label.includes('speaker') || label.includes('speakers')
+function findAudioDeviceSpeaker(devices) {
+  return devices.find(
+    (device) =>
+      device.label.toLowerCase().includes('speaker') ||
+      device.label.toLowerCase().includes('speakers')
   )
 }
 

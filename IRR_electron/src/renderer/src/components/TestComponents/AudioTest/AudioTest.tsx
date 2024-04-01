@@ -1,13 +1,12 @@
 import { Card, CardBody } from '@nextui-org/react'
 import BaseLayout from '../../ui/baseLayout'
 import { useDisclosure } from '@nextui-org/react'
-import useAudioTest from './useAudioTest'
+import useAudioTestR from './useAudioTestR'
 import { ModalNoHeadPhonesWarning, ModalAudioTestF } from '../../ui/index'
 import { useRef } from 'react'
 
 function AudioTest({ TestName, nextTest }) {
   const { onOpen, isOpen, onOpenChange, onClose } = useDisclosure()
-
   const {
     onOpen: onOpenAnother,
     isOpen: isOpenAnother,
@@ -16,7 +15,7 @@ function AudioTest({ TestName, nextTest }) {
 
   const videoRef = useRef(null)
 
-  const { secondsLeft, loading } = useAudioTest(
+  const { secondsLeft, loading, speakerLeft } = useAudioTestR(
     onOpen,
     onClose,
     videoRef,
@@ -38,12 +37,11 @@ function AudioTest({ TestName, nextTest }) {
           {!isOpen ? (
             <Card className=" w-2/4 p-3">
               <CardBody className="grid grid-cols-2 place-items-center">
-                <video
-                  ref={videoRef}
-                  src={`local:///${window.api.getVideoPath()}`}
-                  autoPlay
-                />
-                <p>Tiempo restante: {secondsLeft}</p>
+                <video ref={videoRef} src={`local:///${window.api.getVideoPath()}`} autoPlay />
+                <div className="flex flex-col gap-1">
+                  <p>Audifonos: {secondsLeft === 0 ? 'Probando Bocinas' : secondsLeft}</p>
+                  <p>Bocinas: {secondsLeft > 0 ? 'Probando Audifonos' : speakerLeft}</p>
+                </div>
               </CardBody>
             </Card>
           ) : null}
