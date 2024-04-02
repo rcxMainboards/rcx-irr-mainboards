@@ -22,21 +22,17 @@ function useAudioTestR(
     stop: stopSpeaker
   } = useCountDown(() => onOpenAnother())
 
-  const onHeadPhonesTestEnd = async () => {
+  const getSpeaker = async () => {
     const newDevices = await handleDeviceChange()
     const speakers = findAudioDeviceSpeaker(newDevices)
-    if (speakers) {
-      await changeAudioOutput(videoRef.current, speakers.deviceId)
-      startSpeaker(15)
-    } else {
-      nextTest(TestName, {
-        result: false,
-        message: 'No se detectaron los speakers'
-      })
-    }
+    return speakers.deviceId
   }
 
   const { secondsLeft, start, stop } = useCountDown(() => onHeadPhonesTestEnd())
+
+  const onHeadPhonesTestEnd = async () => {
+    videoRef.current.pause()
+  }
 
   const { handleDeviceChangeDuringTestRef, tries, loading } = useAudioEvents({
     videoRef,
@@ -57,7 +53,7 @@ function useAudioTestR(
     AddErrorCatcher()
   }, [])
 
-  return { secondsLeft, speakerLeft, tries, loading }
+  return { secondsLeft, speakerLeft, tries, loading, getSpeaker, startSpeaker }
 }
 
 export default useAudioTestR

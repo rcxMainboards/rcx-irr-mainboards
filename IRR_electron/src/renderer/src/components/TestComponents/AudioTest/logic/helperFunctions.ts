@@ -8,6 +8,8 @@ async function changeAudioOutput(videoElement: any, deviceId: any) {
 
 const handleDeviceChange = async () => {
   const newDevices = await navigator.mediaDevices.enumerateDevices()
+  console.log('deviceLabels', newDevices)
+
   return newDevices
 }
 
@@ -22,8 +24,8 @@ const checkDefaultAudioDevice = (deviceLabels: any) => {
 function findAudioDeviceSpeaker(devices) {
   return devices.find(
     (device) =>
-      device.label.toLowerCase().includes('speaker') ||
-      device.label.toLowerCase().includes('speakers')
+      (device.label.toLowerCase().includes('speaker') && device.kind === 'audiooutput') ||
+      (device.label.toLowerCase().includes('speakers') && device.kind === 'audiooutput')
   )
 }
 

@@ -55,7 +55,6 @@ function useAudioEvents({
       const deviceLabels = formatDeviceLabels(devices)
       if (!checkDefaultAudioDevice(deviceLabels)) {
         showModalAndLoseTry()
-        stop()
       } else {
         start(15)
       }

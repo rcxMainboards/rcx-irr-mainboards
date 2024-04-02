@@ -3,6 +3,7 @@ import BaseLayout from '../../ui/baseLayout'
 import { useDisclosure } from '@nextui-org/react'
 import useAudioTestR from './useAudioTestR'
 import { ModalNoHeadPhonesWarning, ModalAudioTestF } from '../../ui/index'
+import { Button } from '@nextui-org/react'
 import { useRef } from 'react'
 
 function AudioTest({ TestName, nextTest }) {
@@ -15,7 +16,7 @@ function AudioTest({ TestName, nextTest }) {
 
   const videoRef = useRef(null)
 
-  const { secondsLeft, loading, speakerLeft } = useAudioTestR(
+  const { secondsLeft, loading, speakerLeft, getSpeaker, startSpeaker } = useAudioTestR(
     onOpen,
     onClose,
     videoRef,
@@ -23,6 +24,22 @@ function AudioTest({ TestName, nextTest }) {
     TestName,
     onOpenAnother
   )
+
+  const iniciarSpeakers = async () => {
+    const speakers = await getSpeaker()
+    if (speakers) {
+      // @ts-ignore
+      await videoRef.current.setSinkId(speakers)
+      // @ts-ignore
+      videoRef.current.play()
+      startSpeaker(15)
+    } else {
+      nextTest(TestName, {
+        result: false,
+        message: 'No se detectaron los speakers'
+      })
+    }
+  }
 
   return (
     <BaseLayout>
@@ -41,6 +58,7 @@ function AudioTest({ TestName, nextTest }) {
                 <div className="flex flex-col gap-1">
                   <p>Audifonos: {secondsLeft === 0 ? 'Probando Bocinas' : secondsLeft}</p>
                   <p>Bocinas: {secondsLeft > 0 ? 'Probando Audifonos' : speakerLeft}</p>
+                  <Button onClick={iniciarSpeakers}>Iniciar Speakers</Button>
                 </div>
               </CardBody>
             </Card>
