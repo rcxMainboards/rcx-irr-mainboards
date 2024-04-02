@@ -2,8 +2,8 @@ import BaseLayout from '../../ui/baseLayout'
 import { Card, CardBody } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import { executeRamTest } from './services/ram'
-import { useEffect } from 'react'
 import { errorData } from '../../../utils/functions'
+import { useEffect } from 'react'
 
 function RamTest({ TestName, nextTest, profile }) {
   const { data, isLoading, error, isFetching } = useQuery({
@@ -15,7 +15,7 @@ function RamTest({ TestName, nextTest, profile }) {
   })
 
   useEffect(() => {
-    if (!isLoading && !error && data) {
+    if (!isLoading && data) {
       const memory = data.memory
       if (profile.ram_amount === memory) {
         nextTest(TestName, {
@@ -25,15 +25,14 @@ function RamTest({ TestName, nextTest, profile }) {
       } else {
         nextTest(TestName, {
           result: false,
-          message: `La Ram instalada en la mainboard conincide con el del perfil del SSID | Memoria Instalada: ${memory}, Memoria del perfil ${profile.ram_amount}`
+          message: `La Ram instalada en la mainboard NO conincide con el del perfil del SSID | Memoria Instalada: ${memory}, Memoria del perfil ${profile.ram_amount}`
         })
       }
-    }
-    if (!isFetching) {
+    } else if (!isFetching) {
       nextTest(TestName, {
         result: true,
         message:
-          'El Perfil del Mainboard tiene partes integradas por lo que no se puede hacer la Comparación de Ram'
+          'El Perfil del Mainboard tiene partes integradas por lo que se omite Comparación de Ram'
       })
     }
   }, [isLoading])

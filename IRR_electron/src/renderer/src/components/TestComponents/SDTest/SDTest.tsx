@@ -8,7 +8,7 @@ import { ModalSDProtected } from '../../ui/index'
 import { useDisclosure } from '@nextui-org/react'
 
 function SDTest({ TestName, nextTest, profile }) {
-  const { isLoading, error, refetch, isSuccess } = useQuery({
+  const { isLoading, error, refetch, isSuccess, isFetching } = useQuery({
     queryKey: ['SDTest'],
     queryFn: executeSDTest,
     enabled: profile.sd_reader,
@@ -23,12 +23,6 @@ function SDTest({ TestName, nextTest, profile }) {
   }
 
   useEffect(() => {
-    if (!profile.sd_reader) {
-      nextTest(TestName, {
-        result: true,
-        message: 'Este Mainboard no cuenta con lector SD segun el perfil'
-      })
-    }
     if (isSuccess) {
       nextTest(TestName, {
         result: true,
@@ -44,6 +38,11 @@ function SDTest({ TestName, nextTest, profile }) {
           message: errorData(error)
         })
       }
+    } else if (!isFetching) {
+      nextTest(TestName, {
+        result: true,
+        message: 'Este Mainboard no cuenta con lector SD segun el perfil'
+      })
     }
   }, [isLoading])
 

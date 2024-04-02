@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { errorData } from '../../../utils/functions'
 
 function FingerPrintTest({ TestName, nextTest, profile }) {
-  const { isLoading, error } = useQuery({
+  const { isLoading, data, error, isFetching } = useQuery({
     queryKey: ['fingerPrintTest'],
     queryFn: executeFingerPrintTest,
     retry: false,
@@ -15,13 +15,7 @@ function FingerPrintTest({ TestName, nextTest, profile }) {
   })
 
   useEffect(() => {
-    if (!profile.fingerPrint) {
-      nextTest(TestName, {
-        result: true,
-        message: 'Este Mainboard no cuenta con FingerPrint segun el perfil'
-      })
-    }
-    if (!isLoading && !error) {
+    if (!isLoading && data) {
       nextTest(TestName, {
         result: true,
         message: 'Prueba de FingerPrint exitosa'
@@ -30,6 +24,11 @@ function FingerPrintTest({ TestName, nextTest, profile }) {
       nextTest(TestName, {
         result: false,
         message: errorData(error)
+      })
+    } else if (!isFetching) {
+      nextTest(TestName, {
+        result: true,
+        message: 'El Perfil del Mainboard no tiene FingerPrint, por lo que se omite la prueba'
       })
     }
   }, [isLoading])
