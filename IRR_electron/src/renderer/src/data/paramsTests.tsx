@@ -112,7 +112,7 @@ const tests: Test[] = [
     ],
     TestTimer: 0,
     TestTries: 3
-  }
+  },
   {
     TestComponent: BlueToothTest,
     TestName: 'Prueba de Bluetooth',
