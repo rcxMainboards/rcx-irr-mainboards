@@ -1,8 +1,8 @@
 const motionV1 = {
   variants: {
     enter: {
-      scale: 'var(--scale-enter)',
-      y: 'var(--slide-enter)',
+      scale: '1',
+      y: '1.2',
       opacity: 1,
       transition: {
         scale: { duration: 0.4, ease: [0.36, 0.66, 0.4, 1] },
@@ -11,8 +11,8 @@ const motionV1 = {
       }
     },
     exit: {
-      scale: 'var(--scale-exit)',
-      y: 'var(--slide-exit)',
+      scale: '1',
+      y: '1.2',
       opacity: 0,
       transition: { duration: 0.3, ease: [0.36, 0.66, 0.4, 1] }
     }

@@ -1,12 +1,7 @@
 import { useEffect } from 'react'
 import useCountDown from '../hooks/useCountDown'
 import useAudioEvents from './logic/useAudioEvents'
-import { AddAudioEventLisener } from './logic/eventFunctions'
-import {
-  handleDeviceChange,
-  findAudioDeviceSpeaker,
-  changeAudioOutput
-} from './logic/helperFunctions'
+import { AddAudioEventLisener, RemoveAudioEventLisener } from './logic/eventFunctions'
 
 function useAudioTestR(
   onOpen: any,
@@ -14,7 +9,9 @@ function useAudioTestR(
   videoRef: any,
   nextTest: any,
   TestName: any,
-  onOpenAnother: any
+  onOpenAnother: any,
+  onOpenConnect: any,
+  oncloseConnect: any
 ) {
   const {
     secondsLeft: speakerLeft,
@@ -22,28 +19,29 @@ function useAudioTestR(
     stop: stopSpeaker
   } = useCountDown(() => onOpenAnother())
 
-  const getSpeaker = async () => {
-    const newDevices = await handleDeviceChange()
-    const speakers = findAudioDeviceSpeaker(newDevices)
-    return speakers.deviceId
-  }
-
   const { secondsLeft, start, stop } = useCountDown(() => onHeadPhonesTestEnd())
 
-  const onHeadPhonesTestEnd = async () => {
+  const onHeadPhonesTestEnd = () => {
     videoRef.current.pause()
+    onOpenConnect()
+    RemoveAudioEventLisener(handleDeviceChangeDuringTestRef)
+    AddAudioEventLisener(handleConnectHeadPhonesRef)
   }
 
-  const { handleDeviceChangeDuringTestRef, tries, loading } = useAudioEvents({
-    videoRef,
-    onClose,
-    start,
-    onOpen,
-    stop,
-    stopSpeaker,
-    nextTest,
-    TestName
-  })
+  const { handleDeviceChangeDuringTestRef, tries, loading, handleConnectHeadPhonesRef } =
+    useAudioEvents({
+      videoRef,
+      onClose,
+      start,
+      onOpen,
+      stop,
+      stopSpeaker,
+      startSpeaker,
+      nextTest,
+      TestName,
+      oncloseConnect,
+      onOpenConnect
+    })
 
   const AddErrorCatcher = () => {
     AddAudioEventLisener(handleDeviceChangeDuringTestRef) // Add event listener to check if the default audio device changes
@@ -53,7 +51,7 @@ function useAudioTestR(
     AddErrorCatcher()
   }, [])
 
-  return { secondsLeft, speakerLeft, tries, loading, getSpeaker, startSpeaker }
+  return { secondsLeft, speakerLeft, tries, loading }
 }
 
 export default useAudioTestR

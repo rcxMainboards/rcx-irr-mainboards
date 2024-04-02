@@ -1,10 +1,4 @@
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Button
-} from '@nextui-org/react'
+import { Modal, ModalContent, ModalHeader, ModalBody, Button } from '@nextui-org/react'
 import motionV1 from '../../utils/motionVariants'
 import { FaCheckCircle } from 'react-icons/fa'
 import { MdOutlineDangerous } from 'react-icons/md'
@@ -28,8 +22,8 @@ function ModalAudioTestF({ isOpen, onOpenChange, nextTest, TestName }) {
               </ModalHeader>
               <ModalBody>
                 <p>
-                  Se ha terminado todo el proceso de la prueba. ¿El audio tanto
-                  en audifonos como en bocinas se escucho correctamente?
+                  Se ha terminado todo el proceso de la prueba. ¿El audio tanto en audifonos como en
+                  bocinas se escucho correctamente?
                 </p>
                 <Button
                   className="bg-primary-500 text-white"
@@ -38,8 +32,7 @@ function ModalAudioTestF({ isOpen, onOpenChange, nextTest, TestName }) {
                     onClose()
                     nextTest(TestName, {
                       result: true,
-                      message:
-                        'El usuario decidio que paso la prueba, y decidio pasar a la siguiente prueba'
+                      message: 'Prueba Audio exitosa'
                     })
                   }}
                 >

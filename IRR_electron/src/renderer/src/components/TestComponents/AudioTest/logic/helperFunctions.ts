@@ -13,24 +13,22 @@ const handleDeviceChange = async () => {
   return newDevices
 }
 
-const checkDefaultAudioDevice = (deviceLabels: any) => {
-  return deviceLabels.find(
-    (label: string) =>
-      (label.includes('headphones') && label.includes('default')) ||
-      (label.includes('headphone') && label.includes('default'))
+const findSpeakers = (devices: any) => {
+  return devices.find(
+    (device: any) =>
+      device.label.toLowerCase().includes('speaker') ||
+      device.label.toLowerCase().includes('speakers')
   )
 }
 
-function findAudioDeviceSpeaker(devices) {
+function isHeadPhoneDefault(devices) {
   return devices.find(
     (device) =>
-      (device.label.toLowerCase().includes('speaker') && device.kind === 'audiooutput') ||
-      (device.label.toLowerCase().includes('speakers') && device.kind === 'audiooutput')
+      (device.label.toLowerCase().includes('headphones') &&
+        device.label.toLowerCase().includes('default')) ||
+      (device.label.toLowerCase().includes('headphone') &&
+        device.label.toLowerCase().includes('default'))
   )
-}
-
-const formatDeviceLabels = (deviceLabels: any) => {
-  return deviceLabels.map((device: any) => device.label.toLowerCase())
 }
 
 const restartVideo = (videoRef) => {
@@ -40,11 +38,4 @@ const restartVideo = (videoRef) => {
   }
 }
 
-export {
-  changeAudioOutput,
-  handleDeviceChange,
-  formatDeviceLabels,
-  checkDefaultAudioDevice,
-  findAudioDeviceSpeaker,
-  restartVideo
-}
+export { changeAudioOutput, handleDeviceChange, findSpeakers, isHeadPhoneDefault, restartVideo }

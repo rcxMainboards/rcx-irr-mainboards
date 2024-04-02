@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   handleDeviceChange,
-  formatDeviceLabels,
-  checkDefaultAudioDevice,
+  findSpeakers,
+  isHeadPhoneDefault,
   restartVideo
 } from './helperFunctions'
 import { useMediaDevices } from 'react-media-devices'
@@ -13,9 +13,12 @@ function useAudioEvents({
   start,
   stop,
   stopSpeaker,
+  startSpeaker,
   onOpen,
+  onOpenConnect,
   nextTest,
-  TestName
+  TestName,
+  oncloseConnect
 }) {
   const [tries, setTries] = useState(3)
 
@@ -26,6 +29,14 @@ function useAudioEvents({
     onOpen()
   }
 
+  const showModalConnectAndLoseTry = () => {
+    stop()
+    stopSpeaker()
+    videoRef.current.pause()
+    setTries((oldtries) => oldtries - 1)
+    onOpenConnect()
+  }
+
   const resetTest = () => {
     start(15)
     restartVideo(videoRef)
@@ -34,11 +45,21 @@ function useAudioEvents({
 
   const handleErrorDuringTest = async () => {
     const newDevices = await handleDeviceChange()
-    const deviceLabels = formatDeviceLabels(newDevices)
-    if (!checkDefaultAudioDevice(deviceLabels)) {
+    if (isHeadPhoneDefault(newDevices)) {
       showModalAndLoseTry()
     } else {
       resetTest()
+    }
+  }
+
+  const handleConnectHeadPhones = async () => {
+    const newDevices = await handleDeviceChange()
+    if (isHeadPhoneDefault(newDevices)) {
+      oncloseConnect()
+      videoRef.current.play()
+      startSpeaker(15)
+    } else {
+      showModalConnectAndLoseTry()
     }
   }
 
@@ -52,8 +73,13 @@ function useAudioEvents({
   useEffect(() => {
     // Este efecto al montarse se consigue los dispositivos iniciales.
     if (!loading && devices) {
-      const deviceLabels = formatDeviceLabels(devices)
-      if (!checkDefaultAudioDevice(deviceLabels)) {
+      console.log('devices', devices)
+      if (!findSpeakers(devices)) {
+        nextTest(TestName, {
+          result: false,
+          message: 'No se encontraron bocinas en el sistema conectados'
+        })
+      } else if (isHeadPhoneDefault(devices)) {
         showModalAndLoseTry()
       } else {
         start(15)
@@ -72,9 +98,11 @@ function useAudioEvents({
   }, [tries])
 
   const handleDeviceChangeDuringTestRef = useRef(handleErrorDuringTest)
+  const handleConnectHeadPhonesRef = useRef(handleConnectHeadPhones)
 
   return {
     handleDeviceChangeDuringTestRef,
+    handleConnectHeadPhonesRef,
     loading,
     tries
   }

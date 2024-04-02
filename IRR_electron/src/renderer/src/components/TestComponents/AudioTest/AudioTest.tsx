@@ -3,7 +3,6 @@ import BaseLayout from '../../ui/baseLayout'
 import { useDisclosure } from '@nextui-org/react'
 import useAudioTestR from './useAudioTestR'
 import { ModalNoHeadPhonesWarning, ModalAudioTestF } from '../../ui/index'
-import { Button } from '@nextui-org/react'
 import { useRef } from 'react'
 
 function AudioTest({ TestName, nextTest }) {
@@ -13,33 +12,25 @@ function AudioTest({ TestName, nextTest }) {
     isOpen: isOpenAnother,
     onOpenChange: onOpenChangeAnother
   } = useDisclosure()
+  const {
+    onOpen: onOpenConnect,
+    isOpen: isOpenConnect,
+    onOpenChange: onOpenChangeConect,
+    onClose: oncloseConnect
+  } = useDisclosure()
 
   const videoRef = useRef(null)
 
-  const { secondsLeft, loading, speakerLeft, getSpeaker, startSpeaker } = useAudioTestR(
+  const { secondsLeft, loading, speakerLeft } = useAudioTestR(
     onOpen,
     onClose,
     videoRef,
     nextTest,
     TestName,
-    onOpenAnother
+    onOpenAnother,
+    onOpenChangeConect,
+    oncloseConnect
   )
-
-  const iniciarSpeakers = async () => {
-    const speakers = await getSpeaker()
-    if (speakers) {
-      // @ts-ignore
-      await videoRef.current.setSinkId(speakers)
-      // @ts-ignore
-      videoRef.current.play()
-      startSpeaker(15)
-    } else {
-      nextTest(TestName, {
-        result: false,
-        message: 'No se detectaron los speakers'
-      })
-    }
-  }
 
   return (
     <BaseLayout>
@@ -56,9 +47,8 @@ function AudioTest({ TestName, nextTest }) {
               <CardBody className="grid grid-cols-2 place-items-center">
                 <video ref={videoRef} src={`local:///${window.api.getVideoPath()}`} autoPlay />
                 <div className="flex flex-col gap-1">
-                  <p>Audifonos: {secondsLeft === 0 ? 'Probando Bocinas' : secondsLeft}</p>
-                  <p>Bocinas: {secondsLeft > 0 ? 'Probando Audifonos' : speakerLeft}</p>
-                  <Button onClick={iniciarSpeakers}>Iniciar Speakers</Button>
+                  <p>Probando Bocinas: {secondsLeft}</p>
+                  {secondsLeft === 0 ? <p>Probando Audifonos: {speakerLeft}</p> : null}
                 </div>
               </CardBody>
             </Card>
@@ -68,12 +58,26 @@ function AudioTest({ TestName, nextTest }) {
             onOpenChange={onOpenChange}
             nextTest={nextTest}
             TestName={TestName}
+            title={'No se deben conectar los Audifonos mientras se prueban las bocinas'}
+            message={
+              'No debe conectar los Audifonos mientras se prueban las bocinas, desconectelos para que se reinicie la prueba'
+            }
           />
           <ModalAudioTestF
             isOpen={isOpenAnother}
             onOpenChange={onOpenChangeAnother}
             nextTest={nextTest}
             TestName={TestName}
+          />
+          <ModalNoHeadPhonesWarning
+            isOpen={isOpenConnect}
+            onOpenChange={onOpenConnect}
+            nextTest={nextTest}
+            TestName={TestName}
+            title={'Conecte los Audifonos para continuar con la prueba'}
+            message={
+              'Para que avance la prueba debe de conectar los audifonos, esta ventana se quitara de forma automática, si la ventana no se quita despues de conectarlos, presione el boton para ir a la siguiente prueba'
+            }
           />
         </>
       )}

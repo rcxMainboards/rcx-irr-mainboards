@@ -1,10 +1,4 @@
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Button
-} from '@nextui-org/react'
+import { Modal, ModalContent, ModalHeader, ModalBody, Button } from '@nextui-org/react'
 import motionV1 from '../../utils/motionVariants'
 import { MdOutlineDangerous } from 'react-icons/md'
 import { FaHeadphones } from 'react-icons/fa'
@@ -13,7 +7,9 @@ export default function ModalNoHeadPhonesWarning({
   isOpen,
   onOpenChange,
   nextTest,
-  TestName
+  TestName,
+  title,
+  message
 }) {
   return (
     <>
@@ -29,16 +25,11 @@ export default function ModalNoHeadPhonesWarning({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col items-center gap-3 text-3xl font-semibold">
-                No se detectaron audífonos
+                {title}
                 <FaHeadphones size={44} />
               </ModalHeader>
               <ModalBody>
-                <p>
-                  No se detectaron audífonos conectados, por favor conecta unos
-                  audífonos para continuar con el test. Una vez conectados la
-                  prueba se va a reiniciar. si esto no sucede, de el test por
-                  fallido.
-                </p>
+                <p>{message}</p>
                 <Button
                   color="danger"
                   startContent={<MdOutlineDangerous size={20} />}
