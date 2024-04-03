@@ -14,13 +14,13 @@ function useMainboard() {
     retry: false
   })
 
-  const {} = useQuery({
-    queryKey: ['wifi'],
-    queryFn: disableWifi,
-    refetchOnWindowFocus: false,
-    retry: false,
-    enabled: isSuccess
-  })
+  // const {} = useQuery({
+  //   queryKey: ['wifi'],
+  //   queryFn: disableWifi,
+  //   refetchOnWindowFocus: false,
+  //   retry: false,
+  //   enabled: isSuccess
+  // })
 
   const { data } = useQuery({
     queryKey: ['SSID'],

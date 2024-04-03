@@ -4,10 +4,11 @@ import useCountDown from '../hooks/useCountDown'
 const TIME_SPARE = 120
 
 const KeyboardLayout = {
-  Base: 82,
-  NumPad: 99,
-  NumPadV1: 100,
-  BaseV1: 83
+  '60%Keyboardv1': 77,
+  '65%Keyboardv1': 82,
+  '65%Keyboardv2': 83,
+  '95%Keyboardv1': 99,
+  '95%Keyboardv2': 100
 }
 
 function useKeyboardTest(TestName, nextTest, onOpen, profile) {
@@ -23,12 +24,16 @@ function useKeyboardTest(TestName, nextTest, onOpen, profile) {
   }, [])
 
   useEffect(() => {
-    console.log(keysPresed)
     if (keysAmount) {
       if (keysPresed === keysAmount) {
         nextTest(TestName, {
           result: true,
           message: 'Prueba de Teclado Exitosa'
+        })
+      } else if (!keysAmount) {
+        nextTest(TestName, {
+          result: false,
+          message: 'No se encontró un teclado válido para la prueba'
         })
       }
     }

@@ -2,20 +2,26 @@ import {
   KeyboardLayoutBase,
   KeyboardLayoutBaseV1,
   KeyboardLayoutNumPad,
-  KeyboardLayoutNumPadV1
+  KeyboardLayoutNumPadV1,
+  KeyboardLayout60
 } from './Keyboards/index'
 
+const KeyboardLayouts = {
+  '60%Keyboard': KeyboardLayout60,
+  '65%Keyboardv1': KeyboardLayoutBase,
+  '65%Keyboardv2': KeyboardLayoutBaseV1,
+  '95%Keyboardv1': KeyboardLayoutNumPad,
+  '95%Keyboardv2': KeyboardLayoutNumPadV1
+}
+
 function KeyboardContainer({ handleKeyDown, profile }) {
-  if (profile.keyboard === 'Base') {
-    return <KeyboardLayoutBase handleKeyDown={handleKeyDown} />
-  } else if (profile.keyboard === 'NumPad') {
-    return <KeyboardLayoutNumPad handleKeyDown={handleKeyDown} />
-  } else if (profile.keyboard === 'NumPadV1') {
-    return <KeyboardLayoutNumPadV1 handleKeyDown={handleKeyDown} />
-  } else if (profile.keyboard === 'BaseV1') {
-    return <KeyboardLayoutBaseV1 handleKeyDown={handleKeyDown} />
+  const KeyboardLayout = KeyboardLayouts[profile.keyboard]
+
+  if (KeyboardLayout) {
+    return <KeyboardLayout handleKeyDown={handleKeyDown} />
   }
-  return <h1>No se pudo asignar un Teclado válido</h1>
+
+  return <h1 className="text-white">No se encontro un Teclado Válido para la prueba</h1>
 }
 
 export default KeyboardContainer
