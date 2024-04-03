@@ -5,8 +5,17 @@ import {
   getMainboardProfile
 } from '../../services/mainboard'
 import { disableWifi, checkEthernet, initServer } from '../../services/internalServices'
+import { useEffect, useState } from 'react'
 
 function useMainboard() {
+  const [appStatus, setAppStatus] = useState<boolean>()
+
+  useEffect(() => {
+    window.api.getAppStatus().then((status: boolean) => {
+      setAppStatus(status)
+    })
+  }, [])
+
   const { isLoading: loadingServer, isSuccess } = useQuery({
     queryKey: ['initServer'],
     queryFn: initServer,
@@ -14,13 +23,13 @@ function useMainboard() {
     retry: false
   })
 
-  // const {} = useQuery({
-  //   queryKey: ['wifi'],
-  //   queryFn: disableWifi,
-  //   refetchOnWindowFocus: false,
-  //   retry: false,
-  //   enabled: isSuccess
-  // })
+  const {} = useQuery({
+    queryKey: ['wifi'],
+    queryFn: disableWifi,
+    refetchOnWindowFocus: false,
+    retry: false,
+    enabled: isSuccess && appStatus
+  })
 
   const { data } = useQuery({
     queryKey: ['SSID'],

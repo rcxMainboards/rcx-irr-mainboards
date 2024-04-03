@@ -29,35 +29,38 @@ function WarningStartingApp({ onOpenChange }) {
           {(onClose) => (
             <div className="flex flex-col items-center justify-center">
               <ModalBody className="flex min-h-screen flex-col items-center justify-center">
-                <div className="grid max-w-[50rem] grid-cols-[1.5fr_1fr] place-items-center gap-7 rounded-lg bg-white p-10 px-12 shadow-lg">
+                <div className="grid max-w-[60rem] grid-cols-[1.5fr_1fr] place-items-center gap-7 rounded-lg bg-white p-10 px-12 shadow-lg">
                   <main className="flex flex-col justify-center gap-3">
                     <h1 className="text-2xl font-semibold text-warning-600">
                       Versión de la Aplicación: {appVersion}
                     </h1>
                     <div className="flex items-center gap-2">
-                      <h2 className="text-3xl font-bold text-warning-500">
-                        Atención
-                      </h2>
+                      <h2 className="text-3xl font-bold text-warning-500">Atención</h2>
                       <IoIosWarning size={37} />
                     </div>
-                    <p>
-                      Antes de iniciar esta aplicación, asegúrese de que esta{' '}
-                      <strong>conectado por Ethernet al Servidor</strong>, {''}
-                      de otra forma la aplicación no funcionará.
+                    <p className="font-bold">
+                      Antes de iniciar esta aplicación, asegúrese de que esta conectado por Ethernet
+                      al Servidor, {''}
+                      de otra forma
                     </p>
-                    <p>
-                      Se recomienda que desde este momento conecte los
-                      siguientes dispositivos:
-                    </p>
+                    <p>Se recomienda que desde este momento conecte los siguientes dispositivos:</p>
                     <ul className=" list-disc">
                       <li>La cantidad de USB en la base a los puertos.</li>
+                      <li>Insertar una tarjeta SD si la Mainboard tiene lector.</li>
                       <li>
-                        Insertar una tarjeta SD si la Mainboard tiene lector.
+                        Es posible conectar los los dispositivos anteriormente mencionados antes de
+                        que inice la prueba en especifico, pero se recomienda hacerlo antes de
+                        iniciar la aplicación dado que{' '}
+                        <strong>
+                          la conexión de estos dispositivos es un proceso asíncrono y no instantaneo
+                        </strong>
+                        , por lo que si inicia la prueba y el sistema operativos no los ha detectado
+                        aun <strong>estas pruebas fallaran</strong>.
                       </li>
                       <li>
                         <strong>
-                          Solo se debe conectar el cable de Ethernet por USB si
-                          este no tiene un puerto físico.
+                          Solo se debe conectar el cable de Ethernet por Adaptador USB si este no
+                          tiene un puerto nativo disponible.
                         </strong>
                       </li>
                     </ul>
@@ -76,7 +79,6 @@ function WarningStartingApp({ onOpenChange }) {
                     <CgEthernet size={70} />
                     <GiUsbKey size={70} />
                     <FaSdCard size={70} />
-                    <FaHeadphones size={70} />
                   </section>
                 </div>
               </ModalBody>
