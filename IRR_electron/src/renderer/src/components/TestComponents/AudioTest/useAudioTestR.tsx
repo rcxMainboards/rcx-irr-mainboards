@@ -17,7 +17,10 @@ function useAudioTestR(
     secondsLeft: speakerLeft,
     start: startSpeaker,
     stop: stopSpeaker
-  } = useCountDown(() => onOpenAnother())
+  } = useCountDown(() => {
+    onOpenAnother()
+    RemoveAudioEventLisener(handleConnectHeadPhonesRef)
+  })
 
   const { secondsLeft, start, stop } = useCountDown(() => onHeadPhonesTestEnd())
 

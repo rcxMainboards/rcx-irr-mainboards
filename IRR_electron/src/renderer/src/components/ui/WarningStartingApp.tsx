@@ -2,7 +2,7 @@ import { Modal, ModalContent, ModalBody, Button } from '@nextui-org/react'
 import motionV1 from '../../utils/motionVariants'
 import { IoIosWarning } from 'react-icons/io'
 import { GiUsbKey } from 'react-icons/gi'
-import { FaSdCard, FaHeadphones } from 'react-icons/fa'
+import { FaSdCard } from 'react-icons/fa'
 import { CgEthernet } from 'react-icons/cg'
 import { useState, useEffect } from 'react'
 
