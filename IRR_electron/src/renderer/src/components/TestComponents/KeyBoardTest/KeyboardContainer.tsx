@@ -11,7 +11,7 @@ const KeyboardLayouts = {
   '60%Keyboard': KeyboardLayout60,
   '65%Keyboardv1': KeyboardLayoutBase,
   '65%Keyboardv2': KeyboardLayoutBaseV1,
-  '65Keyboardv3': KeyboardLayout65v3,
+  '65%Keyboardv3': KeyboardLayout65v3,
   '95%Keyboardv1': KeyboardLayoutNumPad,
   '95%Keyboardv2': KeyboardLayoutNumPadV1
 }
