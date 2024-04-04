@@ -5,10 +5,7 @@ function useTouchTest(
   onOpen: () => void,
   TestTimer: number,
   TestName: string,
-  nextTest: (
-    TestName: string,
-    detailsResult: { result: boolean; message: string }
-  ) => void
+  nextTest: (TestName: string, detailsResult: { result: boolean; message: string }) => void
 ) {
   const [boxes, setBoxes] = useState(Array(256).fill('bg-accent-500'))
 
@@ -22,7 +19,7 @@ function useTouchTest(
     if (boxes.every((box) => box === 'bg-transparent')) {
       nextTest(TestName, {
         result: true,
-        message: 'Prueba completada con éxito'
+        message: 'Prueba táctil con exitosa'
       })
     }
   }, [boxes])
@@ -48,9 +45,7 @@ function useTouchTest(
       const element = document.elementFromPoint(touchX, touchY)
 
       // Obtener el índice del elemento si es una caja
-      const index = Array.from(e.currentTarget.children).indexOf(
-        element as Element
-      )
+      const index = Array.from(e.currentTarget.children).indexOf(element as Element)
 
       if (boxes.every((box) => box === 'bg-white')) {
         return

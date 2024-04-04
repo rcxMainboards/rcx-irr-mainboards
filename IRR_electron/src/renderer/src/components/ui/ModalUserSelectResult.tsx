@@ -60,7 +60,7 @@ function ModalUserSelectResult({
                     })
                   }}
                 >
-                  Paso la Prueba (exitoso)
+                  Paso la Prueba (exitosa)
                 </Button>
                 <Button
                   color="danger"

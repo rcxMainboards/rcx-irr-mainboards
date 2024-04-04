@@ -36,7 +36,7 @@ function ModalAudioTestF({ isOpen, onOpenChange, nextTest, TestName }) {
                     })
                   }}
                 >
-                  Paso la prueba (exitoso)
+                  Paso la prueba (exitosa)
                 </Button>
                 <Button
                   color="danger"

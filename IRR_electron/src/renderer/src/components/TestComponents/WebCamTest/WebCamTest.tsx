@@ -31,7 +31,7 @@ function WebCamTest({ TestName, nextTest }) {
               onPress={() => {
                 nextTest(TestName, {
                   result: true,
-                  message: 'Paso la Prueba'
+                  message: 'Prueba de camara exitosa'
                 })
               }}
             >
@@ -44,8 +44,7 @@ function WebCamTest({ TestName, nextTest }) {
               onPress={() => {
                 nextTest(TestName, {
                   result: false,
-                  message:
-                    'El usuario decidio que paso la prueba, y decidio pasar a la siguiente'
+                  message: 'El usuario decidio que paso la prueba, y decidio pasar a la siguiente'
                 })
               }}
             >
