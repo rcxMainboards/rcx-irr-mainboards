@@ -4,7 +4,12 @@ import {
   isMainboardRegistered,
   getMainboardProfile
 } from '../../services/mainboard'
-import { disableWifi, checkEthernet, initServer } from '../../services/internalServices'
+import {
+  disableWifi,
+  checkEthernet,
+  initServer,
+  executeFirmware
+} from '../../services/internalServices'
 import { useEffect, useState } from 'react'
 
 function useMainboard() {
@@ -21,6 +26,14 @@ function useMainboard() {
     queryFn: initServer,
     refetchOnWindowFocus: false,
     retry: false
+  })
+
+  const { isLoading: isLoadingFirmware, error: errorFirmware } = useQuery({
+    queryKey: ['firmware'],
+    queryFn: executeFirmware,
+    refetchOnWindowFocus: false,
+    retry: false,
+    enabled: isSuccess
   })
 
   const {} = useQuery({
@@ -69,11 +82,12 @@ function useMainboard() {
     retry: false
   })
 
-  const isLoading = loadingServer || isLoadingRegistration || loadingEthernet
+  const isLoading = loadingServer || isLoadingRegistration || loadingEthernet || isLoadingFirmware
 
   return {
     netWorkError,
     EhternetError,
+    errorFirmware,
     isLoading
   }
 }
