@@ -5,11 +5,11 @@
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
-  "repository": "https://github.com/EDGARTOYIN/ElectronREMAKE",
+  "repository": "https://github.com/rcxMainboards/rcx-irr-mainboards",
   "publish": {
     "provider": "github",
-    "owner": "EDGARTOYIN",
-    "repo": "ElectronREMAKE",
+    "owner": "rcxMainboards",
+    "repo": "rcx-irr-mainboards",
     "releaseType": "release"
   },
   "scripts": {
