@@ -1,5 +1,5 @@
 import { Button } from '@nextui-org/react'
-import { Card, CardBody, Spinner } from '@nextui-org/react'
+import { Card, CardBody } from '@nextui-org/react'
 import BaseLayout from '../../ui/baseLayout'
 import { FaCheckCircle } from 'react-icons/fa'
 import { MdOutlineDangerous } from 'react-icons/md'
