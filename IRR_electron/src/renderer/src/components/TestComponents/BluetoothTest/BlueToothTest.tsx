@@ -1,5 +1,5 @@
 import BaseLayout from '../../ui/baseLayout'
-import { Card, CardBody } from '@nextui-org/react'
+import { Card, CardBody, Spinner } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import { errorData } from '../../../utils/functions'
 import { executeBluetooth } from './services/bluetooth'
@@ -32,7 +32,10 @@ function BlueToothTest({ TestName, nextTest }) {
       <Card className="p-10">
         <CardBody>
           {isLoading ? (
-            <p>Ejecutando Prueba de Bluetooth...</p>
+            <div className='flex gap-4 items-center'>
+              <p>Ejecutando Prueba de Bluetooth</p>
+              <Spinner color="primary"/>
+            </div>
           ) : error ? (
             errorData(error)
           ) : (

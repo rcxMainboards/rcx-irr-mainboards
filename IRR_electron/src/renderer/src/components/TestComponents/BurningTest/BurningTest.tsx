@@ -1,5 +1,5 @@
 import BaseLayout from '../../ui/baseLayout'
-import { Card, CardBody } from '@nextui-org/react'
+import { Card, CardBody, Spinner } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import { executeBurning } from './Services/burning'
 import { errorData } from '../../../utils/functions'
@@ -36,7 +36,10 @@ function BurningTest({ TestName, nextTest }) {
     <BaseLayout>
       <Card className="p-10">
         <CardBody>
-          <p>Ejecutando Burning...</p>
+          <div className='flex gap-4 items-center'>
+              <p>Ejecutando Burning</p>
+              <Spinner color="primary"/>
+          </div>
           {error ? errorData(error) : null}
         </CardBody>
       </Card>

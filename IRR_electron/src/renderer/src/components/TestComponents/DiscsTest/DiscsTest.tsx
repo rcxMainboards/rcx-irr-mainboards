@@ -1,5 +1,5 @@
 import BaseLayout from '../../ui/baseLayout'
-import { Card, CardBody } from '@nextui-org/react'
+import { Card, CardBody, Spinner } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { executeDiskTest } from './services/disc'
@@ -34,7 +34,10 @@ function DiscsTest({ TestName, nextTest, profile }) {
       {!profile.integrated ? (
         <Card className="p-10">
           <CardBody>
-            <p>Ejecutando Prueba de discos...</p>
+            <div className='flex gap-4 items-center'>
+              <p>Ejecutando Prueba de discos</p>
+              <Spinner color="primary"/>
+            </div>
           </CardBody>
         </Card>
       ) : (

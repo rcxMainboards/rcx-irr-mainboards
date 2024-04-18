@@ -16,6 +16,7 @@ import { CgScreen } from 'react-icons/cg'
 import { GrFormNextLink } from 'react-icons/gr'
 import { MdGrid4X4 } from 'react-icons/md'
 import { CgTouchpad } from 'react-icons/cg'
+import { LuHdmiPort } from "react-icons/lu";
 import {
   FaCamera,
   FaKeyboard,
@@ -99,6 +100,13 @@ function ModalInstruccions() {
                           sucede, se pasará a la siguiente prueba.
                         </p>
                       </AccordionItem>
+                      <AccordionItem startContent={<LuHdmiPort />} title="Prueba de HDMI">
+                        <p>
+                          En esta prueba probamos la funcionalidad del puerto HDMI, 
+                          si el Mainboard cuenta con uno, se le pedira al usuaurio que se le conecte un cable a este puerto
+                          , y se le preguntara si funciona o no.
+                        </p>
+                      </AccordionItem>
                       <AccordionItem startContent={<MdGrid4X4 />} title="Prueba de Pixeles">
                         <p>
                           En esta prueba veificamos el estado de la <strong>pantalla LCD</strong>,
@@ -128,7 +136,7 @@ function ModalInstruccions() {
                           En esta prueba verificamos el estado de la entrada de Audio y Bocinas,
                           antes de iniciar la prueba{' '}
                           <strong>
-                            Primero se iniciar la prueba con las Bocinas, y posteriormente se le
+                            Primero se inicia la prueba con las Bocinas, y posteriormente se le
                             pedira al usuario que conecte los Audifonos.
                           </strong>{' '}
                           {''}

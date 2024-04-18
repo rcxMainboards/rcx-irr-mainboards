@@ -1,5 +1,5 @@
 import BaseLayout from '../../ui/baseLayout'
-import { Card, CardBody } from '@nextui-org/react'
+import { Card, CardBody, Spinner } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import { executeRamTest } from './services/ram'
 import { errorData } from '../../../utils/functions'
@@ -42,7 +42,10 @@ function RamTest({ TestName, nextTest, profile }) {
       <Card className="p-10">
         <CardBody>
           {isLoading ? (
-            <p>Ejecutando de Ram...</p>
+            <div className='flex gap-4 items-center'>
+              <p>Ejecutando Prueba de RAM</p>
+              <Spinner color="primary"/>
+            </div>
           ) : error ? (
             errorData(error)
           ) : (

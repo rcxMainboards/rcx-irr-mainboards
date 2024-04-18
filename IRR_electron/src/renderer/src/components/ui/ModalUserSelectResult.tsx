@@ -56,7 +56,7 @@ function ModalUserSelectResult({
                     nextTest(TestName, {
                       result: true,
                       message:
-                        'El usuario decidio que paso la prueba, y decidio pasar a la siguiente prueba'
+                        'El usuario decidio que pasó la prueba'
                     })
                   }}
                 >
@@ -69,7 +69,7 @@ function ModalUserSelectResult({
                     nextTest(TestName, {
                       result: false,
                       message:
-                        'El usuario decidio que no paso la prueba, y decidio pasar a la siguiente prueba'
+                        'El usuario decidio que no pasó la prueba, y decidio pasar a la siguiente prueba'
                     })
                   }}
                 >

@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { executeWifiTest } from './services/wifi'
 import { errorData } from '../../../utils/functions'
+import {Spinner} from "@nextui-org/react";
+
 
 function WifiTest({ TestName, nextTest }) {
   const { isLoading, error } = useQuery({
@@ -32,7 +34,10 @@ function WifiTest({ TestName, nextTest }) {
       <Card className="p-10">
         <CardBody>
           {isLoading ? (
-            <p>Ejecutando Prueba de Wifi...</p>
+            <div className='flex gap-4 items-center'>
+              <p>Ejecutando Prueba de Wifi</p>
+              <Spinner color="primary"/>
+            </div>
           ) : error ? (
             errorData(error)
           ) : (

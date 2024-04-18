@@ -1,6 +1,6 @@
 import { Card, CardBody } from '@nextui-org/react'
 import BaseLayout from '../../ui/baseLayout'
-import { useDisclosure } from '@nextui-org/react'
+import { useDisclosure, Spinner } from '@nextui-org/react'
 import useAudioTestR from './useAudioTestR'
 import { ModalNoHeadPhonesWarning, ModalAudioTestF } from '../../ui/index'
 import { useRef } from 'react'
@@ -37,7 +37,10 @@ function AudioTest({ TestName, nextTest }) {
       {loading ? (
         <Card className="p-10">
           <CardBody>
-            <p>Cargando Prueba de Audio...</p>
+            <div className='flex gap-4 items-center'>
+              <p>Cargando Prueba de Audio</p>
+              <Spinner color="primary"/>
+            </div>
           </CardBody>
         </Card>
       ) : (
