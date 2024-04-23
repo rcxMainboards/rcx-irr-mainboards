@@ -20,12 +20,8 @@ function OutputLog({ Results, user }) {
 
   const { mutate, isPending, isSuccess, isError } = useMutation({
     // subir los datos de la placa con junto con los resultados de las pruebas
-    mutationFn: (args: {
-      tests: any
-      Passed: any
-      mainboard: any
-      user: string
-    }) => sendOutputLog(args),
+    mutationFn: (args: { tests: any; Passed: any; mainboard: any; user: string }) =>
+      sendOutputLog(args),
     onSuccess: (data) => {
       setMessage(data.message)
     },
@@ -54,35 +50,38 @@ function OutputLog({ Results, user }) {
 
   return (
     <BaseLayout>
-      <Card className="m-4 grid grid-cols-2 place-content-center px-10 pb-5 text-text-700">
-        <main className="mt-10 w-[40rem]">
-          <CardHeader className=" flex items-center">
-            <h1 className="text-4xl font-bold">Resultados</h1>
-            <TbReportSearch size={40} />
-          </CardHeader>
-          <OutputTable Results={Results} />
-        </main>
-        <CardHeader className="flex flex-col items-center justify-center gap-2 text-center">
-          <h1 className="text-4xl font-bold">Resultados</h1>
-          <TbReportSearch size={100} />
-          <div className="m-4 ">
-            {isPending ? (
-              <h1 className="text-2xl font-bold">Subiendo...</h1>
-            ) : (
-              <div className=" overflow-auto break-words">
-                <p
-                  className={clsx('rounded-lg p-3 text-lg text-white', {
-                    'bg-danger-500 ': isError,
-                    ' bg-success-500': isSuccess
-                  })}
-                >
-                  {message}
-                </p>
-              </div>
-            )}
+      <Card>
+        <div className="m-4 flex h-full items-center gap-10 px-10 pb-5 text-text-700">
+          <main className="mt-10 w-[40rem]">
+            <CardHeader className=" flex items-center">
+              <h1 className="text-4xl font-bold">Resultados</h1>
+              <TbReportSearch size={40} />
+            </CardHeader>
+            <OutputTable Results={Results} />
+          </main>
+          <div className="flex h-full flex-col ">
+            <h1 className="text-5xl font-bold">Estatus de Guardado</h1>
+            <div className="m-4 ">
+              {isPending ? (
+                <h1 className="text-2xl font-bold">Subiendo...</h1>
+              ) : (
+                <div className=" w-full overflow-auto break-words text-center">
+                  <p
+                    className={clsx('rounded-lg p-3 text-lg text-white', {
+                      'bg-danger-500 ': isError,
+                      ' bg-success-500': isSuccess
+                    })}
+                  >
+                    {message}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
-        </CardHeader>
-        <ExitButton />
+          <div className="mt-auto">
+            <ExitButton />
+          </div>
+        </div>
       </Card>
     </BaseLayout>
   )

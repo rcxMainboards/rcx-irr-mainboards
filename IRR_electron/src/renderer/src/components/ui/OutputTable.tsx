@@ -1,11 +1,4 @@
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell
-} from '@nextui-org/react'
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@nextui-org/react'
 import { Chip } from '@nextui-org/react'
 import { useCallback } from 'react'
 import { TestResult } from '../TestComponents/objectInterfaces'
@@ -27,13 +20,7 @@ const columns = [
 
 const statusColorMap: Record<
   string,
-  | 'success'
-  | 'danger'
-  | 'default'
-  | 'primary'
-  | 'secondary'
-  | 'warning'
-  | undefined
+  'success' | 'danger' | 'default' | 'primary' | 'secondary' | 'warning' | undefined
 > = {
   false: 'danger',
   true: 'success'
@@ -53,12 +40,7 @@ export default function OutputTable({ Results }) {
     switch (columnKey) {
       case 'status':
         return (
-          <Chip
-            className="capitalize"
-            size="sm"
-            variant="flat"
-            color={statusColorMap[cellValue]}
-          >
+          <Chip className="capitalize" size="sm" variant="flat" color={statusColorMap[cellValue]}>
             {cellValue === 'true' ? 'Paso' : 'Fallo'}
           </Chip>
         )
@@ -68,16 +50,18 @@ export default function OutputTable({ Results }) {
   }, [])
 
   return (
-    <Table aria-label="Example static collection table">
+    <Table
+      aria-label="Example static collection table"
+      isHeaderSticky
+      className="max-h-[600px] overflow-scroll"
+    >
       <TableHeader columns={columns}>
         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
       </TableHeader>
       <TableBody items={mapedResults}>
         {(item: object) => (
           <TableRow key={(item as { name: string }).name}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
-            )}
+            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}
       </TableBody>
