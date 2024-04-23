@@ -24,13 +24,8 @@ function Tests({ tests, user }: { tests: Test[]; user: string }) {
   })
 
   const { open, changeOpen, resetModal } = useCloseModal()
-  const { nextTest, currentTestIndex, Results, showOutPutLog } = useNextTest(
-    resetModal,
-    tests
-  )
-
-  const { TestComponent, TestName, TestTimer, ...props } =
-    tests[currentTestIndex]
+  const { nextTest, currentTestIndex, Results, showOutPutLog } = useNextTest(resetModal, tests)
+  const { TestComponent, TestName, TestTimer, ...props } = tests[currentTestIndex]
 
   return (
     <>

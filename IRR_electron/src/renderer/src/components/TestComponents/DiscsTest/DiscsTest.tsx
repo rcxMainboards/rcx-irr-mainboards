@@ -35,7 +35,7 @@ function DiscsTest({ TestName, nextTest, profile }) {
         <Card className="p-10">
           <CardBody>
             <div className='flex gap-4 items-center'>
-              <p>Ejecutando Prueba de discos</p>
+              <p>Ejecutando Prueba de Discos</p>
               <Spinner color="primary"/>
             </div>
           </CardBody>
