@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { executeSDTest } from './services/sd'
 import { errorData, errorStatus } from '../../../utils/functions'
 import { ModalSDProtected } from '../../ui/index'
-import { useDisclosure } from '@nextui-org/react'
+import { useDisclosure, Spinner } from '@nextui-org/react'
 
 function SDTest({ TestName, nextTest, profile }) {
   const { isLoading, error, refetch, isSuccess, isFetching } = useQuery({
@@ -52,7 +52,10 @@ function SDTest({ TestName, nextTest, profile }) {
         <Card className="p-10">
           <CardBody>
             {isLoading ? (
-              <p>Ejecutando Prueba de SD...</p>
+              <div className="flex items-center gap-4">
+                <p>Ejecutando Prueba de SD</p>
+                <Spinner color="primary" />
+              </div>
             ) : error ? (
               errorData(error)
             ) : (

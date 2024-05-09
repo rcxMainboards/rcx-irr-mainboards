@@ -1,20 +1,58 @@
 import BaseLayout from '../../ui/baseLayout'
-import { Card, CardBody, Spinner } from '@nextui-org/react'
+import { Card, CardBody, Spinner, Progress } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { executeUSBTest } from './services/usb'
 import { errorData } from '../../../utils/functions'
+import { IRR_MB_API } from '@renderer/utils/serviceEndPoints'
 
-function USBTest({ TestName, nextTest, profile }) {
-  const { isLoading, error } = useQuery({
+function USBTest({TestName, nextTest, profile}) {
+  const [progressValue, setProgressValue] = useState(0)
+  const [downLoadComplete, setDownLoadComplete] = useState(false)
+  const [downloadError, setDownloadError] = useState(false)
+  /* TODO
+    .-Cambiar UI conforme comienza la descarga y e inicia el test
+    .- Iniciar el test de usb una vez la descarga haya comenzado
+    .- Configurar el backend de python para que busque el archivo
+    .- al acabar el test ir al siguiente.
+  */
+
+
+  const { isLoading, isSuccess, error } = useQuery({
     queryKey: ['usbTest'],
     queryFn: () => executeUSBTest(profile.usb),
     retry: false,
+    enabled: downLoadComplete && !downloadError, // solo ejecutcar si se ha descargado y no hubo ningun error
     refetchOnWindowFocus: false
   })
 
+  const getTestFile = () => {
+    window.api.send('downLoadFile', { payload: { url: `${IRR_MB_API}/downloadTestFile/`} })
+    // @ts-ignore
+    window.api.on('update-download-progress', (event, progress) => {
+      setProgressValue(progress.progress)
+    })
+    // @ts-ignore
+    window.api.on('download-end', (event, value) => {
+      if (value) {
+        setDownLoadComplete(true)
+      }
+    })
+    // @ts-ignore
+    window.api.on('download-error', (event, error) => {
+      if(error){
+        setDownloadError(true)
+        nextTest(TestName, {result: false, message: "Hubo un fallo al tratar de descargar el archivo de prueba"})
+      }
+    })
+  }
+
   useEffect(() => {
-    if (!isLoading && !error) {
+    getTestFile()
+  }, [])
+
+  useEffect(() => {
+    if(isSuccess) {
       nextTest(TestName, {
         result: true,
         message: 'Prueba de USB exitosa'
@@ -31,16 +69,18 @@ function USBTest({ TestName, nextTest, profile }) {
     <BaseLayout>
       <Card className="p-10">
         <CardBody>
-          {isLoading ? (
-            <div className='flex gap-4 items-center'>
-              <p>Ejecutando Prueba de USB</p>
-              <Spinner color="primary"/>
-            </div>
-          ) : error ? (
-            errorData(error)
-          ) : (
-            'Termino la prueba de USB'
-          )}
+          {!downLoadComplete ? <div className="flex flex-col items-center gap-4">
+            <p>Iniciando descarga de archivo de pruebas</p>
+            <Progress
+              aria-label="Cargando..."
+              showValueLabel={true}
+              value={progressValue}
+              className="max-w-md"
+            />
+          </div> : <div className='flex items-center gap-4'>
+          <p>Ejecutando prueba de USB</p>
+          <Spinner color='primary'/>
+          </div>}
         </CardBody>
       </Card>
     </BaseLayout>

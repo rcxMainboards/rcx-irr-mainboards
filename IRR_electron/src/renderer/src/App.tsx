@@ -1,9 +1,5 @@
 import Aplicationstart from './components/Aplicationstart'
-import {
-  WarningStartingApp,
-  ModalCheckUpdates,
-  UpdateInProgress
-} from './components/ui'
+import { WarningStartingApp, ModalCheckUpdates, UpdateInProgress } from './components/ui'
 import useCloseModal from './components/hooks/useCloseModal'
 import useUpdateCheck from './components/hooks/useUpdateCheck'
 import { useState, useEffect } from 'react'
@@ -19,6 +15,7 @@ function App(): JSX.Element {
     })
   }, [])
 
+  //Antes de renderizar el componente principal hacemos una serie de checkeos
   return (
     <>
       {updateChecking && AppStatus ? (

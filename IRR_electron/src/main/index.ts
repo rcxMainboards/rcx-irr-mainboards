@@ -6,6 +6,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 import { spawn } from 'child_process'
 import { UpdateCheckResult, autoUpdater } from 'electron-updater'
 import log from 'electron-log/main'
+import { DownloaderHelper } from 'node-downloader-helper'
 
 log.initialize()
 autoUpdater.logger = log
@@ -64,11 +65,7 @@ function startServer() {
     serverProcess = spawn(mainExePath)
     serverProcess.stderr.on('data', (data) => {
       console.log(`stderr: ${data}`)
-      if (
-        data.includes(
-          'Uvicorn running on http://127.0.0.1:2010 (Press CTRL+C to quit)'
-        )
-      ) {
+      if (data.includes('Uvicorn running on http://127.0.0.1:2010 (Press CTRL+C to quit)')) {
         resolve(true)
       }
     })
@@ -148,6 +145,29 @@ app.whenReady().then(() => {
 async function closeServer() {
   fetch('http://127.0.01:2010/shutdown')
 }
+
+ipcMain.on('downLoadFile', async (event, { payload }) => {
+  const downloader = new DownloaderHelper(
+    payload.url,
+    `${app.getPath('downloads')}` // Or a custom download directory if needed
+  )
+  downloader.on('end', () => event.sender.send('download-end', true))
+  downloader.on('error', (err) => event.sender.send('download-error', err))
+  downloader
+    .on('progress', (stats) => {
+      const progressData = {
+        speed: (stats.speed / 1024).toFixed(1) + ' KB/s', // KB/s with one decimal place
+        progress: stats.progress.toFixed(1),
+        downloaded: (stats.downloaded / 1048576).toFixed(2), // MB with two decimal places
+        total: (stats.total / 1048576).toFixed(2) + ' MB'
+      }
+
+      // Send progress data to the renderer process using ipcMain.send
+      event.sender.send('update-download-progress', progressData)
+    })
+
+  downloader.start().catch((err) => console.error(err))
+})
 
 ipcMain.on('close-app', async () => {
   try {

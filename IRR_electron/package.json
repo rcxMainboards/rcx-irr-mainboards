@@ -1,6 +1,6 @@
 {
   "name": "irr-electron",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "example.com",
@@ -38,6 +38,7 @@
     "electron-log": "^5.1.2",
     "electron-updater": "^6.1.7",
     "framer-motion": "^11.0.5",
+    "node-downloader-helper": "^2.1.9",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-hook-form": "^7.50.1",
