@@ -36,7 +36,7 @@ function useMainboard() {
     enabled: isSuccess
   })
 
-  const {} = useQuery({
+  const { isFetching } = useQuery({
     queryKey: ['wifi'],
     queryFn: disableWifi,
     refetchOnWindowFocus: false,
@@ -49,7 +49,7 @@ function useMainboard() {
     queryFn: getMainboardProduct,
     refetchOnWindowFocus: false,
     retry: false,
-    enabled: isSuccess
+    enabled: isSuccess && !isFetching
   })
 
   const ssid = data?.product

@@ -9,9 +9,14 @@ function WebCamTest({ TestName, nextTest }) {
   return (
     <BaseLayout>
       <div className="flex flex-col items-center ">
+        <Card className='m-10 max-w-md '>
+          <CardBody>
+            <h1 className='font-bold text-2xl p-2 text-center'>Acérquese a la cámara y diga "Probando sonido" y verifique que se reproduzca el sonido</h1>
+          </CardBody>
+        </Card>
         <Webcam
           style={{ borderRadius: '12px', border: '2px solid white' }}
-          audio={false}
+          audio={true}
           height={720}
           width={500}
           onUserMediaError={() => {

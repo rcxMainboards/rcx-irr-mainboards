@@ -12,7 +12,7 @@ const executeFirmware = async () => {
 }
 
 const disableWifi = async () => {
-  const response = await axios.get(`${API_INTERNAL}/wifi/disableWifi/`)
+  const response = await axios.get(`${API_INTERNAL}/wifi/disableWifi`)
   return response.data
 }
 

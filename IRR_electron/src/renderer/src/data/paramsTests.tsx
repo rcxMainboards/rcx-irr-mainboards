@@ -51,11 +51,11 @@ const tests: Test[] = [
     TestComponent: WebCamTest,
     TestName: 'Prueba de Cámara',
     TestDescription:
-      'La prueba consiste en verificar si la cámara esta funcionando correctamente, para ello se intentara activar la camara predeterminada del dispositivo.',
+      'La prueba consiste en verificar si la cámara esta funcionando correctamente, para ello se intentara activar la camara predeterminada del dispositivo, tambien debera verificar la captura de audio.',
     TestSuccessCondition:
-      'Si la camara muestra video en pantalla, entonces el usuario debera escoger pasar la prueba.',
+      'Si la camara muestra video en pantalla, y se escucha que la camara capta sonido, entonces el usuario debera escoger pasar la prueba.',
     TestFailCondition:
-      'La prueba solo se considerara fallida si el servicio de la cámara no se encuentra activo (algunos teclados tienen una tecla para desactivar la camara, si esta tecla esta encendida la prueba fallara), o si el usuario decide que no pasó la prueba.',
+      'La prueba solo se considerara fallida si el servicio de la cámara no se encuentra activo (algunos teclados tienen una tecla para desactivar la camara, si esta tecla esta encendida la prueba fallara) y si la camara no esta captando el audio, o si el usuario decide que no pasó la prueba.',
     TestIconName: FaCamera,
     TestNotes: [
       'Puede ocurrir que el servicio de la cámara este funcionando, pero el video que de la camara no sea completamente funcional.',
