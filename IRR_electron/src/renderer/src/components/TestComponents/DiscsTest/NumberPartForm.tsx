@@ -99,7 +99,7 @@ function NumberPartForm({ TestName, nextTest, profile }) {
                 // Asegurarse de que partNumber termine en -601 o -001
                 setError('partNumber', {
                   message:
-                    'Un  número de parte válido debe terminar en -601 o -001'
+                    'Un número de parte válido debe terminar en -601 o -001'
                 })
                 return
               }

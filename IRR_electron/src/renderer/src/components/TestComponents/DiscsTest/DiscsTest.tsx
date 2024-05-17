@@ -5,9 +5,11 @@ import { useEffect } from 'react'
 import { executeDiskTest } from './services/disc'
 import { errorData } from '../../../utils/functions'
 import NumberPartForm from './NumberPartForm'
+import { getHpResults } from '@renderer/services/internalServices'
 
 function DiscsTest({ TestName, nextTest, profile }) {
-  const { isLoading, error, isSuccess } = useQuery({
+
+  const { isLoading: isDiscTestLoading, error, isSuccess: isDiskTestSucces, data:diskTestData } = useQuery({
     queryKey: ['DiscsTest'],
     queryFn: () => executeDiskTest(profile),
     retry: false,
@@ -15,19 +17,33 @@ function DiscsTest({ TestName, nextTest, profile }) {
     enabled: !profile.integrated // la consulta se ejecutará si profile.integrated es false
   })
 
-  useEffect(() => {
-    if (!isLoading && isSuccess) {
-      nextTest(TestName, {
-        result: true,
-        message: 'Prueba discos exitosa'
-      })
-    } else if (!isLoading && error) {
-      nextTest(TestName, {
-        result: false,
-        message: errorData(error)
-      })
+  const { isLoading: isHpResultLoading, data: hpResultData } = useQuery({
+    queryKey: ['hpResults'],
+    queryFn: () => getHpResults(),
+    retry: false,
+    refetchOnWindowFocus: false,
+  })
+
+  const checkTestDiskResult = () =>  {
+   if (hpResultData && diskTestData) {
+        const { hpResults: { DiskReadVerify } } = hpResultData
+        const testHpPassResult = DiskReadVerify.Result === "ExecutionPassed" 
+        const generalTestResult = testHpPassResult && isDiskTestSucces
+        if (generalTestResult){
+          nextTest(TestName, {
+          result: generalTestResult,
+          message: "Prueba discos exitosa"
+          })
+        } else {
+          nextTest(TestName, {
+          result: generalTestResult,
+          message: `${error ? errorData(error) : ''} ${!testHpPassResult ? 'La verificación de disco de HP Fallo' : ''}`
+          })
+        }
     }
-  }, [isLoading])
+  } 
+
+  useEffect(checkTestDiskResult, [isHpResultLoading, isDiscTestLoading])
 
   return (
     <BaseLayout>

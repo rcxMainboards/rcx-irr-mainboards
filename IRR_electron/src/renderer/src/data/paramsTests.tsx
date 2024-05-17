@@ -28,9 +28,12 @@ import {
   SDTest,
   DiscsTest,
   BlueToothTest,
-  HdmiTest
+  HdmiTest,
+  BatteryTest
 } from '../components/TestComponents/index'
 import Test from '../components/TestComponents/interfaces'
+import { CiBatteryFull } from "react-icons/ci";
+
 
 const tests: Test[] = [
   {
@@ -227,6 +230,17 @@ const tests: Test[] = [
     TestTimer: 0,
     TestTries: 3
   },
+  {
+    TestComponent: BatteryTest,
+    TestName: 'Prueba de Bateria',
+    TestDescription: 'La prueba consiste en revisar que la bateria este funcionando de forma apropiada',
+    TestSuccessCondition: 'Que la bateria funcione correctamente',
+    TestFailCondition: 'Si el resultado arroja que no funciona de forma correcta, se fallara la prueba',
+    TestIconName: CiBatteryFull,
+    TestNotes: ['Este proceso es automático, por lo que se hara la revision y se pasar a la siguiente prueba cuando termine.'],
+    TestTimer: 0,
+  },
+  
   {
     TestComponent: RamTest,
     TestName: 'Prueba de Ram',

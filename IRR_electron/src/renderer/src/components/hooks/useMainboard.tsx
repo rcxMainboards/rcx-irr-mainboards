@@ -8,7 +8,8 @@ import {
   disableWifi,
   checkEthernet,
   initServer,
-  executeFirmware
+  executeFirmware,
+  clearHpEvents
 } from '../../services/internalServices'
 import { useEffect, useState } from 'react'
 
@@ -27,6 +28,17 @@ function useMainboard() {
     refetchOnWindowFocus: false,
     retry: false
   })
+  
+  
+  // @ts-ignore
+  const { isSuccess: isClearSuccess } = useQuery({
+    queryKey: ['clearEvents'],
+    queryFn: clearHpEvents,
+    refetchOnWindowFocus: false,
+    enabled: isSuccess,
+    retry: false
+  })
+ 
 
   const { isLoading: isLoadingFirmware, error: errorFirmware } = useQuery({
     queryKey: ['firmware'],

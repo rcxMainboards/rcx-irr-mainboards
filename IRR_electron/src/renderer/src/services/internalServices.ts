@@ -16,9 +16,27 @@ const disableWifi = async () => {
   return response.data
 }
 
+
+const clearHpEvents = async () => {
+  const response = await axios.get(`${API_INTERNAL}/hpDiag/ClearHpEvents`)
+  return response.data
+}
+
+
+const runHPBackgroundTests = async () => {
+  const response = await axios.get(`${API_INTERNAL}/hpDiag/runHPTests`)
+  return response.data
+}
+
+
+const getHpResults =async () => {
+  const response = await axios.get(`${API_INTERNAL}/hpDiag/hpResults`)
+  return response.data
+}
+
 const initServer = async () => {
   const response = await (window.api as any).startServer()
   return response
 }
 
-export { checkEthernet, disableWifi, initServer, executeFirmware }
+export { checkEthernet, disableWifi, initServer, executeFirmware, clearHpEvents, runHPBackgroundTests, getHpResults }
