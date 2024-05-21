@@ -5,6 +5,7 @@ import { validateMainboard } from '../services/mainboard'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 interface IFormInput {
   CT: string
@@ -26,6 +27,16 @@ function LoginForm(): JSX.Element {
   })
 
   const navigate = useNavigate()
+
+  useEffect(() => { // => Go to test Menu if app is in dev mode
+    window.api.getAppStatus().then((status: boolean) => {
+      if (!status) {
+        navigate('/TestMenu', {
+          state: { numEmpleado: '00000' }
+        })
+      }
+    })
+  }, [])
 
   const { mutate } = useMutation({
     mutationFn: validateMainboard,

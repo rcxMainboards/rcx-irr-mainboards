@@ -231,17 +231,6 @@ const tests: Test[] = [
     TestTries: 3
   },
   {
-    TestComponent: BatteryTest,
-    TestName: 'Prueba de Bateria',
-    TestDescription: 'La prueba consiste en revisar que la bateria este funcionando de forma apropiada',
-    TestSuccessCondition: 'Que la bateria funcione correctamente',
-    TestFailCondition: 'Si el resultado arroja que no funciona de forma correcta, se fallara la prueba',
-    TestIconName: CiBatteryFull,
-    TestNotes: ['Este proceso es automático, por lo que se hara la revision y se pasar a la siguiente prueba cuando termine.'],
-    TestTimer: 0,
-  },
-  
-  {
     TestComponent: RamTest,
     TestName: 'Prueba de Ram',
     TestDescription:
@@ -269,6 +258,16 @@ const tests: Test[] = [
       'Esta prueba es automática, por lo que se pasara a la siguiente prueba en cuanto se obtenga el resultado de la prueba.'
     ],
     TestTimer: 0
+  },
+  {
+    TestComponent: BatteryTest,
+    TestName: 'Prueba de Bateria',
+    TestDescription: 'La prueba consiste en revisar que la bateria este funcionando de forma apropiada',
+    TestSuccessCondition: 'Que la bateria funcione correctamente',
+    TestFailCondition: 'Si el resultado arroja que no funciona de forma correcta, se fallara la prueba',
+    TestIconName: CiBatteryFull,
+    TestNotes: ['Este proceso es automático, por lo que se hara la revision y se pasar a la siguiente prueba cuando termine.'],
+    TestTimer: 0,
   },
   {
     TestComponent: BurningTest,
