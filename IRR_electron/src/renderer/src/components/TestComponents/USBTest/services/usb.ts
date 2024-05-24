@@ -6,4 +6,9 @@ const executeUSBTest = async (usbAmount) => {
   return response.data
 }
 
-export { executeUSBTest }
+const deleteUSBtestFile = async () => {
+  const response = await axios.get(`${API_INTERNAL}/mountedDrives/RemoveTestFile`)
+  return response.data
+}
+
+export { executeUSBTest, deleteUSBtestFile }

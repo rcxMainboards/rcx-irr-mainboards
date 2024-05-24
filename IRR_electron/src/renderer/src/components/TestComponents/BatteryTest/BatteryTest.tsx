@@ -24,7 +24,7 @@ function BatteryTest({ TestName, nextTest }) {
             if (BatteryCheck === undefined) {
                 nextTest(TestName, {
                     result: false,
-                    message: "Prueba de Bateria fallo"
+                    message: "No se encontro el resultado de Prueba de Bateria"
                 })
             } else {
                 const testHpPassResult = BatteryCheck.Result === "ExecutionPassed"
@@ -48,7 +48,7 @@ function BatteryTest({ TestName, nextTest }) {
     const { start } = useCountDown(() => checkHpTestResults(hpResultData))
 
     useEffect(() => {
-        start(180)
+        start(240)
     }, [])
 
     return (
