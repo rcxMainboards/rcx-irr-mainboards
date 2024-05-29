@@ -7,6 +7,7 @@ import { spawn } from 'child_process'
 import { UpdateCheckResult, autoUpdater } from 'electron-updater'
 import log from 'electron-log/main'
 import { DownloaderHelper } from 'node-downloader-helper'
+import { execFile } from 'child_process'
 
 log.initialize()
 autoUpdater.logger = log
@@ -169,6 +170,25 @@ ipcMain.on('downLoadFile', async (event, { payload }) => {
   downloader.start().catch((err) => console.error(err))
 })
 
+
+ipcMain.handle('runTabletModEvent', async () => {
+  const ps1Dir = app.isPackaged
+    ? join(process.resourcesPath, 'app.asar.unpacked', 'resources', 'psw.ps1')
+    : join(__dirname, '../../resources/psw.ps1')
+
+  return new Promise((resolve, reject) => {
+    const powershellScript = ps1Dir
+    execFile('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', powershellScript], (error, stdout, stderr) => {
+      if (error) {
+        reject(stderr);
+      } else {
+        resolve(stdout);
+      }
+    });
+  })
+})
+
+
 ipcMain.on('close-app', async () => {
   try {
     await closeServer()
@@ -199,7 +219,7 @@ ipcMain.handle('start-server', async () => {
 app.on('before-quit', async () => {
   try {
     await closeServer()
-  } catch (error) {}
+  } catch (error) { }
   app.quit()
 })
 
@@ -214,6 +234,9 @@ app.on('window-all-closed', async () => {
   }
 
   if (process.platform !== 'darwin') {
+    try {
+      await closeServer()
+    } catch (error) { }
     app.quit()
   }
 })

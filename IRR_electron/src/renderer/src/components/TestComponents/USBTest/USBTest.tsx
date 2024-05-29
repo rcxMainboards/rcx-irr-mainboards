@@ -51,6 +51,7 @@ function USBTest({ TestName, nextTest, profile }) {
   }, [])
 
   const makeTestAgain = () => {
+    //@ts-ignore
     executeUSBTest(profile.usb).then((response) => {
       deleteUSBtestFile()
       nextTest(TestName, {

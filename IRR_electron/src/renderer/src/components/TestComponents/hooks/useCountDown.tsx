@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-function useCountDown(action: () => void) {
+function useCountDown(action?: () => void) {
   const [secondsLeft, setSecondsLeft] = useState(0)
   const [isActive, setIsActive] = useState(false)
 
@@ -11,7 +11,9 @@ function useCountDown(action: () => void) {
     }, 1000)
 
     if (secondsLeft === 0) {
-      action()
+      if (action) {
+        action()
+      }
       return
     }
 

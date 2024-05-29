@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   handleDeviceChange,
-  findSpeakers,
   isHeadPhoneDefault,
   restartVideo
 } from './helperFunctions'
@@ -73,13 +72,7 @@ function useAudioEvents({
   useEffect(() => {
     // Este efecto al montarse se consigue los dispositivos iniciales.
     if (!loading && devices) {
-      console.log('devices', devices)
-      if (!findSpeakers(devices)) {
-        nextTest(TestName, {
-          result: false,
-          message: 'No se encontraron bocinas en el sistema conectados'
-        })
-      } else if (isHeadPhoneDefault(devices)) {
+      if (isHeadPhoneDefault(devices)) {
         showModalAndLoseTry()
       } else {
         start(15)

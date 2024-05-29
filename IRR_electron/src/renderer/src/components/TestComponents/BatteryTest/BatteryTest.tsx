@@ -1,24 +1,14 @@
 import BaseLayout from '../../ui/baseLayout'
 import { Card, CardBody, Spinner } from '@nextui-org/react'
-import { useQuery } from '@tanstack/react-query'
+// import { useQuery } from '@tanstack/react-query'
 import { getHpResults } from '@renderer/services/internalServices'
 import { useEffect } from 'react'
 import useCountDown from '../hooks/useCountDown'
+import { errorData } from '@renderer/utils/functions'
 
 function BatteryTest({ TestName, nextTest }) {
 
-
-
-    const { data: hpResultData } = useQuery({
-        queryKey: ['hpTests'],
-        queryFn: getHpResults,
-        retry: false,
-        refetchOnWindowFocus: false
-    })
-
-
     const checkHpTestResults = hpResultData => {
-
         if (hpResultData) {
             const BatteryCheck = hpResultData?.hpResults?.BatteryCheck
             if (BatteryCheck === undefined) {
@@ -33,11 +23,10 @@ function BatteryTest({ TestName, nextTest }) {
                         result: true,
                         message: "Prueba de Bateria exitosa"
                     })
-
                 } else {
                     nextTest(TestName, {
                         result: false,
-                        message: "Prueba de Bateria fallo"
+                        message: "Prueba de Bateria fallo "
                     })
                 }
             }
@@ -45,7 +34,12 @@ function BatteryTest({ TestName, nextTest }) {
 
     }
 
-    const { start } = useCountDown(() => checkHpTestResults(hpResultData))
+    const { start } = useCountDown(() => getHpResults().then((hpResultData) => checkHpTestResults(hpResultData)).catch(err => {
+        nextTest(TestName, {
+            result: false,
+            message: "Prueba de Bateria fallo " + errorData(err)
+        })
+    }))
 
     useEffect(() => {
         start(240)

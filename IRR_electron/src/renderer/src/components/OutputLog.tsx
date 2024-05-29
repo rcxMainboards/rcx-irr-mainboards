@@ -65,7 +65,7 @@ function OutputLog({ Results, user }) {
               {isPending ? (
                 <h1 className="text-2xl font-bold">Subiendo...</h1>
               ) : (
-                <div className=" w-full overflow-auto break-words text-center">
+                <div className="max-w-[30rem] overflow-auto break-words text-center">
                   <p
                     className={clsx('rounded-lg p-3 text-lg text-white', {
                       'bg-danger-500 ': isError,
@@ -78,7 +78,7 @@ function OutputLog({ Results, user }) {
               )}
             </div>
           </div>
-          <div className="mt-auto">
+          <div className=" mt-auto">
             <ExitButton />
           </div>
         </div>

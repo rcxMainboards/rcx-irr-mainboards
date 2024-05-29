@@ -13,6 +13,7 @@ import { LuHdmiPort } from 'react-icons/lu'
 import { BsSoundwave } from 'react-icons/bs'
 import { GiBurningEmbers, GiUsbKey } from 'react-icons/gi'
 import { RiHardDrive3Fill } from 'react-icons/ri'
+import { PiKeyboardFill } from "react-icons/pi";
 import {
   TouchScreenTest,
   PixelesTest,
@@ -29,10 +30,14 @@ import {
   DiscsTest,
   BlueToothTest,
   HdmiTest,
-  BatteryTest
+  BatteryTest,
+  KioskoTest,
+  Backlight
 } from '../components/TestComponents/index'
 import Test from '../components/TestComponents/interfaces'
 import { CiBatteryFull } from "react-icons/ci";
+import { IoTabletLandscape } from "react-icons/io5";
+
 
 
 const tests: Test[] = [
@@ -129,6 +134,39 @@ const tests: Test[] = [
     ],
     TestTimer: 0
   },
+  {
+    TestComponent: KioskoTest,
+    TestName: 'Prueba de modo Tablet',
+    TestDescription:
+      'La prueba consiste revisar la computadora es capaz de cambiar de modo de visualización, el usuario tendra que cambiar la computadora de posición.',
+    TestSuccessCondition:
+      'El usuario decide si la característica funciona correctamente.',
+    TestFailCondition:
+      'Esta prueba fallara si el usuario decide que la característica no funciona como deberia.',
+    TestIconName: IoTabletLandscape,
+    TestNotes: [
+      'Recuerde girar la computadora en la posición adecuada con cuidado para probar la característica del modo de visualización'
+    ],
+    TestTimer: 35
+  },
+
+  {
+    TestComponent: Backlight,
+    TestName: 'Prueba de Backlight',
+    TestDescription:
+      'La prueba consiste revisar el Backlight del teclado presionando el boton',
+    TestSuccessCondition:
+      'El usuario debe decidir si el funcionamiento de la tecla y la instensidad de la luz es correcta.',
+    TestFailCondition:
+      'El usuario puede decidir que no paso la prueba.',
+    TestIconName: PiKeyboardFill,
+    TestNotes: [
+      'Recuerde presionar la tecla especial para esta funcion y verificar la instensidad de esta.',
+      'Recuerde que la tecla puede ser presionada tres veces, la primera vez prendera las luces, la segunda bajara la intensidad, y la tercera las apagara'
+    ],
+    TestTimer: 0
+  },
+
   {
     TestComponent: AudioTest,
     TestName: 'Prueba de Audio',
@@ -262,9 +300,9 @@ const tests: Test[] = [
   {
     TestComponent: BatteryTest,
     TestName: 'Prueba de Bateria',
-    TestDescription: 'La prueba consiste en revisar que la bateria este funcionando de forma apropiada',
-    TestSuccessCondition: 'Que la bateria funcione correctamente',
-    TestFailCondition: 'Si el resultado arroja que no funciona de forma correcta, fallara la prueba',
+    TestDescription: 'La prueba consiste en hacer una revision de la bateria, es necesario tener un cargador conectado durante la prueba',
+    TestSuccessCondition: 'El resultado de la revision tiene que ser positivio, y tiene que estar conectado a un cargador.',
+    TestFailCondition: 'Si el resultado arroja que no funciona de forma correcta o si no hay un cargador conectado, fallara la prueba',
     TestIconName: CiBatteryFull,
     TestNotes: ['Este proceso es automático, por lo que se hara la revision y se pasara a la siguiente prueba cuando termine.'],
     TestTimer: 0,

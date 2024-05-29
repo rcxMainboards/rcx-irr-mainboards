@@ -6,7 +6,7 @@ const handleClick = () => {
 
 function ExitButton() {
   return (
-    <Button className="bg-secondary-100 font-semibold" fullWidth onClick={handleClick}>
+    <Button className="bg-secondary-500 text-white font-semibold" fullWidth onClick={handleClick}>
       Salir
     </Button>
   )

@@ -4,22 +4,24 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { executeWifiTest } from './services/wifi'
 import { errorData } from '../../../utils/functions'
-import {Spinner} from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 
 
 function WifiTest({ TestName, nextTest }) {
-  const { isLoading, error } = useQuery({
+
+  const { isLoading, error, data } = useQuery({
     queryKey: ['WifiTest'],
     queryFn: executeWifiTest,
     retry: false,
     refetchOnWindowFocus: false
   })
 
+
   useEffect(() => {
     if (!isLoading && !error) {
       nextTest(TestName, {
         result: true,
-        message: 'Prueba de Wifi exitosa'
+        message: data?.detail
       })
     } else if (!isLoading && error) {
       nextTest(TestName, {
@@ -36,7 +38,7 @@ function WifiTest({ TestName, nextTest }) {
           {isLoading ? (
             <div className='flex gap-4 items-center'>
               <p>Ejecutando Prueba de Wifi</p>
-              <Spinner color="primary"/>
+              <Spinner color="primary" />
             </div>
           ) : error ? (
             errorData(error)

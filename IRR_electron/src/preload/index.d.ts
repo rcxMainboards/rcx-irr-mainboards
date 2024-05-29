@@ -12,6 +12,7 @@ declare global {
       onUpdateAvailable: (callback: () => void) => void
       onUpdateDownloaded: (callback: () => void) => void
       onUpdateNotAvailable: (callback: () => void) => void
+      runPswTablet: (callback: () => Promise) => Promise
     }
   }
 }
