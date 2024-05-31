@@ -12,7 +12,7 @@ function useAudioTestR(
   onOpenConnect: any,
   oncloseConnect: any,
   startMicTest: () => void,
-  micTestOpen
+  // micTestOpen
 ) {
   const {
     secondsLeft: speakerLeft,
@@ -44,7 +44,7 @@ function useAudioTestR(
       TestName,
       oncloseConnect,
       onOpenConnect,
-      micTestOpen
+      // micTestOpen
     })
 
   const AddErrorCatcher = () => {

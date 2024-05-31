@@ -39,7 +39,7 @@ function AudioTest({ TestName, nextTest }) {
     onOpenChangeConect,
     oncloseConnect,
     startMicTest,
-    micTestOpen
+    // micTestOpen
   )
 
   const openFinalModal = () => {
