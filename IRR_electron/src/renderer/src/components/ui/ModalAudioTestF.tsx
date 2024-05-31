@@ -22,8 +22,7 @@ function ModalAudioTestF({ isOpen, onOpenChange, nextTest, TestName }) {
               </ModalHeader>
               <ModalBody>
                 <p>
-                  Se ha terminado todo el proceso de la prueba. ¿El audio tanto en audifonos como en
-                  bocinas se escucho correctamente?
+                  Se ha terminado todo el proceso de la prueba. Si el Audio de Bocinas, Audifonos y tambien la grabación se escucho correctamente presione el boton de Paso.
                 </p>
                 <Button
                   className="bg-primary-500 text-white"

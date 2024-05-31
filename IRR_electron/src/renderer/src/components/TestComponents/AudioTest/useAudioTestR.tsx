@@ -9,17 +9,17 @@ function useAudioTestR(
   videoRef: any,
   nextTest: any,
   TestName: any,
-  onOpenAnother: any,
   onOpenConnect: any,
-  oncloseConnect: any
+  oncloseConnect: any,
+  startMicTest: () => void,
+  micTestOpen
 ) {
   const {
     secondsLeft: speakerLeft,
     start: startSpeaker,
     stop: stopSpeaker
   } = useCountDown(() => {
-    onOpenAnother()
-    RemoveAudioEventLisener(handleConnectHeadPhonesRef)
+    startMicTest()
   })
 
   const { secondsLeft, start, stop } = useCountDown(() => onHeadPhonesTestEnd())
@@ -43,7 +43,8 @@ function useAudioTestR(
       nextTest,
       TestName,
       oncloseConnect,
-      onOpenConnect
+      onOpenConnect,
+      micTestOpen
     })
 
   const AddErrorCatcher = () => {
@@ -54,7 +55,7 @@ function useAudioTestR(
     AddErrorCatcher()
   }, [])
 
-  return { secondsLeft, speakerLeft, tries, loading }
+  return { secondsLeft, speakerLeft, tries, loading, handleConnectHeadPhonesRef }
 }
 
 export default useAudioTestR

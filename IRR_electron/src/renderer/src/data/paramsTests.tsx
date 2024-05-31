@@ -31,12 +31,12 @@ import {
   BlueToothTest,
   HdmiTest,
   BatteryTest,
-  KioskoTest,
-  Backlight
+  // KioskoTest,
+  Backlight,
 } from '../components/TestComponents/index'
 import Test from '../components/TestComponents/interfaces'
 import { CiBatteryFull } from "react-icons/ci";
-import { IoTabletLandscape } from "react-icons/io5";
+// import { IoTabletLandscape } from "react-icons/io5";
 
 
 
@@ -134,22 +134,21 @@ const tests: Test[] = [
     ],
     TestTimer: 0
   },
-  {
-    TestComponent: KioskoTest,
-    TestName: 'Prueba de modo Tablet',
-    TestDescription:
-      'La prueba consiste revisar la computadora es capaz de cambiar de modo de visualización, el usuario tendra que cambiar la computadora de posición.',
-    TestSuccessCondition:
-      'El usuario decide si la característica funciona correctamente.',
-    TestFailCondition:
-      'Esta prueba fallara si el usuario decide que la característica no funciona como deberia.',
-    TestIconName: IoTabletLandscape,
-    TestNotes: [
-      'Recuerde girar la computadora en la posición adecuada con cuidado para probar la característica del modo de visualización'
-    ],
-    TestTimer: 35
-  },
-
+  // {
+  //   TestComponent: KioskoTest,
+  //   TestName: 'Prueba de modo Tablet',
+  //   TestDescription:
+  //     'La prueba consiste revisar la computadora es capaz de cambiar de modo de visualización, el usuario tendra que cambiar la computadora de posición.',
+  //   TestSuccessCondition:
+  //     'El usuario decide si la característica funciona correctamente.',
+  //   TestFailCondition:
+  //     'Esta prueba fallara si el usuario decide que la característica no funciona como deberia.',
+  //   TestIconName: IoTabletLandscape,
+  //   TestNotes: [
+  //     'Recuerde girar la computadora en la posición adecuada con cuidado para probar la característica del modo de visualización'
+  //   ],
+  //   TestTimer: 35
+  // },
   {
     TestComponent: Backlight,
     TestName: 'Prueba de Backlight',
@@ -166,16 +165,15 @@ const tests: Test[] = [
     ],
     TestTimer: 0
   },
-
   {
     TestComponent: AudioTest,
     TestName: 'Prueba de Audio',
     TestDescription:
-      'La prueba consiste en verificar si la salida de audio esta funcionando correctamente, para ello se intentara reproducir un audio durante un tiempo determinado; primero se reproducira por las bocinas del dispositivo, despues se le pedira al usuario que conecte los audifonos para que se reproduzca el audio por estos en determinado momento.',
+      'La prueba consiste en verificar si la salida de audio esta funcionando correctamente, para ello se intentara reproducir un audio durante un tiempo determinado; primero se reproducira por las bocinas del dispositivo, despues se le pedira al usuario que conecte los audifonos para que se reproduzca el audio por estos en determinado momento, finalmente se probara la entrada de audio con el microfono de los audifonos.',
     TestSuccessCondition:
-      'Si el audio se reproduce correctamente por las bocinas del dispositivo y por los audifonos, el usuario debera escoger pasar la prueba.',
+      'Si el audio se reproduce correctamente por las bocinas del dispositivo, por los audifonos, y el audio se grabo correctamente, el usuario debera elegir pasar la prueba.',
     TestFailCondition:
-      'Esta prueba esta condicionada a intentos, si mientras se reproduce el audio los audifonos sufren desconexiones, o no se encuentran disponibles los speakers la prueba fallara.',
+      'Esta prueba esta condicionada a intentos, si mientras se reproduce el audio los audifonos sufren desconexiones, o no se encuentran disponibles las bocinas la prueba fallara.',
     TestIconName: BsSoundwave,
     TestNotes: [
       'Si los audifonos sufren desconexiones durante la prueba, se le pedira al usuario que vuelva conectar los audifonos y se reiniciara la prueba.',

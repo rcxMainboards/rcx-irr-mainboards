@@ -17,9 +17,10 @@ function useAudioEvents({
   onOpenConnect,
   nextTest,
   TestName,
-  oncloseConnect
+  oncloseConnect,
+  // micTestOpen,
 }) {
-  const [tries, setTries] = useState(3)
+  const [tries, setTries] = useState(5)
 
   const showModalAndLoseTry = () => {
     stop()
@@ -27,6 +28,8 @@ function useAudioEvents({
     setTries((oldtries) => oldtries - 1)
     onOpen()
   }
+
+  useEffect(() => console.log(tries), [tries])
 
   const showModalConnectAndLoseTry = () => {
     stop()

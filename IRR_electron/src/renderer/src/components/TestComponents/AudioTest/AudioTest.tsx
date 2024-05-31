@@ -3,9 +3,12 @@ import BaseLayout from '../../ui/baseLayout'
 import { useDisclosure, Spinner } from '@nextui-org/react'
 import useAudioTestR from './useAudioTestR'
 import { ModalNoHeadPhonesWarning, ModalAudioTestF } from '../../ui/index'
-import { useRef } from 'react'
-
+import { useEffect, useRef, useState } from 'react'
+import MicTest from './MicTest'
+import clsx from 'clsx'
+import { RemoveAudioEventLisener } from './logic/eventFunctions'
 function AudioTest({ TestName, nextTest }) {
+  const [micTestOpen, setMicTestOpen] = useState(false);
   const { onOpen, isOpen, onOpenChange, onClose } = useDisclosure()
   const {
     onOpen: onOpenAnother,
@@ -21,16 +24,36 @@ function AudioTest({ TestName, nextTest }) {
 
   const videoRef = useRef(null)
 
-  const { secondsLeft, loading, speakerLeft } = useAudioTestR(
+  const startMicTest = () => {
+    setMicTestOpen(true)
+    //@ts-ignore
+    videoRef.current.pause()
+  }
+
+  const { secondsLeft, loading, speakerLeft, handleConnectHeadPhonesRef } = useAudioTestR(
     onOpen,
     onClose,
     videoRef,
     nextTest,
     TestName,
-    onOpenAnother,
     onOpenChangeConect,
-    oncloseConnect
+    oncloseConnect,
+    startMicTest,
+    micTestOpen
   )
+
+  const openFinalModal = () => {
+    RemoveAudioEventLisener(handleConnectHeadPhonesRef)
+    onOpenAnother()
+  }
+
+  useEffect(() => {
+    if (videoRef.current) {
+      //@ts-ignore
+      videoRef.current.muted = true
+    }
+  }, [micTestOpen])
+
 
   return (
     <BaseLayout>
@@ -39,22 +62,25 @@ function AudioTest({ TestName, nextTest }) {
           <CardBody>
             <div className='flex gap-4 items-center'>
               <p>Cargando Prueba de Audio</p>
-              <Spinner color="primary"/>
+              <Spinner color="primary" />
             </div>
           </CardBody>
         </Card>
       ) : (
         <>
           {!isOpen ? (
-            <Card className=" w-2/4 p-3">
-              <CardBody className="grid grid-cols-2 place-items-center">
-                <video ref={videoRef} src={`local:///${window.api.getVideoPath()}`} autoPlay />
-                <div className="flex flex-col gap-1">
-                  <p>Probando Bocinas: {secondsLeft}</p>
-                  {secondsLeft === 0 ? <p>Probando Audifonos: {speakerLeft}</p> : null}
-                </div>
-              </CardBody>
-            </Card>
+            <>
+              <Card className=" w-2/4 p-3">
+                <CardBody className={clsx("grid grid-cols-2 place-items-center", { 'hidden': micTestOpen === true })}>
+                  <video ref={videoRef} src={`local:///${window.api.getVideoPath()}`} autoPlay />
+                  <div className="flex flex-col gap-1">
+                    <p>Probando Bocinas: {secondsLeft}</p>
+                    {secondsLeft === 0 ? <p>Probando Audifonos: {speakerLeft}</p> : null}
+                  </div>
+                </CardBody>
+                {micTestOpen && <MicTest onOpenAnother={openFinalModal} />}
+              </Card>
+            </>
           ) : null}
           <ModalNoHeadPhonesWarning
             isOpen={isOpen}
