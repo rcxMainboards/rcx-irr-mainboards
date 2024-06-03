@@ -41,20 +41,20 @@ import { IoTabletLandscape } from "react-icons/io5";
 
 
 const tests: Test[] = [
-  {
-    TestComponent: HdmiTest,
-    TestName: 'Prueba de HDMI',
-    TestDescription:
-      'La prueba consiste en conectar un cable HDMI al puerto y verificar que este puerto sea funcional asegurándose de que dé video. Mainboard no tiene puerto HDMI esta prueba se saltara de forma automática ',
-    TestSuccessCondition: 'El usuario decidirá si la prueba se pasó con éxito.',
-    TestFailCondition: 'El usuario decidirá si la prueba falló.',
-    TestIconName: LuHdmiPort,
-    TestNotes: [
-      'Asegúrese de conectar un cable HDMI al puerto disponible y verificar que al conectar dé video.',
-      'Si este Mainboard no tiene puerto HDMI, la prueba no se realizara'
-    ],
-    TestTimer: 0
-  },
+  // {
+  //   TestComponent: HdmiTest,
+  //   TestName: 'Prueba de HDMI',
+  //   TestDescription:
+  //     'La prueba consiste en conectar un cable HDMI al puerto y verificar que este puerto sea funcional asegurándose de que dé video. Mainboard no tiene puerto HDMI esta prueba se saltara de forma automática ',
+  //   TestSuccessCondition: 'El usuario decidirá si la prueba se pasó con éxito.',
+  //   TestFailCondition: 'El usuario decidirá si la prueba falló.',
+  //   TestIconName: LuHdmiPort,
+  //   TestNotes: [
+  //     'Asegúrese de conectar un cable HDMI al puerto disponible y verificar que al conectar dé video.',
+  //     'Si este Mainboard no tiene puerto HDMI, la prueba no se realizara'
+  //   ],
+  //   TestTimer: 0
+  // },
   // {
   //   TestComponent: WebCamTest,
   //   TestName: 'Prueba de Cámara',
@@ -295,16 +295,16 @@ const tests: Test[] = [
   //   ],
   //   TestTimer: 0
   // },
-  // {
-  //   TestComponent: BatteryTest,
-  //   TestName: 'Prueba de Bateria',
-  //   TestDescription: 'La prueba consiste en hacer una revision de la bateria, es necesario tener un cargador conectado durante la prueba',
-  //   TestSuccessCondition: 'El resultado de la revision tiene que ser positivio, y tiene que estar conectado a un cargador.',
-  //   TestFailCondition: 'Si el resultado arroja que no funciona de forma correcta o si no hay un cargador conectado, fallara la prueba',
-  //   TestIconName: CiBatteryFull,
-  //   TestNotes: ['Este proceso es automático, por lo que se hara la revision y se pasara a la siguiente prueba cuando termine.'],
-  //   TestTimer: 0,
-  // },
+  {
+    TestComponent: BatteryTest,
+    TestName: 'Prueba de Bateria',
+    TestDescription: 'La prueba consiste en hacer una revision de la bateria, es necesario tener un cargador conectado durante la prueba',
+    TestSuccessCondition: 'El resultado de la revision tiene que ser positivio, y tiene que estar conectado a un cargador.',
+    TestFailCondition: 'Si el resultado arroja que no funciona de forma correcta o si no hay un cargador conectado, fallara la prueba',
+    TestIconName: CiBatteryFull,
+    TestNotes: ['Este proceso es automático, por lo que se hara la revision y se pasara a la siguiente prueba cuando termine.'],
+    TestTimer: 0,
+  },
   // {
   //   TestComponent: BurningTest,
   //   TestName: 'Prueba de Estres',
