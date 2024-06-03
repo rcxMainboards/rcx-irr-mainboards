@@ -32,7 +32,7 @@ function WarningStartingApp({ onOpenChange }) {
                 <div className="grid max-w-[60rem] grid-cols-[1.5fr_1fr] place-items-center gap-7 rounded-lg bg-white p-10 px-12 shadow-lg">
                   <main className="flex flex-col justify-center gap-3">
                     <h1 className="text-2xl font-semibold text-warning-600">
-                      Versión de la Aplicación: {appVersion}
+                      Versión de la Aplicación: {appVersion} | PCaas
                     </h1>
                     <div className="flex items-center gap-2">
                       <h2 className="text-3xl font-bold text-warning-500">Atención</h2>
@@ -43,7 +43,7 @@ function WarningStartingApp({ onOpenChange }) {
                       al Servidor, {''}
                       de otra forma.
                     </p>
-                    <p><strong className='text-danger'>Es importante que termine la pruebas sin importar si alguna de estas falla.</strong></p>  
+                    <p><strong className='text-danger'>Es importante que termine la pruebas sin importar si alguna de estas falla.</strong></p>
                     <p>Se recomienda que desde este momento conecte los siguientes dispositivos:</p>
                     <ul className=" list-disc">
                       <li>La cantidad de USB en la base a los puertos.</li>

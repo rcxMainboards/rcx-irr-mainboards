@@ -29,8 +29,13 @@ const runHPBackgroundTests = async () => {
 }
 
 
-const getHpResults =async () => {
+const getHpResults = async () => {
   const response = await axios.get(`${API_INTERNAL}/hpDiag/hpResults`)
+  return response.data
+}
+
+const getBatteryValues = async () => {
+  const response = await axios.get(`${API_INTERNAL}/hpDiag/batteryLife`)
   return response.data
 }
 
@@ -39,4 +44,4 @@ const initServer = async () => {
   return response
 }
 
-export { checkEthernet, disableWifi, initServer, executeFirmware, clearHpEvents, runHPBackgroundTests, getHpResults }
+export { checkEthernet, getBatteryValues, disableWifi, initServer, executeFirmware, clearHpEvents, runHPBackgroundTests, getHpResults }
