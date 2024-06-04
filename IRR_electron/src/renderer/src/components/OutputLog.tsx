@@ -20,7 +20,7 @@ function OutputLog({ Results, user }) {
 
   const { mutate, isPending, isSuccess, isError } = useMutation({
     // subir los datos de la placa con junto con los resultados de las pruebas
-    mutationFn: (args: { tests: any; Passed: any; mainboard: any; user: string }) =>
+    mutationFn: (args: { tests: any; Passed: any; mainboard: any; user: string, mb_test_type: string }) =>
       sendOutputLog(args),
     onSuccess: (data) => {
       setMessage(data.message)
@@ -43,7 +43,8 @@ function OutputLog({ Results, user }) {
         tests: Results,
         Passed: isPassed,
         mainboard: mainboardProfile,
-        user: user
+        user: user,
+        mb_test_type: ''
       })
     }
   }, [isLoading, data])
