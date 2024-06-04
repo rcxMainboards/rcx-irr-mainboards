@@ -8,6 +8,13 @@ const validateMainboard = async (CT: string) => {
   return response.data
 }
 
+const validateSNB = async (SNBIOS: string) => {
+  const response = await axios.get(
+    `${API_INTERNAL}/mainboard/serial_number_bios/${SNBIOS}`
+  )
+  return response.data
+}
+
 const getMainboardProduct = async () => {
   // Example : "8E91"
   const response = await axios.get(`${API_INTERNAL}/mainboard/product`)
@@ -50,5 +57,6 @@ export {
   isMainboardRegistered,
   getMainboardProfile,
   getMainboardProps,
-  sendOutputLog
+  sendOutputLog,
+  validateSNB
 }

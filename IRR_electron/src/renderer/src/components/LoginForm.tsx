@@ -1,11 +1,10 @@
 import { Input, Button, Divider } from '@nextui-org/react'
 import { useForm, Controller } from 'react-hook-form'
 import { ModalInstruccions, ModalFAQ, ExitButton } from './ui'
-import { validateMainboard } from '../services/mainboard'
+import { validateSNB } from '../services/mainboard'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 
 interface IFormInput {
   CT: string
@@ -28,18 +27,18 @@ function LoginForm(): JSX.Element {
 
   const navigate = useNavigate()
 
-  useEffect(() => { // => Go to test Menu if app is in dev mode
-    window.api.getAppStatus().then((status: boolean) => {
-      if (!status) {
-        navigate('/TestMenu', {
-          state: { numEmpleado: '00000' }
-        })
-      }
-    })
-  }, [])
+  // useEffect(() => { // => Go to test Menu if app is in dev mode
+  //   window.api.getAppStatus().then((status: boolean) => {
+  //     if (!status) {
+  //       navigate('/TestMenu', {
+  //         state: { numEmpleado: '00000' }
+  //       })
+  //     }
+  //   })
+  // }, [])
 
   const { mutate } = useMutation({
-    mutationFn: validateMainboard,
+    mutationFn: validateSNB,
     onSuccess: () => {
       navigate('/TestMenu', {
         state: { numEmpleado: getValues('NumEmpleado') }
@@ -64,7 +63,7 @@ function LoginForm(): JSX.Element {
         className="flex w-[28rem] flex-col rounded-md border bg-background-50 px-12 py-12  text-text-700 shadow-xl"
       >
         <h1 className="mb-8 inline-block bg-gradient-l bg-clip-text text-center text-4xl font-bold text-transparent">
-          Bienvenido IRR MB Pruebas
+          Bienvenido a PcaaS
         </h1>
         <div className="flex flex-col gap-3">
           <Controller
@@ -75,7 +74,7 @@ function LoginForm(): JSX.Element {
                 {...field}
                 maxLength={19}
                 type="text"
-                label="CT"
+                label="Numero de Serial"
                 variant="bordered"
                 isClearable
                 isInvalid={!!errors.CT}
@@ -88,7 +87,7 @@ function LoginForm(): JSX.Element {
                   setValue('CT', e.target.value)
                   clearErrors('CT')
                 }}
-                placeholder="Escribe el CT de la Mainboard"
+                placeholder="Escribe el Numbero de Serial de la unidad"
                 isRequired
               />
             )}
