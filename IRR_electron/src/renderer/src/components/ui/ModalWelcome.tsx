@@ -1,8 +1,7 @@
 import { Modal, ModalContent, ModalBody, Button } from '@nextui-org/react'
-import tests from '../../data/paramsTests'
 import motionV1 from '../../utils/motionVariants'
 
-function ModalWelcome({ onOpenChange }) {
+function ModalWelcome({ onOpenChange, tests }) {
   return (
     <>
       <Modal

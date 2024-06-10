@@ -21,6 +21,14 @@ const getMainboardProduct = async () => {
   return response.data
 }
 
+
+const getMainboardSKU = async () => {
+  // Example : "#ABA"
+  const response = await axios.get(`${API_INTERNAL}/mainboard/sku`)
+  return response.data
+}
+
+
 const getMainboardProfile = async (SSID: string) => {
   // Example :SEND: "8E91"
   const response = await axios.get(
@@ -54,6 +62,7 @@ const sendOutputLog = async (data) => {
 export {
   validateMainboard,
   getMainboardProduct,
+  getMainboardSKU,
   isMainboardRegistered,
   getMainboardProfile,
   getMainboardProps,

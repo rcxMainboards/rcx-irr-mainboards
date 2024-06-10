@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import {
   getMainboardProduct,
   isMainboardRegistered,
-  getMainboardProfile
+  getMainboardProfile,
+  getMainboardSKU,
 } from '../../services/mainboard'
 import {
   disableWifi,
@@ -28,8 +29,8 @@ function useMainboard() {
     refetchOnWindowFocus: false,
     retry: false
   })
-  
-  
+
+
   // @ts-ignore
   const { isSuccess: isClearSuccess } = useQuery({
     queryKey: ['clearEvents'],
@@ -38,7 +39,7 @@ function useMainboard() {
     enabled: isSuccess,
     retry: false
   })
- 
+
 
   const { isLoading: isLoadingFirmware, error: errorFirmware } = useQuery({
     queryKey: ['firmware'],
@@ -64,19 +65,34 @@ function useMainboard() {
     enabled: isSuccess && !isFetching
   })
 
-  const ssid = data?.product
+  const { data: skudata } = useQuery({
+    queryKey: ['sku'],
+    queryFn: getMainboardSKU,
+    refetchOnWindowFocus: false,
+    retry: false,
+    enabled: !!data
+  })
+
+  const ssid = data?.product;
+  const sku = skudata?.sku;
+  const SkuNumber = sku?.split("#")[0];
+
+  // Valida si ssid y SkuNumber tienen valores antes de crear MainboardAuthID
+  const MainboardAuthID = ssid && SkuNumber ? `${ssid}&${SkuNumber}` : null;
 
   const {
     isLoading: isLoadingRegistration,
     error: netWorkError,
     data: isRegistered
   } = useQuery({
-    queryKey: ['isRegistered', ssid],
-    queryFn: () => isMainboardRegistered(ssid),
-    enabled: !!ssid,
+    queryKey: ['isRegistered'],
+    //@ts-ignore
+    queryFn: () => isMainboardRegistered(MainboardAuthID),
+    enabled: !!MainboardAuthID, // Se habilita solo si MainboardAuthID no es null
     refetchOnWindowFocus: false,
     retry: false
-  })
+  });
+
 
   const { data: ProfileData } = useQuery({
     queryKey: ['profile', ssid],

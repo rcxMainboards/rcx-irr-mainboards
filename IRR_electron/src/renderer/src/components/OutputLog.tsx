@@ -12,7 +12,7 @@ function OutputLog({ Results, user }) {
   const [message, setMessage] = useState('')
 
   const { isLoading, data } = useQuery({
-    queryKey: ['propMB'],
+    queryKey: ['mbProfile'],
     queryFn: getMainboardProps, // conseguir los datos de la placa
     retry: false,
     refetchOnWindowFocus: false
@@ -39,13 +39,10 @@ function OutputLog({ Results, user }) {
     if (!isLoading && data) {
       const isPassed = Results.every((test) => test.details.result)
       const mainboardProfile = data
-
-      const profileMBPcAs = { ...mainboardProfile, serial_number: mainboardProfile.SerialNumber_hp }
-
       mutate({
         tests: Results,
         Passed: isPassed,
-        mainboard: profileMBPcAs,
+        mainboard: mainboardProfile, //Cambiar
         user: user,
         mb_test_type: 'PCaaS'
       })

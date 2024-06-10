@@ -7,11 +7,12 @@ import { errorData } from '../../../utils/functions'
 import { Spinner } from "@nextui-org/react";
 
 
-function WifiTest({ TestName, nextTest }) {
+function WifiTest({ TestParams, TestName, nextTest }) {
+
 
   const { isLoading, error, data } = useQuery({
     queryKey: ['WifiTest'],
-    queryFn: executeWifiTest,
+    queryFn: () => executeWifiTest(TestParams.config),
     retry: false,
     refetchOnWindowFocus: false
   })

@@ -5,6 +5,7 @@ import { validateSNB } from '../services/mainboard'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
+// import { useEffect } from 'react'
 
 interface IFormInput {
   CT: string
