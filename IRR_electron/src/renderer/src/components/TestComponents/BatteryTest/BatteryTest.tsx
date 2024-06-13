@@ -1,6 +1,5 @@
 import BaseLayout from '../../ui/baseLayout'
 import { Card, CardBody, Spinner } from '@nextui-org/react'
-// import { useQuery } from '@tanstack/react-query'
 import { getHpResults } from '@renderer/services/internalServices'
 import { useEffect } from 'react'
 import useCountDown from '../hooks/useCountDown'
@@ -9,6 +8,24 @@ import { errorData } from '@renderer/utils/functions'
 function BatteryTest({ TestName, nextTest }) {
 
     const checkHpTestResults = hpResultData => {
+
+        //@ts-ignore
+        navigator.getBattery().then((battery) => {
+            console.log(battery.charging)
+            if (!battery.charging) {
+                nextTest(TestName, {
+                    result: false,
+                    message: "No se detecto un cargador conectado"
+                })
+            }
+        }).catch((err) => {
+            nextTest(TestName, {
+                result: false,
+                message: "No se pudo obtener el estado de carga de la bateria: " + err
+            })
+        })
+
+
         if (hpResultData) {
             const BatteryCheck = hpResultData?.hpResults?.BatteryCheck
             if (BatteryCheck === undefined) {
