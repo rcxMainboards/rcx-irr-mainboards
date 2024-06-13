@@ -19,6 +19,7 @@ function BatteryTest({ TestName, nextTest }) {
                 })
             }
         }).catch((err) => {
+            console.log(err)
             nextTest(TestName, {
                 result: false,
                 message: "No se pudo obtener el estado de carga de la bateria: " + err
