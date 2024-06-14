@@ -4,7 +4,8 @@ import {
   KeyboardLayoutNumPad,
   KeyboardLayoutNumPadV1,
   KeyboardLayout60,
-  KeyboardLayout65v3
+  KeyboardLayout65v3,
+  KeyboardLayout95v3
 } from './Keyboards/index'
 
 const KeyboardLayouts = {
@@ -13,7 +14,8 @@ const KeyboardLayouts = {
   '65%Keyboardv2': KeyboardLayoutBaseV1,
   '65%Keyboardv3': KeyboardLayout65v3,
   '95%Keyboardv1': KeyboardLayoutNumPad,
-  '95%Keyboardv2': KeyboardLayoutNumPadV1
+  '95%Keyboardv2': KeyboardLayoutNumPadV1,
+  '95%Keyboardv3': KeyboardLayout95v3
 }
 
 function KeyboardContainer({ handleKeyDown, profile }) {

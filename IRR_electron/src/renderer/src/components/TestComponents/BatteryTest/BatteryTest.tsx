@@ -1,6 +1,6 @@
 import BaseLayout from '../../ui/baseLayout'
 import { Card, CardBody, Spinner } from '@nextui-org/react'
-import { getHpResults } from '@renderer/services/internalServices'
+import { getHpResults, runHPBattery } from '@renderer/services/internalServices'
 import { useEffect } from 'react'
 import useCountDown from '../hooks/useCountDown'
 import { errorData } from '@renderer/utils/functions'
@@ -11,7 +11,6 @@ function BatteryTest({ TestName, nextTest }) {
 
         //@ts-ignore
         navigator.getBattery().then((battery) => {
-            console.log(battery.charging)
             if (!battery.charging) {
                 nextTest(TestName, {
                     result: false,
@@ -55,12 +54,20 @@ function BatteryTest({ TestName, nextTest }) {
     const { start } = useCountDown(() => getHpResults().then((hpResultData) => checkHpTestResults(hpResultData)).catch(err => {
         nextTest(TestName, {
             result: false,
-            message: "Prueba de Bateria fallo " + errorData(err)
+            message: "Ocurrio un error al tratar de obtener un resultado en la prueba de bateria " + errorData(err)
         })
     }))
 
     useEffect(() => {
-        start(240)
+
+        const runBattery = async () => {
+            await runHPBattery()
+            start(255)
+
+        }
+
+        runBattery()
+
     }, [])
 
     return (

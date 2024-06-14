@@ -23,10 +23,16 @@ const clearHpEvents = async () => {
 }
 
 
-const runHPBackgroundTests = async () => {
-  const response = await axios.get(`${API_INTERNAL}/hpDiag/runHPTests`)
+const runHPDisk = async () => {
+  const response = await axios.get(`${API_INTERNAL}/hpDiag/runHPDisk`)
   return response.data
 }
+
+const runHPBattery = async () => {
+  const response = await axios.get(`${API_INTERNAL}/hpDiag/runHPBattery`)
+  return response.data
+}
+
 
 
 const getHpResults =async () => {
@@ -39,4 +45,4 @@ const initServer = async () => {
   return response
 }
 
-export { checkEthernet, disableWifi, initServer, executeFirmware, clearHpEvents, runHPBackgroundTests, getHpResults }
+export { checkEthernet, disableWifi, initServer, executeFirmware, clearHpEvents, runHPDisk, runHPBattery , getHpResults }

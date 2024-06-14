@@ -5,7 +5,7 @@ import Tests from './Tests'
 import useCloseModal from './hooks/useCloseModal'
 import { useLocation } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { clearHpEvents, runHPBackgroundTests } from '@renderer/services/internalServices'
+import { clearHpEvents } from '@renderer/services/internalServices'
 
 function TestSelector() {
   const { open, changeOpen } = useCloseModal()
@@ -21,15 +21,15 @@ function TestSelector() {
     retry: false
   })
 
-  // Ejecutamos en el background desde que inicia la app el test de bateria y disco
-  //@ts-ignore
-  const { data } = useQuery({
-    queryKey: ['runHpBackground'],
-    queryFn: () => runHPBackgroundTests(),
-    refetchOnWindowFocus: false,
-    enabled: isClearSuccess,
-    retry: false
-  })
+  // // Ejecutamos en el background desde que inicia la app el test de bateria y disco
+  // //@ts-ignore
+  // const { data } = useQuery({
+  //   queryKey: ['runHpBackground'],
+  //   queryFn: () => runHPBackgroundTests(),
+  //   refetchOnWindowFocus: false,
+  //   enabled: isClearSuccess,
+  //   retry: false
+  // })
 
   return (
     <>

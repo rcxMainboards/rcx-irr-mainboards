@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 import { executeDiskTest } from './services/disc'
 import { errorData } from '../../../utils/functions'
 import NumberPartForm from './NumberPartForm'
-import { getHpResults } from '@renderer/services/internalServices'
+import { runHPDisk, getHpResults } from '@renderer/services/internalServices'
+import useCountDown from '../hooks/useCountDown'
 
 function DiscsTest({ TestName, nextTest, profile }) {
 
@@ -17,18 +18,32 @@ function DiscsTest({ TestName, nextTest, profile }) {
     enabled: !profile.integrated // la consulta se ejecutará si profile.integrated es false
   })
 
-  const { data: hpResultData } = useQuery({
-    queryKey: ['hpResults'],
-    queryFn: () => getHpResults(),
-    retry: false,
-    refetchOnWindowFocus: false,
-  })
+  // const { data: hpResultData } = useQuery({
+  //   queryKey: ['hpResults'],
+  //   queryFn: () => getHpResults(),
+  //   retry: false,
+  //   refetchOnWindowFocus: false,
+  // })
 
 
-  const checkTestDiskResult = () => {
+  const { start } = useCountDown(() => getHpResults().then((data) => {
+    checkTestDiskResult(data)
+  }).catch((err) => console.log(err)))
+
+  
+  useEffect(() => {
+    const disktest =async () => {
+      await runHPDisk()
+      start(80)
+    }
+    disktest()
+  }, [])
+
+
+  const checkTestDiskResult = (hpResultData) => {
     if (hpResultData && diskTestData) {
       const { hpResults: { DiskReadVerify } } = hpResultData
-      const testHpPassResult = DiskReadVerify.Result === "ExecutionPassed"
+      const testHpPassResult = DiskReadVerify.every((disk) => disk.Result === "ExecutionPassed")
       const generalTestResult = testHpPassResult && isDiskTestSucces
 
       if (DiskReadVerify === undefined) {
@@ -49,10 +64,6 @@ function DiscsTest({ TestName, nextTest, profile }) {
       }
     }
   }
-
-  useEffect(() => {
-    checkTestDiskResult()
-  }, [hpResultData, diskTestData])
 
   return (
     <BaseLayout>
