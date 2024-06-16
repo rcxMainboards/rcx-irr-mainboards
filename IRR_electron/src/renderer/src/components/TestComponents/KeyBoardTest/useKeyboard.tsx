@@ -9,7 +9,9 @@ const KeyboardLayout = {
   '65%Keyboardv2': 83,
   '65%Keyboardv3': 81,
   '95%Keyboardv1': 99,
-  '95%Keyboardv2': 100
+  '95%Keyboardv2': 100,
+  '95%Keyboardv3': 98
+
 }
 
 function useKeyboardTest(TestName, nextTest, onOpen, profile) {

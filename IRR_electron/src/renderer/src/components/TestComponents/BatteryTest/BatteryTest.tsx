@@ -1,6 +1,6 @@
 import BaseLayout from '../../ui/baseLayout'
 import { Card, CardBody, Spinner } from '@nextui-org/react'
-import { getHpResults, getBatteryValues } from '@renderer/services/internalServices'
+import { getHpResults, getBatteryValues, runHPBattery } from '@renderer/services/internalServices'
 import { useEffect } from 'react'
 import useCountDown from '../hooks/useCountDown'
 import { errorData } from '@renderer/utils/functions'
@@ -8,6 +8,24 @@ import { errorData } from '@renderer/utils/functions'
 function BatteryTest({ TestName, nextTest }) {
 
     const checkHpTestResults = hpResultData => {
+
+        //@ts-ignore
+        navigator.getBattery().then((battery) => {
+            if (!battery.charging) {
+                nextTest(TestName, {
+                    result: false,
+                    message: "No se detecto un cargador conectado"
+                })
+            }
+        }).catch((err) => {
+            console.log(err)
+            nextTest(TestName, {
+                result: false,
+                message: "No se pudo obtener el estado de carga de la bateria: " + err
+            })
+        })
+
+
         if (hpResultData) {
             const BatteryCheck = hpResultData?.hpResults?.BatteryCheck
             if (BatteryCheck === undefined) {
@@ -17,7 +35,6 @@ function BatteryTest({ TestName, nextTest }) {
                 })
             } else {
                 const testHpPassResult = BatteryCheck.Result === "ExecutionPassed"
-                console.log(testHpPassResult)
                 if (testHpPassResult) {
                     getBatteryValues().then((response) => {
                     
@@ -62,12 +79,20 @@ function BatteryTest({ TestName, nextTest }) {
     const { start } = useCountDown(() => getHpResults().then((hpResultData) => checkHpTestResults(hpResultData)).catch(err => {
         nextTest(TestName, {
             result: false,
-            message: "Prueba de Bateria fallo " + errorData(err)
+            message: "Ocurrio un error al tratar de obtener un resultado en la prueba de bateria " + errorData(err)
         })
     }))
 
     useEffect(() => {
-        start(240)
+
+        const runBattery = async () => {
+            await runHPBattery()
+            start(255)
+
+        }
+
+        runBattery()
+
     }, [])
 
 

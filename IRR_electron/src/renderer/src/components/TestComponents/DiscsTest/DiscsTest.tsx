@@ -5,11 +5,12 @@ import { useEffect } from 'react'
 import { executeDiskTest } from './services/disc'
 import { errorData } from '../../../utils/functions'
 import NumberPartForm from './NumberPartForm'
-import { getHpResults } from '@renderer/services/internalServices'
+import { runHPDisk, getHpResults } from '@renderer/services/internalServices'
+import useCountDown from '../hooks/useCountDown'
 
 function DiscsTest({ TestName, nextTest, profile }) {
 
-  const { isLoading: isDiscTestLoading, error, isSuccess: isDiskTestSucces, data:diskTestData } = useQuery({
+  const { error, isSuccess: isDiskTestSucces, data: diskTestData } = useQuery({
     queryKey: ['DiscsTest'],
     queryFn: () => executeDiskTest(profile),
     retry: false,
@@ -17,33 +18,52 @@ function DiscsTest({ TestName, nextTest, profile }) {
     enabled: !profile.integrated // la consulta se ejecutará si profile.integrated es false
   })
 
-  const { isLoading: isHpResultLoading, data: hpResultData } = useQuery({
-    queryKey: ['hpResults'],
-    queryFn: () => getHpResults(),
-    retry: false,
-    refetchOnWindowFocus: false,
-  })
+  // const { data: hpResultData } = useQuery({
+  //   queryKey: ['hpResults'],
+  //   queryFn: () => getHpResults(),
+  //   retry: false,
+  //   refetchOnWindowFocus: false,
+  // })
 
-  const checkTestDiskResult = () =>  {
-   if (hpResultData && diskTestData) {
-        const { hpResults: { DiskReadVerify } } = hpResultData
-        const testHpPassResult = DiskReadVerify.Result === "ExecutionPassed" 
-        const generalTestResult = testHpPassResult && isDiskTestSucces
-        if (generalTestResult){
-          nextTest(TestName, {
+
+  const { start } = useCountDown(() => getHpResults().then((data) => {
+    checkTestDiskResult(data)
+  }).catch((err) => console.log(err)))
+
+  
+  useEffect(() => {
+    const disktest =async () => {
+      await runHPDisk()
+      start(80)
+    }
+    disktest()
+  }, [])
+
+
+  const checkTestDiskResult = (hpResultData) => {
+    if (hpResultData && diskTestData) {
+      const { hpResults: { DiskReadVerify } } = hpResultData
+      const testHpPassResult = DiskReadVerify.every((disk) => disk.Result === "ExecutionPassed")
+      const generalTestResult = testHpPassResult && isDiskTestSucces
+
+      if (DiskReadVerify === undefined) {
+        nextTest(TestName, {
+          result: false,
+          message: "No se obtuvo resultado de la prueba de HP"
+        })
+      } else if (generalTestResult) {
+        nextTest(TestName, {
           result: generalTestResult,
           message: "Prueba discos exitosa"
-          })
-        } else {
-          nextTest(TestName, {
+        })
+      } else {
+        nextTest(TestName, {
           result: generalTestResult,
           message: `${error ? errorData(error) : ''} ${!testHpPassResult ? 'La verificación de disco de HP Fallo' : ''}`
-          })
-        }
+        })
+      }
     }
-  } 
-
-  useEffect(checkTestDiskResult, [isHpResultLoading, isDiscTestLoading])
+  }
 
   return (
     <BaseLayout>
@@ -52,7 +72,7 @@ function DiscsTest({ TestName, nextTest, profile }) {
           <CardBody>
             <div className='flex gap-4 items-center'>
               <p>Ejecutando Prueba de Discos</p>
-              <Spinner color="primary"/>
+              <Spinner color="primary" />
             </div>
           </CardBody>
         </Card>
