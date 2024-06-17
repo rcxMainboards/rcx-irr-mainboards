@@ -28,6 +28,7 @@ function useKeyboardTest(TestName, nextTest, onOpen, profile) {
 
   useEffect(() => {
     if (keysAmount) {
+      console.log(keysPresed)
       if (keysPresed === keysAmount) {
         nextTest(TestName, {
           result: true,

@@ -6,17 +6,11 @@ export default function KeyboardLayout95v3({ handleKeyDown }) {
 
     const [keysGlobalState, setkeysGlobalState] = useState(keysStateMap)
 
-
-
-    useEffect(() => {handleKeyDown()}, [keysGlobalState])
-
-
-
     useEffect(() => {
 
+
         const handleKeyCode = (event) => {
-            const findKey = keysGlobalState[event.code];
-            if (findKey && !findKey.pressed) {
+            if (!keysGlobalState[event.code].pressed) {
                 setkeysGlobalState((prevState) => ({
                     ...prevState,
                     [event.code]: {
@@ -24,13 +18,14 @@ export default function KeyboardLayout95v3({ handleKeyDown }) {
                         pressed: true,
                     },
                 }));
+
+                handleKeyDown()
             }
         };
 
         const handleKeyUp = (event) => {
             if (event.code === 'PrintScreen') {
-                const findKey = keysGlobalState[event.code];
-                if (findKey && !findKey.pressed) {
+                if (!keysGlobalState[event.code].pressed) {
                     setkeysGlobalState((prevState) => ({
                         ...prevState,
                         [event.code]: {
@@ -38,6 +33,7 @@ export default function KeyboardLayout95v3({ handleKeyDown }) {
                             pressed: true,
                         },
                     }));
+                    handleKeyDown()
                 }
             }
         }
@@ -49,7 +45,7 @@ export default function KeyboardLayout95v3({ handleKeyDown }) {
             window.removeEventListener('keydown', handleKeyCode)
             window.removeEventListener('keyup', handleKeyUp)
         }
-    }, [])
+    }, [keysGlobalState])
 
 
     return (

@@ -32,7 +32,7 @@ function createWindow(): BrowserWindow {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
       // devTools: false
     }
   })
@@ -41,6 +41,7 @@ function createWindow(): BrowserWindow {
     mainWindow.show()
     mainWindow.setMenu(null) // Esto quita el menú
     mainWindow.setFullScreen(true) // Esto pone la aplicación en pantalla completa
+    // mainWindow.webContents.openDevTools()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
