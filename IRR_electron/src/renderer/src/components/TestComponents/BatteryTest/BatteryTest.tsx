@@ -68,7 +68,7 @@ function BatteryTest({ TestName, nextTest }) {
                 } else {
                     nextTest(TestName, {
                         result: false,
-                        message: "Prueba de Bateria fallo "
+                        message: "Prueba de Bateria de HP fallo "
                     })
                 }
             }

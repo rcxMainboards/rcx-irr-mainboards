@@ -1,10 +1,15 @@
 import { useState } from 'react'
 import keysStateMap from '../constants/NumpadCopilot'
-import BkeyR from '../Keyboards/BkeyR'
+import BkeyR from './BkeyR'
 import { useEffect } from 'react'
 export default function KeyboardLayout95v3({ handleKeyDown }) {
 
     const [keysGlobalState, setkeysGlobalState] = useState(keysStateMap)
+
+
+
+    useEffect(() => {handleKeyDown()}, [keysGlobalState])
+
 
 
     useEffect(() => {

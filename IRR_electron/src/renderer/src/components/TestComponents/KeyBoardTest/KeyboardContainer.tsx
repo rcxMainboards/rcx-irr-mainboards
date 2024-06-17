@@ -5,7 +5,7 @@ import {
   KeyboardLayoutNumPadV1,
   KeyboardLayout60,
   KeyboardLayout65v3,
-  KeyboardLayout95v3
+  KeyboardLayout95Copilotv3
 } from './Keyboards/index'
 
 
@@ -16,13 +16,17 @@ const KeyboardLayouts = {
   '65%Keyboardv3': KeyboardLayout65v3,
   '95%Keyboardv1': KeyboardLayoutNumPad,
   '95%Keyboardv2': KeyboardLayoutNumPadV1,
-  '95%Keyboardv3': KeyboardLayout95v3,
+  '95%KeyboardCopilotv3': KeyboardLayout95Copilotv3,
 }
 
 function KeyboardContainer({ handleKeyDown, profile }) {
-  // const KeyboardLayout = KeyboardLayouts[profile.keyboard]
+  const KeyboardLayout = KeyboardLayouts[profile.keyboard]
 
-  return <KeyboardLayout95v3 handleKeyDown={handleKeyDown} ></KeyboardLayout95v3>
+  if (KeyboardLayout) {
+    return <KeyboardLayout handleKeyDown={handleKeyDown} />
+  }
+
+  return <h1 className="text-white">No se encontro un Teclado Válido para la prueba</h1>
 }
 
 export default KeyboardContainer
