@@ -8,23 +8,15 @@ import NumberPartForm from './NumberPartForm'
 import { runHPDisk, getHpResults } from '@renderer/services/internalServices'
 import useCountDown from '../hooks/useCountDown'
 
-function DiscsTest({ TestName, nextTest, profile }) {
+function DiscsTest({ TestName, nextTest, profile, TestParams }) {
 
   const { error, isSuccess: isDiskTestSucces, data: diskTestData } = useQuery({
     queryKey: ['DiscsTest'],
-    queryFn: () => executeDiskTest(profile),
+    queryFn: () => executeDiskTest(profile,TestParams),
     retry: false,
     refetchOnWindowFocus: false,
     enabled: !profile.integrated // la consulta se ejecutará si profile.integrated es false
   })
-
-  // const { data: hpResultData } = useQuery({
-  //   queryKey: ['hpResults'],
-  //   queryFn: () => getHpResults(),
-  //   retry: false,
-  //   refetchOnWindowFocus: false,
-  // })
-
 
   const { start } = useCountDown(() => getHpResults().then((data) => {
     checkTestDiskResult(data)

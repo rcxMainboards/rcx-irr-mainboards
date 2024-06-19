@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { API_INTERNAL, IRR_MB_API } from '../../../../utils/serviceEndPoints'
 
-const executeDiskTest = async (profile) => {
+const executeDiskTest = async (profile, TestParams) => {
   const response = await axios.post(
     `${API_INTERNAL}/mountedDrives/TestDrives`,
     {
       ssd_amount: profile.ssd_amount,
-      hdd_amount: profile.hdd_amount
+      hdd_amount: profile.hdd_amount,
+      config: TestParams.config
     }
   )
   return response.data
