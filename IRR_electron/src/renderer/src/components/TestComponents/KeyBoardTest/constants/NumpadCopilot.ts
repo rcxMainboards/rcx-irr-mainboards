@@ -73,7 +73,7 @@ const keysStateMap = {
     'AltLeft': { key: 'AltLeft', label: 'Alt', pressed: false },
     'Space': { key: 'Space', label: 'Space', pressed: false },
     'AltRight': { key: 'AltRight', label: 'Alt', pressed: false },
-    'ControlRight': { key: 'ControlRight', label: 'Ctrl', pressed: false },
+    'Copilot': { key: 'Copilot', label: 'Copilot', pressed: false },
     'ArrowLeft': { key: 'ArrowLeft', label: '<', pressed: false },
     'ArrowUp': { key: 'ArrowUp', label: '^', pressed: false },
     'ArrowRight': { key: 'ArrowRight', label: '>', pressed: false },

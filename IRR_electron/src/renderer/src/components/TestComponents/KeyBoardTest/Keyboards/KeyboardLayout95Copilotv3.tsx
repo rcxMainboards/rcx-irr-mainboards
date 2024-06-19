@@ -10,7 +10,18 @@ export default function KeyboardLayout95v3({ handleKeyDown }) {
 
 
         const handleKeyCode = (event) => {
-            if (!keysGlobalState[event.code].pressed) {
+
+            if (event.shiftKey && event.metaKey && !keysGlobalState["Copilot"].pressed) {
+
+                setkeysGlobalState((prevState) => ({
+                    ...prevState,
+                    ["Copilot"]: {
+                        ...prevState["Copilot"],
+                        pressed: true,
+                    },
+                }));
+                handleKeyDown()
+            } else if (!keysGlobalState[event.code].pressed) {
                 setkeysGlobalState((prevState) => ({
                     ...prevState,
                     [event.code]: {
@@ -21,6 +32,8 @@ export default function KeyboardLayout95v3({ handleKeyDown }) {
 
                 handleKeyDown()
             }
+
+            
         };
 
         const handleKeyUp = (event) => {

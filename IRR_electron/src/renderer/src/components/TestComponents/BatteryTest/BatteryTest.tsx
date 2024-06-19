@@ -1,13 +1,15 @@
 import BaseLayout from '../../ui/baseLayout'
-import { Card, CardBody, Spinner } from '@nextui-org/react'
-import { getHpResults, getBatteryValues, runHPBattery } from '@renderer/services/internalServices'
+import { Card, CardBody, Divider, Button } from '@nextui-org/react'
 import { useEffect } from 'react'
-import useCountDown from '../hooks/useCountDown'
-import { errorData } from '@renderer/utils/functions'
+import { getBatteryValues } from '@renderer/services/internalServices'
+import { MdOutlineDangerous } from 'react-icons/md'
+import { CiBatteryFull } from "react-icons/ci";
+import { FaCheckCircle } from 'react-icons/fa'
+
 
 function BatteryTest({ TestName, nextTest }) {
 
-    const checkHpTestResults = hpResultData => {
+    const checkHpTestResults = () => {
 
         //@ts-ignore
         navigator.getBattery().then((battery) => {
@@ -25,88 +27,55 @@ function BatteryTest({ TestName, nextTest }) {
             })
         })
 
-
-        if (hpResultData) {
-            const BatteryCheck = hpResultData?.hpResults?.BatteryCheck
-            if (BatteryCheck === undefined) {
+        getBatteryValues().then((response) => {
+                    
+            const batteryValues = response
+            const d_c = batteryValues["DESIGN CAPACITY"]
+            const f_d_c = batteryValues["FULL CHARGE CAPACITY"]
+            const D_C = d_c.replace(/[^\d]/g, "");
+            const F_D_C = f_d_c.replace(/[^\d]/g, "");
+            const dc = Number(D_C)
+            const fdc = Number(F_D_C)
+            const lifeb = (fdc/dc) * 100 
+            if (!(lifeb >= 91)) {
                 nextTest(TestName, {
                     result: false,
-                    message: "No se encontro el resultado de Prueba de Bateria"
+                    message: "Prueba de Bateria fallo, no cumple con el valor requerido de una bateria funcional: " + lifeb.toFixed(2)
                 })
-            } else {
-                const testHpPassResult = BatteryCheck.Result === "ExecutionPassed"
-                if (testHpPassResult) {
-                    getBatteryValues().then((response) => {
-                    
-                        const batteryValues = response
-                        const d_c = batteryValues["DESIGN CAPACITY"]
-                        const f_d_c = batteryValues["FULL CHARGE CAPACITY"]
-                        const D_C = d_c.replace(/[^\d]/g, "");
-                        const F_D_C = f_d_c.replace(/[^\d]/g, "");
-                        const dc = Number(D_C)
-                        const fdc = Number(F_D_C)
-                        const lifeb = (fdc/dc) * 100 
-                        if (lifeb >= 91) {
-                            nextTest(TestName, {
-                                result: true,
-                                message: "Prueba de Bateria paso"
-                            })
-                        } else {
-                            nextTest(TestName, {
-                                result: false,
-                                message: "Prueba de Bateria fallo, no cumple con el valor requerido de una bateria funcional: " + lifeb.toFixed(2)
-                            })
-                        }
-                      
-                        
-                    }).catch((error) => {
-                        nextTest(TestName, {
-                            result: false,
-                            message: "Prueba de Bateria fallo " + errorData(error)
-                        })
-                    })
-                } else {
-                    nextTest(TestName, {
-                        result: false,
-                        message: "Prueba de Bateria de HP fallo "
-                    })
-                }
             }
-        }
-
+        })
+            
     }
 
-    const { start } = useCountDown(() => getHpResults().then((hpResultData) => checkHpTestResults(hpResultData)).catch(err => {
-        nextTest(TestName, {
-            result: false,
-            message: "Ocurrio un error al tratar de obtener un resultado en la prueba de bateria " + errorData(err)
-        })
-    }))
+    
 
     useEffect(() => {
-
-        const runBattery = async () => {
-            await runHPBattery()
-            start(255)
-
-        }
-
-        runBattery()
-
+        checkHpTestResults()
     }, [])
 
 
     return (
-        <BaseLayout>
-            <Card>
-                <CardBody className="p-10">
-                    <div className='flex gap-4 items-center'>
-                        <p>Ejecutando Prueba de Bateria</p>
-                        <Spinner color="primary" />
+        (
+            <BaseLayout>
+            <>
+                <Card className="max-w-[500px] p-10">
+                    <div className="flex flex-col gap-2 justify-center items-center mb-6">
+                        <p className="text-4xl font-bold text-text-700">Bateria</p>
+                        <CiBatteryFull size={100}/>
                     </div>
-                </CardBody>
-            </Card>
-        </BaseLayout>
+                    <Divider />
+                    <CardBody>
+                        <p className="text-center text-text-700">Eliga la opcion que corresponda al resultado de la bateria de UEFI</p>
+                    </CardBody>
+                    <Divider />
+                    <section className="flex items-center justify-center gap-7 mt-4">
+                        <Button startContent={<FaCheckCircle size={22} />} className="bg-primary-700 text-white" onClick={() => nextTest(TestName, { result: true, message: "Prueba de Bateria exitosa" })}>Paso UEFI</Button>
+                        <Button startContent={<MdOutlineDangerous size={25} />}  className="bg-danger text-white" onClick={() => nextTest(TestName, { result: false, message: "Prueba de Bateria fallida" })}>Fallo UEFI</Button>
+                    </section>
+                </Card>
+            </>
+        </BaseLayout >
+        )
     )
 }
 
