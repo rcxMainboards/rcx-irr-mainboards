@@ -40,10 +40,9 @@ function WarningStartingApp({ onOpenChange }) {
                     </div>
                     <p className="font-bold">
                       Antes de iniciar esta aplicación, asegúrese de que esta conectado por Ethernet
-                      al Servidor, {''}
-                      de otra forma.
+                      al Servidor.
                     </p>
-                    <p><strong className='text-danger'>Es importante que termine la pruebas sin importar si alguna de estas falla.</strong></p>  
+                    <p><strong className='text-danger'><span className='text-blue-600'>Es importante haber ejecutado antes la prueba de bateria de UEFI</span> y que termine la pruebas sin importar si alguna de estas falla.</strong></p>  
                     <p>Se recomienda que desde este momento conecte los siguientes dispositivos:</p>
                     <ul className=" list-disc">
                       <li>La cantidad de USB en la base a los puertos.</li>
