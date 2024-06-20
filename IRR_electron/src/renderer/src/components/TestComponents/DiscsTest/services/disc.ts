@@ -2,14 +2,19 @@ import axios from 'axios'
 import { API_INTERNAL, IRR_MB_API } from '../../../../utils/serviceEndPoints'
 
 const executeDiskTest = async (profile, TestParams) => {
-  const response = await axios.post(
-    `${API_INTERNAL}/mountedDrives/TestDrives`,
-    {
-      ssd_amount: profile.ssd_amount,
-      hdd_amount: profile.hdd_amount,
-      config: TestParams.config
-    }
-  )
+
+  console.log(TestParams)
+  const obj = TestParams.config
+  const data = {
+    ssd_amount: profile.ssd_amount,
+    hdd_amount: profile.hdd_amount,
+    HDD: obj.HDD,
+    SSD: obj.SSD,
+  };
+
+ 
+
+  const response = await axios.post(`${API_INTERNAL}/mountedDrives/TestDrives`,data)
   return response.data
 }
 
