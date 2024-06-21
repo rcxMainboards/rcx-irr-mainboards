@@ -8,6 +8,7 @@ import { UpdateCheckResult, autoUpdater } from 'electron-updater'
 import log from 'electron-log/main'
 import { DownloaderHelper } from 'node-downloader-helper'
 import { execFile } from 'child_process'
+import "./winWifi"
 
 log.initialize()
 autoUpdater.logger = log
@@ -33,7 +34,7 @@ function createWindow(): BrowserWindow {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
-      // devTools: false
+      devTools: true
     }
   })
 
@@ -41,7 +42,7 @@ function createWindow(): BrowserWindow {
     mainWindow.show()
     mainWindow.setMenu(null) // Esto quita el menú
     mainWindow.setFullScreen(true) // Esto pone la aplicación en pantalla completa
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
