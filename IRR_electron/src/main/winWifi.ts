@@ -106,6 +106,7 @@ const {
             
                     if(result.connectionStatus === 1){
                         console.log("Se pudo lograr una conexion con TEST-Electron_5G")
+                        adapter.disconnect();
                         resolve("Se pudo lograr una conexion con ambas redes de prueba");
                     } else {
                         const message = "ocurrio un error conectandose a TEST-Electron_5G";

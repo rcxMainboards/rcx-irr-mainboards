@@ -3,8 +3,30 @@ import { Card, CardBody, Divider, Button } from '@nextui-org/react'
 import { FaCheckCircle } from 'react-icons/fa'
 import { MdOutlineDangerous } from 'react-icons/md'
 import { CiBatteryFull } from "react-icons/ci";
+import { useEffect } from 'react';
+
+
+
 
 function BatteryTest({ TestName, nextTest }) {
+
+    useEffect(() => {
+          //@ts-ignore
+        navigator.getBattery().then((battery) => {
+            if (!battery.charging) {
+                nextTest(TestName, {
+                    result: false,
+                    message: "No se detecto un cargador conectado"
+                })
+            }
+        }).catch((err) => {
+            console.log(err)
+            nextTest(TestName, {
+                result: false,
+                message: "No se pudo obtener el estado de carga de la bateria: " + err
+            })
+        })
+    }, [])
 
     return (
         <BaseLayout>
