@@ -1,49 +1,71 @@
 import BaseLayout from '../../ui/baseLayout'
 import { Card, CardBody } from '@nextui-org/react'
-import { useQuery } from '@tanstack/react-query'
+// import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { executeWifiTest } from './services/wifi'
-import { errorData } from '../../../utils/functions'
+// import { executeWifiTest } from './services/wifi'
+// import { errorData } from '../../../utils/functions'
 import { Spinner } from "@nextui-org/react";
-
+import { useState } from 'react'
 
 function WifiTest({ TestName, nextTest }) {
+  const [loading, setLoading] = useState(false)
+  
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['WifiTest'],
-    queryFn: executeWifiTest,
-    retry: false,
-    refetchOnWindowFocus: false
-  })
+  // const { isLoading, error, data } = useQuery({
+  //   queryKey: ['WifiTest'],
+  //   queryFn: executeWifiTest,
+  //   retry: false,
+  //   refetchOnWindowFocus: false
+  // })
+
+
+  // useEffect(() => {
+  //   if (!isLoading && !error) {
+  //     nextTest(TestName, {
+  //       result: true,
+  //       message: data?.detail
+  //     })
+  //   } else if (!isLoading && error) {
+      // nextTest(TestName, {
+      //   result: false,
+      //   message: errorData(error)
+      // })
+  //   }
+  // }, [isLoading])
+
 
 
   useEffect(() => {
-    if (!isLoading && !error) {
+    setLoading(true)
+    window.api.executeWifiTest().then((res) => {
+      console.log(res)
       nextTest(TestName, {
         result: true,
-        message: data?.detail
+        message: res
       })
-    } else if (!isLoading && error) {
+    }).catch((err) => {
+      console.log(err)
+
       nextTest(TestName, {
         result: false,
-        message: errorData(error)
+        message: err
       })
-    }
-  }, [isLoading])
+      
+    }).finally(() => {
+      setLoading(false)
+    })
+  }, [])
+
 
   return (
     <BaseLayout>
       <Card className="p-10">
         <CardBody>
-          {isLoading ? (
+          {loading && (
             <div className='flex gap-4 items-center'>
               <p>Ejecutando Prueba de Wifi</p>
               <Spinner color="primary" />
             </div>
-          ) : error ? (
-            errorData(error)
-          ) : (
-            'Termino la prueba de Wifi'
           )}
         </CardBody>
       </Card>

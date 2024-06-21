@@ -26,6 +26,7 @@ declare global {
       getAppVersion: () => Promise<string>;
       getAppStatus: () => Promise<boolean>;
       runPswTablet: () => Promise<any>;
+      executeWifiTest: () => Promise<any>; // Añade esta línea
       on(channel: string, func: (...args: any[]) => void): void;
     };
   }

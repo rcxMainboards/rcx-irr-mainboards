@@ -13,6 +13,7 @@ declare global {
       onUpdateDownloaded: (callback: () => void) => void
       onUpdateNotAvailable: (callback: () => void) => void
       runPswTablet: (callback: () => Promise) => Promise
+      executeWifiTest: () => Promise
     }
   }
 }
