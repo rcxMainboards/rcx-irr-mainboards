@@ -46,8 +46,8 @@ function BatteryTest({ TestName, nextTest }) {
                     message: "Prueba de Bateria fallo, no cumple con el valor requerido de una bateria funcional: " + lifeb.toFixed(2)
                 })
             }
+            setLoading(false)
         })
-        setLoading(false)
     }
 
     
