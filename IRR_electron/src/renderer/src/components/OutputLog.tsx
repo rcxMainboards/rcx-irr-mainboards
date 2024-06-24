@@ -39,14 +39,15 @@ function OutputLog({ Results, user }) {
     if (!isLoading && data) {
       const isPassed = Results.every((test) => test.details.result)
       const mainboardProfile = data
-
+      const {product, sku} = mainboardProfile
+      const newProduct = `${product}&${sku}`
 
       // TODO, se tiene que modificar el product enviado para que matche con el tipo de perfil registrado en Admin y no provoque un error
 
       mutate({
         tests: Results,
         Passed: isPassed,
-        mainboard: mainboardProfile, //Cambiar
+        mainboard: {...mainboardProfile, product: newProduct}, //Cambiar
         user: user,
         mb_test_type: 'PCaaS'
       })

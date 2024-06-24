@@ -52,9 +52,7 @@ export default function useCreateConfig() {
         if (data && skudata) {
             const sku = skudata?.sku;
             const ssid = data?.product
-            const SkuNumber = sku?.split("#")[0];
-
-            const MainboardAuthID = ssid && SkuNumber ? `${ssid}&${SkuNumber}` : null;
+            const MainboardAuthID = ssid && sku ? `${ssid}&${sku}` : null;
 
             //@ts-ignore
             getMainboardProfile(MainboardAuthID).then((res) => {

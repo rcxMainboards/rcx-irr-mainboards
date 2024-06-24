@@ -75,10 +75,9 @@ function useMainboard() {
 
   const ssid = data?.product;
   const sku = skudata?.sku;
-  const SkuNumber = sku?.split("#")[0];
 
   // Valida si ssid y SkuNumber tienen valores antes de crear MainboardAuthID
-  const MainboardAuthID = ssid && SkuNumber ? `${ssid}&${SkuNumber}` : null;
+  const MainboardAuthID = ssid && sku ? `${ssid}&${sku}` : null;
 
   const {
     isLoading: isLoadingRegistration,
