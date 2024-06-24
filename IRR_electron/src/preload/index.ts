@@ -19,7 +19,7 @@ const api = {
   getAppVersion: () => ipcRenderer.invoke('get-app-version'),
   getAppStatus: () => ipcRenderer.invoke('get-app-status'),
   runPswTablet: () => ipcRenderer.invoke('runTabletModEvent'),
-  executeWifiTest: (config:string) => ipcRenderer.invoke("win:wifi", config)
+  // executeWifiTest: (config:string) => ipcRenderer.invoke("win:wifi", config)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

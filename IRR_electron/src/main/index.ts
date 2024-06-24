@@ -4,18 +4,17 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 import { spawn } from 'child_process'
-import { UpdateCheckResult, autoUpdater } from 'electron-updater'
+// import { UpdateCheckResult, autoUpdater } from 'electron-updater'
 import log from 'electron-log/main'
 import { DownloaderHelper } from 'node-downloader-helper'
 import { execFile } from 'child_process'
-import "./winWifi"
 
-log.initialize()
-autoUpdater.logger = log
-log.transports.file.level = 'info'
+// log.initialize()
+// autoUpdater.logger = log
+// log.transports.file.level = 'info'
 
-autoUpdater.autoDownload = true
-autoUpdater.autoInstallOnAppQuit = true
+// autoUpdater.autoDownload = true
+// autoUpdater.autoInstallOnAppQuit = true
 
 const mainExePath = app.isPackaged
   ? join(process.resourcesPath, 'app.asar.unpacked', 'resources', 'myapp.exe')
@@ -112,29 +111,29 @@ app.whenReady().then(() => {
     log.info(message)
   })
 
-  if (app.isPackaged) {
-    ipcMain.on('check-for-updates', (event) => {
-      const { sender } = event
-      const result = autoUpdater.checkForUpdates()
-      result
-        .then((checkResult: UpdateCheckResult | null) => {
-          const updateInfo = checkResult?.updateInfo
-          if (updateInfo?.version !== app.getVersion()) {
-            log.info(updateInfo)
-            sender.send('update-available', updateInfo)
-          } else {
-            sender.send('update-not-available')
-          }
-        })
-        .catch(() => {
-          app.quit()
-        })
-    })
-  }
+  // if (app.isPackaged) {
+  //   ipcMain.on('check-for-updates', (event) => {
+  //     const { sender } = event
+  //     const result = autoUpdater.checkForUpdates()
+  //     result
+  //       .then((checkResult: UpdateCheckResult | null) => {
+  //         const updateInfo = checkResult?.updateInfo
+  //         if (updateInfo?.version !== app.getVersion()) {
+  //           log.info(updateInfo)
+  //           sender.send('update-available', updateInfo)
+  //         } else {
+  //           sender.send('update-not-available')
+  //         }
+  //       })
+  //       .catch(() => {
+  //         app.quit()
+  //       })
+  //   })
+  // }
 
-  autoUpdater.on('update-downloaded', () => {
-    autoUpdater.quitAndInstall()
-  })
+  // autoUpdater.on('update-downloaded', () => {
+  //   autoUpdater.quitAndInstall()
+  // })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
