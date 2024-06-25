@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { getMainboardProps, sendOutputLog } from '../services/mainboard'
 import { AxiosError } from 'axios'
 import clsx from 'clsx'
+import { set } from 'react-hook-form'
 
 function OutputLog({ Results, user }) {
   const [message, setMessage] = useState('')
@@ -19,7 +20,7 @@ function OutputLog({ Results, user }) {
     refetchOnWindowFocus: false
   })
 
-  const { mutate, isPending, isSuccess, isError } = useMutation({
+  const { mutate, status, isSuccess, isError } = useMutation({
     // subir los datos de la placa con junto con los resultados de las pruebas
     mutationFn: (args: { tests: any; Passed: any; mainboard: any; user: string, mb_test_type: string }) => sendOutputLog(args),
     onSuccess: (data) => {
@@ -33,26 +34,28 @@ function OutputLog({ Results, user }) {
         )
       }
     },
+  
   })
 
   useEffect(() => {
-    if (!isLoading && data) {
-      const isPassed = Results.every((test) => test.details.result)
-      setIsPassed(isPassed)
-      const mainboardProfile = data
-      const {product, sku} = mainboardProfile
-      const newProduct = `${product}&${sku}`
+      if (!isLoading && data) {
+        const isPassed = Results.every((test) => test.details.result)
+        setIsPassed(isPassed)
+        const mainboardProfile = data
+        const {product, sku} = mainboardProfile
+        const newProduct = `${product}&${sku}`
 
-      // TODO, se tiene que modificar el product enviado para que matche con el tipo de perfil registrado en Admin y no provoque un error
+        // TODO, se tiene que modificar el product enviado para que matche con el tipo de perfil registrado en Admin y no provoque un error
 
-      mutate({
-        tests: Results,
-        Passed: isPassed,
-        mainboard: {...mainboardProfile, product: newProduct, serial_number: mainboardProfile.SerialNumber_hp}, //Cambiar
-        user: user,
-        mb_test_type: 'PCaaS'
-      })
-    }
+        mutate({
+          tests: Results,
+          Passed: isPassed,
+          mainboard: {...mainboardProfile, product: newProduct, serial_number: mainboardProfile.SerialNumber_hp}, //Cambiar
+          user: user,
+          mb_test_type: 'PCaaS'
+        })
+      }
+    
   }, [isLoading, data])
 
   return (
@@ -67,11 +70,12 @@ function OutputLog({ Results, user }) {
             <OutputTable Results={Results} />
           </main>
           <div className='flex-1 items-center h-full mt-8'>
-              {isPending && isLoading ? (
-                <div>
-                  <h2 className="text-2xl font-bold p-2 text-white bg-gray-500">Subiendo...</h2>
+              {status === 'pending' || status === 'idle' ? (
+                <div className='p-2 flex flex-col items-center justify-center'>
+                  <Spinner size='lg' color="primary" />
+                  <p className="text-2xl">Subiendo resultados...</p>
                 </div>
-              ) : !isPending ? (
+              ) : (
                 <div className="max-w-[30rem] flex flex-col gap-2 overflow-auto break-words text-center">
                   <h1 className="text-3xl text-center font-bold">Estatus de Guardado</h1>
                   <p
@@ -84,7 +88,7 @@ function OutputLog({ Results, user }) {
                   </p>
                   <div>
                     <h1 className="text-3xl p-2 text-center font-bold">Estatus de pruebas</h1>
-                    {isPassed && !isPending ? ( // si todas las pruebas pasaron  
+                    {isPassed ? ( // si todas las pruebas pasaron  
                       <p className="text-lg rounded-md p-2 bg-success-500 text-white">Todas las pruebas pasaron</p>
                     ) : (
                       <p className="text-lg rounded-md bg-danger-500 p-2 text-white">Una prueba o varias fallaron</p>
@@ -94,7 +98,7 @@ function OutputLog({ Results, user }) {
                   <ExitButton /> 
                   </div>
                 </div>
-              ) : <Spinner color="primary" />}
+              )}
           </div>
         </div>
       </Card>
