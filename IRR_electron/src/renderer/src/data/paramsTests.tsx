@@ -31,12 +31,12 @@ import {
   BlueToothTest,
   HdmiTest,
   BatteryTest,
-  KioskoTest,
+  // KioskoTest,
   Backlight,
 } from '../components/TestComponents/index'
 import Test from '../components/TestComponents/interfaces'
 import { CiBatteryFull } from "react-icons/ci";
-import { IoTabletLandscape } from "react-icons/io5";
+// import { IoTabletLandscape } from "react-icons/io5";
 
 
 
@@ -134,21 +134,21 @@ const tests: Test[] = [
     ],
     TestTimer: 0
   },
-  {
-    TestComponent: KioskoTest,
-    TestName: 'Prueba de modo Tablet',
-    TestDescription:
-      'La prueba consiste revisar la computadora es capaz de cambiar de modo de visualización, el usuario tendra que cambiar la computadora de posición.',
-    TestSuccessCondition:
-      'El usuario decide si la característica funciona correctamente.',
-    TestFailCondition:
-      'Esta prueba fallara si el usuario decide que la característica no funciona como deberia.',
-    TestIconName: IoTabletLandscape,
-    TestNotes: [
-      'Recuerde girar la computadora en la posición adecuada con cuidado para probar la característica del modo de visualización'
-    ],
-    TestTimer: 35
-  },
+  // {
+  //   TestComponent: KioskoTest,
+  //   TestName: 'Prueba de modo Tablet',
+  //   TestDescription:
+  //     'La prueba consiste revisar la computadora es capaz de cambiar de modo de visualización, el usuario tendra que cambiar la computadora de posición.',
+  //   TestSuccessCondition:
+  //     'El usuario decide si la característica funciona correctamente.',
+  //   TestFailCondition:
+  //     'Esta prueba fallara si el usuario decide que la característica no funciona como deberia.',
+  //   TestIconName: IoTabletLandscape,
+  //   TestNotes: [
+  //     'Recuerde girar la computadora en la posición adecuada con cuidado para probar la característica del modo de visualización'
+  //   ],
+  //   TestTimer: 35
+  // },
   {
     TestComponent: Backlight,
     TestName: 'Prueba de Backlight',
