@@ -8,7 +8,7 @@ import { UpdateCheckResult, autoUpdater } from 'electron-updater'
 import log from 'electron-log/main'
 import { DownloaderHelper } from 'node-downloader-helper'
 import { execFile } from 'child_process'
-import "./winWifi"
+// import "./winWifi"
 
 log.initialize()
 autoUpdater.logger = log
