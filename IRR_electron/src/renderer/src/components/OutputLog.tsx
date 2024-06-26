@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react'
 import { getMainboardProps, sendOutputLog } from '../services/mainboard'
 import { AxiosError } from 'axios'
 import clsx from 'clsx'
-import { set } from 'react-hook-form'
 
 function OutputLog({ Results, user }) {
   const [message, setMessage] = useState('')
